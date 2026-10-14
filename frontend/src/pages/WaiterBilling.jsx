@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../config/api";
-import WaiterLogoIcon from "../components/WaiterLogoIcon";
+import WaiterLogoIcon from "../Components/WaiterLogoIcon";
 import "./WaiterBilling.css";
 
 const money = (value) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 2 }).format(Number(value || 0));

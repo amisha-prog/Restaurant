@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback, useMemo, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { API_URL } from "../config/api";
-import ChefLogoIcon from "../components/ChefLogoIcon";
+import ChefLogoIcon from "../Components/ChefLogoIcon";
 import "./ChefDashboard.css";
 
 const money = (v) =>

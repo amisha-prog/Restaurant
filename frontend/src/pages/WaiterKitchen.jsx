@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_URL } from "../config/api";
-import WaiterLogoIcon from "../components/WaiterLogoIcon";
+import WaiterLogoIcon from "../Components/WaiterLogoIcon";
 import "./WaiterKitchen.css";
 
 const FLOW = {
