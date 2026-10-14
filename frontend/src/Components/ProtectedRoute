@@ -1,0 +1,21 @@
+// components/ProtectedRoute.jsx
+import { Navigate } from "react-router-dom";
+
+const ProtectedRoute = ({ children, allowedRole }) => {
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+  // Agar token nahi hai toh Login page par bhejo
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // Agar role match nahi karta toh unauthorized ya login par bhejo
+  if (allowedRole && user.role !== allowedRole) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+};
+
+export default ProtectedRoute;

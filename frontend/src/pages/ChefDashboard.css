@@ -1,0 +1,2169 @@
+/* ========================================================
+   CHEF DASHBOARD & KITCHEN DISPLAY SYSTEM (KDS)
+   Curated Executive Color Palette & Modern POS Aesthetics
+   ======================================================== */
+
+* {
+  box-sizing: border-box;
+}
+
+.chef-layout {
+  min-height: 100vh;
+  display: flex;
+  background: #f8fafc;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #0f172a;
+}
+
+/* ========================================================
+   1. LEFT SIDEBAR (Deep Slate & Muted Indigo)
+   ======================================================== */
+.chef-sidebar {
+  width: 260px;
+  min-height: 100vh;
+  background: #0f172a;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 14px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+  z-index: 100;
+  box-shadow: 2px 0 16px rgba(0, 0, 0, 0.08);
+}
+
+.chef-sidebar-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 10px 18px;
+  border-bottom: 1px solid #1e293b;
+  margin-bottom: 14px;
+}
+
+.chef-brand-icon {
+  width: 46px;
+  height: 46px;
+  background: transparent;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.35);
+  transition: transform 0.2s ease;
+}
+
+.chef-brand-icon:hover {
+  transform: scale(1.06);
+}
+
+.chef-sidebar-brand h2 {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+}
+
+.chef-sidebar-brand span {
+  font-size: 0.72rem;
+  color: #94a3b8;
+}
+
+/* Chef Profile Card in Sidebar */
+.chef-sidebar-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #1e293b;
+  border-radius: 12px;
+  border: 1px solid #334155;
+  margin-bottom: 12px;
+}
+
+.chef-profile-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 10px rgba(234, 88, 12, 0.25);
+  transition: transform 0.2s ease;
+}
+
+.chef-profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.chef-profile-info strong {
+  font-size: 0.88rem;
+  color: #f1f5f9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chef-id-badge {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.chef-role-pill {
+  font-size: 0.68rem;
+  color: #cbd5e1;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1px 6px;
+  border-radius: 4px;
+  width: fit-content;
+}
+
+/* Restaurant Pin in Sidebar */
+.chef-rest-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 0.78rem;
+}
+
+.chef-rest-badge .rest-icon {
+  font-size: 0.95rem;
+}
+
+.chef-rest-badge .rest-name {
+  font-weight: 600;
+  color: #cbd5e1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chef-rest-badge .rest-code {
+  color: #64748b;
+  font-size: 0.72rem;
+  margin-left: auto;
+}
+
+/* Nav Menu */
+.chef-nav-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.chef-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 11px 13px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: #94a3b8;
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s ease;
+  width: 100%;
+}
+
+.chef-nav-item:hover {
+  background: #1e293b;
+  color: #ffffff;
+}
+
+.chef-nav-item.active {
+  background: #2563eb;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.28);
+}
+
+.chef-nav-item .nav-icon {
+  font-size: 1.1rem;
+}
+
+.chef-nav-item .nav-text {
+  flex: 1;
+}
+
+.nav-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.nav-badge.count-active {
+  background: #ef4444;
+  color: #ffffff;
+}
+
+.nav-badge.count-alert {
+  background: #f59e0b;
+  color: #111827;
+}
+
+.nav-badge.count-neutral {
+  background: #334155;
+  color: #cbd5e1;
+}
+
+.chef-nav-item.active .nav-badge {
+  background: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+}
+
+/* Sidebar Footer */
+.chef-sidebar-footer {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid #1e293b;
+}
+
+.chef-sidebar-exit-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid #334155;
+  font-size: 0.84rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chef-sidebar-exit-btn.admin-return {
+  background: #1e293b;
+  color: #cbd5e1;
+}
+
+.chef-sidebar-exit-btn.admin-return:hover {
+  background: #334155;
+  color: #ffffff;
+}
+
+.chef-sidebar-exit-btn.chef-signout {
+  background: rgba(255, 255, 255, 0.05);
+  color: #d1d5db;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.chef-sidebar-exit-btn.chef-signout:hover {
+  background: #374151;
+  color: #ffffff;
+  border-color: #4b5563;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+/* ========================================================
+   2. RIGHT MAIN CONTENT AREA
+   ======================================================== */
+.chef-main-content {
+  flex: 1;
+  margin-left: 260px;
+  padding: 24px 30px;
+  overflow-y: auto;
+  min-height: 100vh;
+}
+
+/* Topbar Header */
+.chef-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 18px 24px;
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+  margin-bottom: 22px;
+}
+
+.chef-topbar-left h1 {
+  margin: 0 0 4px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #0f172a;
+  letter-spacing: -0.02em;
+}
+
+.chef-topbar-left p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.chef-topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: nowrap;
+}
+
+.chef-topbar-right .notification-wrap {
+  flex-shrink: 0;
+}
+
+/* Clock Widget */
+.chef-clock-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: #0f172a;
+  color: #f8fafc;
+  border-radius: 10px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  min-width: 135px;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+.clock-time {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.clock-pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
+  animation: clock-blink 1.5s infinite;
+}
+
+@keyframes clock-blink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.chef-auto-toggle {
+  padding: 8px 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.chef-auto-toggle.active {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #166534;
+}
+
+.chef-manual-refresh-btn {
+  padding: 8px 16px;
+  background: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: #0f172a;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chef-manual-refresh-btn:hover {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+/* Toast Alert */
+.chef-toast-alert {
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: toast-in 0.3s ease-out;
+}
+
+.chef-toast-alert.success {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========================================================
+   3. STAT METRIC CARDS (Subtle Pastel Accents)
+   ======================================================== */
+.chef-stat-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.chef-stat-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+  position: relative;
+}
+
+.chef-stat-card:hover {
+  transform: translateY(-2px);
+  border-color: #cbd5e1;
+  box-shadow: 0 6px 18px -2px rgba(0, 0, 0, 0.06);
+}
+
+.chef-stat-card.selected {
+  border-color: #2563eb;
+  background: #f8fafc;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+.stat-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.icon-new {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.icon-prep {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.icon-ready {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.icon-completed {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.icon-stock {
+  background: #f5f3ff;
+  color: #7c3aed;
+}
+
+.stat-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.stat-card-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.stat-card-num {
+  font-size: 1.45rem;
+  font-weight: 800;
+  color: #0f172a;
+  line-height: 1.1;
+}
+
+.stat-card-sub {
+  font-size: 0.72rem;
+  color: #94a3b8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stat-badge-pulse {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #ef4444;
+  animation: clock-blink 1s infinite;
+}
+
+/* ========================================================
+   4. KDS ORDERS TOOLBAR & FILTER PILLS
+   ======================================================== */
+.chef-kds-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 12px 18px;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+  margin-bottom: 20px;
+}
+
+.kds-filter-pills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.filter-pill-btn {
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.filter-pill-btn:hover {
+  background: #f8fafc;
+  color: #0f172a;
+  border-color: #cbd5e1;
+}
+
+.filter-pill-btn.active {
+  background: #0f172a;
+  border-color: #0f172a;
+  color: #ffffff;
+}
+
+.pill-count {
+  font-size: 0.74rem;
+  opacity: 0.85;
+}
+
+.kds-search-box input {
+  padding: 8px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.84rem;
+  color: #0f172a;
+  background: #f8fafc;
+  outline: none;
+  min-width: 250px;
+  transition: all 0.15s ease;
+}
+
+.kds-search-box input:focus {
+  background: #ffffff;
+  border-color: #0f172a;
+  box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.08);
+}
+
+/* ========================================================
+   5. KDS ORDER CARDS GRID (Clean, Crisp, Restaurant POS)
+   ======================================================== */
+.chef-orders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+  gap: 20px;
+}
+
+.chef-order-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04), 0 2px 8px -2px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.chef-order-card:hover {
+  border-color: #cbd5e1;
+  box-shadow: 0 4px 14px -2px rgba(0, 0, 0, 0.08);
+}
+
+/* Subtle top hairline instead of neon strip */
+.chef-order-card.status-new {
+  border-top: 3px solid #ef4444;
+}
+
+.chef-order-card.status-preparing {
+  border-top: 3px solid #f59e0b;
+}
+
+.chef-order-card.status-ready {
+  border-top: 3px solid #059669;
+}
+
+.chef-order-card.status-served,
+.chef-order-card.status-completed {
+  border-top: 3px solid #64748b;
+}
+
+/* Urgent state */
+.chef-order-card.urgent-card {
+  border-color: #fecaca;
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.08);
+}
+
+/* Card Header */
+.order-card-header {
+  padding: 14px 16px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.order-table-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Table Badge: Sleek high-contrast dark badge */
+.table-badge {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: #0f172a;
+  padding: 4px 10px;
+  border-radius: 7px;
+  letter-spacing: 0.2px;
+}
+
+.order-id-label {
+  font-size: 0.76rem;
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.time-pill {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #64748b;
+  background: #f8fafc;
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+}
+
+.time-pill.urgent-pill {
+  background: #fef2f2;
+  color: #b91c1c;
+  border-color: #fecaca;
+}
+
+/* Card Meta (Guest & Source) */
+.order-card-meta {
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: #64748b;
+  background: #f8fafc;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.meta-customer {
+  font-weight: 600;
+  color: #334155;
+}
+
+.meta-source {
+  font-size: 0.72rem;
+  color: #475569;
+  background: #e2e8f0;
+  padding: 2.5px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.meta-source.source-admin,
+.history-source-badge.source-admin {
+  background: #ede9fe;
+  color: #6d28d9;
+  border: 1px solid #c4b5fd;
+}
+
+.meta-source.source-waiter,
+.history-source-badge.source-waiter {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+
+.meta-source.source-qr,
+.history-source-badge.source-qr {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.history-source-badge {
+  font-size: 0.72rem;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 700;
+  display: inline-block;
+}
+
+/* Items List */
+.order-items-box {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.order-item-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.item-qty-tag {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: #0f172a;
+  background: #f1f5f9;
+  padding: 3px 7px;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  flex-shrink: 0;
+  line-height: 1.2;
+}
+
+.item-text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.item-name {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.item-mod-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.item-mod-pill {
+  font-size: 0.72rem;
+  color: #475569;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+/* Notes Callout */
+.order-notes-callout {
+  margin: 0 16px 10px;
+  padding: 8px 12px;
+  background: #fffbeb;
+  border-left: 3px solid #f59e0b;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  color: #92400e;
+}
+
+/* Status Bar */
+.order-card-status-bar {
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #f1f5f9;
+  background: #ffffff;
+}
+
+.order-status-badge {
+  font-size: 0.74rem;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 6px;
+}
+
+.badge-new {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.badge-preparing {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.badge-ready {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.badge-served,
+.badge-completed {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+.order-items-total-qty {
+  font-size: 0.74rem;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+/* Actions Footer */
+.order-card-actions {
+  padding: 12px 16px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+}
+
+.btn-kds-action {
+  width: 100%;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Start Cooking: Warm amber */
+.btn-start-prep {
+  background: #d97706;
+  color: #ffffff;
+}
+.btn-start-prep:hover:not(:disabled) {
+  background: #b45309;
+}
+
+/* Food is Ready: Deep forest emerald */
+.btn-mark-ready {
+  background: #059669;
+  color: #ffffff;
+}
+.btn-mark-ready:hover:not(:disabled) {
+  background: #047857;
+}
+
+.ready-action-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Waiter callout: Warm, understated alert */
+.ready-callout-text {
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: #9a3412;
+  background: #fffbeb;
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #fed7aa;
+  text-align: center;
+}
+
+/* Mark as Picked Up: Sleek authoritative dark slate (replaces loud royal blue!) */
+.btn-mark-served {
+  background: #0f172a;
+  color: #ffffff;
+}
+.btn-mark-served:hover:not(:disabled) {
+  background: #1e293b;
+}
+
+.completed-card-footer {
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #475569;
+  padding: 6px;
+}
+
+/* Empty State */
+.chef-empty-card {
+  padding: 60px 20px;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1.5px dashed #cbd5e1;
+  text-align: center;
+  color: #64748b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.chef-empty-card .empty-icon {
+  font-size: 3rem;
+  margin-bottom: 6px;
+}
+
+.chef-empty-card h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.chef-empty-card p {
+  margin: 0;
+  font-size: 0.88rem;
+  max-width: 440px;
+  line-height: 1.5;
+}
+
+.btn-reset-filter {
+  margin-top: 10px;
+  padding: 9px 18px;
+  background: #0f172a;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-reset-filter:hover {
+  background: #1e293b;
+}
+
+/* ========================================================
+   6. TAB 2: KITCHEN STOCK & 86 BOARD
+   ======================================================== */
+.stock-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 18px 22px;
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 16px;
+}
+
+.stock-title-info h3 {
+  margin: 0 0 4px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.stock-title-info p {
+  margin: 0;
+  font-size: 0.82rem;
+  color: #64748b;
+  max-width: 620px;
+}
+
+.stock-search-wrap input {
+  padding: 9px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 0.84rem;
+  min-width: 260px;
+  background: #f8fafc;
+  outline: none;
+}
+
+.stock-search-wrap input:focus {
+  background: #ffffff;
+  border-color: #0f172a;
+  box-shadow: 0 0 0 2px rgba(15, 23, 42, 0.08);
+}
+
+.stock-category-pills {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 18px;
+}
+
+.stock-cat-btn {
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #475569;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.stock-cat-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.stock-cat-btn.active {
+  background: #0f172a;
+  color: #ffffff;
+  border-color: #0f172a;
+}
+
+.stock-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.stock-card {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all 0.15s ease;
+}
+
+.stock-card.card-out-stock {
+  border-color: #fecaca;
+  background: #fef2f2;
+}
+
+.stock-card-top {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.stock-card-thumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  background: #f1f5f9;
+  flex-shrink: 0;
+}
+
+.stock-card-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.stock-placeholder-icon {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+
+.stock-badge {
+  position: absolute;
+  bottom: 2px;
+  left: 2px;
+  right: 2px;
+  font-size: 0.58rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 1px 0;
+  border-radius: 3px;
+}
+
+.stock-badge.available {
+  background: rgba(5, 150, 105, 0.9);
+  color: #ffffff;
+}
+
+.stock-badge.out-of-stock {
+  background: rgba(220, 38, 38, 0.9);
+  color: #ffffff;
+}
+
+.stock-card-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.stock-cat-name {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.stock-card-meta h4 {
+  margin: 2px 0 4px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stock-price {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.btn-toggle-stock {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-make-out {
+  background: #fef2f2;
+  color: #dc2626;
+  border-color: #fecaca;
+}
+.btn-make-out:hover {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.btn-make-in {
+  background: #f0fdf4;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+.btn-make-in:hover {
+  background: #16a34a;
+  color: #ffffff;
+}
+
+/* ========================================================
+   7. TAB 3: ORDERS HISTORY TABLE
+   ======================================================== */
+.history-table-container {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  overflow-x: auto;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+.chef-history-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.85rem;
+}
+
+.chef-history-table th {
+  background: #f8fafc;
+  color: #64748b;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  padding: 12px 16px;
+  border-bottom: 1.5px solid #e2e8f0;
+}
+
+.chef-history-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+}
+
+.chef-history-table tr:last-child td {
+  border-bottom: none;
+}
+
+.mono-order-id {
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.history-status-pill {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  display: inline-block;
+}
+
+.history-status-pill.status-new {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+
+.history-status-pill.status-preparing {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.history-status-pill.status-ready {
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #a7f3d0;
+}
+
+.history-status-pill.status-served,
+.history-status-pill.status-completed {
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+.empty-table-cell {
+  text-align: center;
+  color: #94a3b8;
+  padding: 40px 16px !important;
+}
+
+/* ========================================================
+   8. TAB 4: CHEF PROFILE VIEW
+   ======================================================== */
+.profile-detail-card {
+  background: #ffffff;
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.profile-card-hero {
+  background: #0f172a;
+  padding: 26px 30px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: #ffffff;
+}
+
+.profile-hero-avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.8rem;
+  font-weight: 800;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  flex-shrink: 0;
+}
+
+.profile-hero-text h2 {
+  margin: 0 0 6px;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.profile-id-pill,
+.profile-role-pill,
+.profile-status-pill {
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.profile-id-pill {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.profile-role-pill {
+  background: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+}
+
+.profile-status-pill {
+  background: rgba(16, 185, 129, 0.18);
+  color: #a7f3d0;
+}
+
+.profile-boxes-grid {
+  padding: 24px 30px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.profile-info-box {
+  padding: 14px 16px;
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.profile-info-box label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #64748b;
+  letter-spacing: 0.4px;
+}
+
+.profile-info-box strong {
+  font-size: 0.92rem;
+  color: #0f172a;
+}
+
+.profile-exit-actions {
+  padding: 18px 30px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-profile-return {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  background: #0f172a;
+  color: #ffffff;
+}
+
+.btn-profile-return:hover {
+  background: #1e293b;
+}
+
+.btn-profile-return.logout {
+  background: #dc2626;
+}
+
+.btn-profile-return.logout:hover {
+  background: #b91c1c;
+}
+
+/* ========================================================
+   9. LOADING & ERROR STATES
+   ======================================================== */
+.chef-loading-screen,
+.chef-error-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background: #f8fafc;
+  color: #475569;
+  text-align: center;
+  padding: 20px;
+}
+
+.chef-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3.5px solid #e2e8f0;
+  border-top-color: #0f172a;
+  border-radius: 50%;
+  animation: chef-spin 0.8s linear infinite;
+}
+
+@keyframes chef-spin {
+  to { transform: rotate(360deg); }
+}
+
+.chef-error-screen .error-icon {
+  font-size: 3rem;
+}
+
+.btn-error-back {
+  padding: 10px 22px;
+  background: #0f172a;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* ========================================================
+   9. CHEF SETTINGS & PASSWORD RESET
+   ======================================================== */
+.chef-settings-section {
+  max-width: 1080px;
+}
+
+.chef-settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.chef-settings-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1.5px solid #e2e8f0;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.chef-settings-card-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1.5px solid #f1f5f9;
+}
+
+.chef-settings-card-icon {
+  font-size: 1.8rem;
+  background: #eff6ff;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.chef-settings-card-header h3 {
+  margin: 0;
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.chef-settings-card-header p {
+  margin: 3px 0 0 0;
+  font-size: 0.83rem;
+  color: #64748b;
+}
+
+/* Profile summary */
+.chef-settings-hero {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f8fafc;
+}
+
+.chef-settings-avatar {
+  width: 58px;
+  height: 58px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: #ffffff;
+  font-size: 1.7rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+  flex-shrink: 0;
+}
+
+.chef-settings-hero h4 {
+  margin: 0 0 4px 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.chef-settings-id-pill {
+  display: inline-block;
+  background: #f1f5f9;
+  color: #475569;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.76rem;
+  font-family: monospace;
+  font-weight: 700;
+  margin-right: 6px;
+}
+
+.chef-settings-spec-pill {
+  display: inline-block;
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.76rem;
+  font-weight: 600;
+}
+
+.chef-settings-detail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.chef-detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: #f8fafc;
+  border-radius: 10px;
+  font-size: 0.86rem;
+}
+
+.chef-detail-row .label {
+  color: #64748b;
+  font-weight: 600;
+}
+
+.chef-detail-row .val {
+  color: #0f172a;
+  font-weight: 600;
+  text-align: right;
+  max-width: 60%;
+  word-break: break-word;
+}
+
+.chef-status-tag {
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.chef-status-tag.active {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+/* Reset Form */
+.chef-settings-reset-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.chef-settings-alert {
+  padding: 11px 14px;
+  border-radius: 9px;
+  font-size: 0.88rem;
+  font-weight: 500;
+}
+
+.chef-settings-alert.alert-success {
+  background: #dcfce7;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+.chef-settings-alert.alert-error {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.chef-settings-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.chef-settings-field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.chef-pwd-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.chef-settings-input {
+  width: 100%;
+  padding: 11px 44px 11px 14px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  background: #f8fafc;
+  color: #0f172a;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.chef-settings-input:focus {
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.chef-pwd-toggle-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 4px;
+  color: #64748b;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.chef-pwd-toggle-btn:hover {
+  opacity: 1;
+}
+
+.chef-settings-hints small {
+  color: #64748b;
+  font-size: 0.8rem;
+}
+
+.chef-settings-submit-btn {
+  margin-top: 6px;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: #ffffff;
+  font-size: 0.94rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chef-settings-submit-btn:hover:not(:disabled) {
+  opacity: 0.95;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(37, 99, 235, 0.35);
+}
+
+.chef-settings-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ========================================================
+   10. RESPONSIVE BREAKPOINTS
+   ======================================================== */
+@media (min-width: 651px) and (max-width: 1200px) {
+  .chef-settings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chef-stat-cards-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 12px !important;
+    margin-bottom: 20px !important;
+  }
+
+  .chef-stat-cards-grid > div:nth-child(5) {
+    grid-column: auto !important;
+  }
+
+  .chef-stat-card {
+    padding: 12px 10px;
+    gap: 8px;
+    border-radius: 12px;
+  }
+
+  .stat-card-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 16px;
+  }
+
+  .stat-card-label {
+    font-size: 0.64rem;
+    line-height: 1.1;
+  }
+
+  .stat-card-num {
+    font-size: 1.2rem;
+  }
+
+  .stat-card-sub {
+    font-size: 0.60rem;
+  }
+
+  .chef-orders-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 16px !important;
+  }
+
+  .profile-boxes-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Responsive text classes for Auto Refresh button */
+.auto-short-text {
+  display: none;
+}
+
+.auto-full-text {
+  display: inline-block;
+}
+
+@media (max-width: 900px) {
+  .auto-short-text {
+    display: inline-block;
+  }
+
+  .auto-full-text {
+    display: none;
+  }
+
+  .chef-layout {
+    display: block;
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  .chef-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    max-width: 85vw;
+    height: 100vh;
+    z-index: 1100;
+    transform: translateX(-100%);
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: none;
+  }
+
+  .chef-sidebar.open {
+    transform: translateX(0);
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.55);
+  }
+
+  .chef-sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.65);
+    backdrop-filter: blur(4px);
+    z-index: 1050;
+  }
+
+  .chef-sidebar-close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: #ffffff;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .chef-sidebar-close-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .chef-main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 12px;
+  }
+
+  .chef-mobile-menu-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    width: 36px;
+    height: 36px;
+    padding: 7px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background: #ffffff;
+    cursor: pointer;
+    flex-shrink: 0;
+    box-shadow: 0 1px 3px rgba(15, 23, 42, 0.05);
+  }
+
+  .chef-mobile-menu-btn span {
+    display: block;
+    width: 100%;
+    height: 2.5px;
+    background: #0f172a;
+    border-radius: 2px;
+  }
+
+  .chef-mobile-brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .chef-topbar {
+    padding: 8px 12px;
+    gap: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid #e2e8f0;
+    margin-bottom: 14px;
+    border-radius: 12px;
+  }
+
+  .chef-topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .chef-topbar-left h1 {
+    font-size: 0.82rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+    color: #0f172a;
+  }
+
+  .chef-topbar-sub {
+    display: none;
+  }
+
+  .chef-topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+    margin-left: 8px;
+  }
+
+  .chef-clock-card {
+    display: none;
+  }
+
+  .chef-auto-toggle {
+    padding: 5px 10px;
+    font-size: 0.72rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .chef-stat-cards-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px 10px !important;
+    margin-bottom: 16px !important;
+  }
+
+  .chef-stat-cards-grid > div:nth-child(5) {
+    grid-column: 1 / -1 !important;
+  }
+
+  .chef-stat-card {
+    padding: 10px 8px;
+    gap: 6px;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(15, 23, 42, 0.05);
+    min-width: 0;
+  }
+
+  .stat-card-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+    border-radius: 8px;
+    flex-shrink: 0;
+  }
+
+  .stat-card-label {
+    font-size: 0.60rem;
+    line-height: 1.1;
+    letter-spacing: 0;
+  }
+
+  .stat-card-num {
+    font-size: 1.15rem;
+    line-height: 1.1;
+    margin: 1px 0;
+  }
+
+  .stat-card-sub {
+    font-size: 0.58rem;
+    line-height: 1.1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .kds-filter-pills {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    gap: 6px !important;
+    padding-bottom: 4px;
+    -webkit-overflow-scrolling: touch;
+    width: 100%;
+  }
+
+  .filter-pill-btn {
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    padding: 6px 10px;
+    font-size: 0.76rem;
+    border-radius: 8px;
+  }
+
+  .chef-orders-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  .profile-boxes-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 901px) {
+  .chef-mobile-menu-btn,
+  .chef-mobile-brand,
+  .chef-sidebar-close-btn,
+  .chef-sidebar-overlay {
+    display: none !important;
+  }
+}
+
+/* ========================================================
+   ORDERS HISTORY CONTROLS & PAGINATION
+   ======================================================== */
+.history-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.history-search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 240px;
+}
+
+.history-search-box .search-icon {
+  position: absolute;
+  left: 12px;
+  color: #94a3b8;
+  font-size: 14px;
+}
+
+.history-search-input {
+  width: 100%;
+  padding: 9px 14px 9px 36px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  font-size: 13px;
+  color: #0f172a;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.history-search-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.history-per-page-select {
+  padding: 9px 14px;
+  border-radius: 10px;
+  border: 1px solid #cbd5e1;
+  font-size: 13px;
+  font-weight: 600;
+  background: #ffffff;
+  color: #334155;
+  cursor: pointer;
+}
+
+/* Table Pagination Bar */
+.table-pagination-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  margin-top: 16px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.pagination-info {
+  font-size: 13px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.pagination-nav {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.page-number-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.page-number-btn.active {
+  background: #2563eb;
+  color: #ffffff;
+  border-color: #2563eb;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.25);
+}
+
+.page-number-btn:hover:not(.active):not(:disabled) {
+  background: #f1f5f9;
+}
+
+.page-number-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}

@@ -1,0 +1,610 @@
+* {
+  box-sizing: border-box;
+}
+
+.add-restaurant-page {
+  min-height: 100vh;
+  background: #f5f6f8;
+  padding: 30px;
+  margin-left: 265px;
+}
+
+/* ===============================
+   Header
+================================ */
+
+.add-restaurant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.add-restaurant-header h1 {
+  margin: 0 0 6px;
+  font-size: 26px;
+  color: #111827;
+}
+
+.add-restaurant-header p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 13px;
+}
+
+.add-restaurant-header .back-button {
+  border: none;
+  background: #111827;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.add-restaurant-header .back-button:hover {
+  background: #1f2937;
+}
+
+
+/* ===============================
+   Form Card
+================================ */
+
+.restaurant-form-card {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 25px;
+  max-width: 1000px;
+}
+
+
+/* ===============================
+   Form Section
+================================ */
+
+.form-section {
+  padding-bottom: 25px;
+  margin-bottom: 25px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.section-title {
+  margin-bottom: 20px;
+}
+
+.section-title h2 {
+  margin: 0 0 5px;
+  font-size: 17px;
+  color: #111827;
+}
+
+.section-title p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 11px;
+}
+
+
+/* ===============================
+   Form Grid
+================================ */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-group label {
+  margin-bottom: 7px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.form-group label span {
+  color: #dc2626;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  padding: 11px 12px;
+  font-size: 12px;
+  outline: none;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #111827;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+
+/* ===============================
+   Messages
+================================ */
+
+.form-error {
+  background: #fee2e2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  padding: 11px 13px;
+  border-radius: 7px;
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+.form-success {
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+  padding: 11px 13px;
+  border-radius: 7px;
+  font-size: 12px;
+  margin-bottom: 15px;
+}
+
+
+/* ===============================
+   Buttons
+================================ */
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.cancel-button,
+.create-button {
+  padding: 11px 20px;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.cancel-button {
+  border: 1px solid #d1d5db;
+  background: white;
+  color: #374151;
+}
+
+.cancel-button:hover {
+  background: #f3f4f6;
+}
+
+.create-button {
+  border: none;
+  background: #111827;
+  color: white;
+}
+
+.create-button:hover {
+  background: #1f2937;
+}
+
+.create-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* ===============================
+   Responsive
+================================ */
+
+@media (max-width: 900px) {
+  .add-restaurant-page {
+    margin-left: 0;
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .add-restaurant-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 14px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 25px;
+  }
+
+  .add-restaurant-header h1,
+  .add-restaurant-header p {
+    text-align: center;
+  }
+
+  .add-restaurant-header .back-button {
+    margin: 4px auto 0;
+  }
+
+  .restaurant-form-card {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .section-title {
+    text-align: center;
+  }
+
+  .section-title h2,
+  .section-title p {
+    text-align: center;
+  }
+}
+
+@media (max-width: 650px) {
+  .add-restaurant-page {
+    margin-left: 0;
+    padding: 20px 15px;
+  }
+
+  .add-restaurant-header {
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .add-restaurant-header h1 {
+    font-size: 22px;
+  }
+
+  .add-restaurant-header p {
+    font-size: 12px;
+  }
+
+  .section-title h2 {
+    font-size: 16px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-group.full-width {
+    grid-column: auto;
+  }
+
+  .restaurant-form-card {
+    padding: 18px 16px;
+  }
+
+  .form-actions {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .cancel-button,
+  .create-button {
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+/* ===============================
+   Admin Created Success Card
+================================ */
+.admin-created-success-card {
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+  border: 1.5px solid #86efac;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.12);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.admin-success-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #bbf7d0;
+}
+
+.admin-success-header .success-icon {
+  font-size: 28px;
+}
+
+.admin-success-header h3 {
+  margin: 0 0 3px;
+  font-size: 16px;
+  color: #14532d;
+  font-weight: 700;
+}
+
+.admin-success-header p {
+  margin: 0;
+  font-size: 12px;
+  color: #166534;
+}
+
+.admin-cred-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.cred-item {
+  background: #ffffff;
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  padding: 10px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cred-item label {
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  color: #4b5563;
+}
+
+.cred-item strong {
+  font-size: 13px;
+  color: #111827;
+}
+
+.cred-badge {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 6px;
+  width: fit-content;
+}
+
+.cred-badge.rest-id {
+  background: #e0e7ff;
+  color: #3730a3;
+}
+
+.cred-badge.rest-email {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+.admin-login-hint {
+  background: #dcfce7;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 11.5px;
+  color: #15803d;
+  line-height: 1.5;
+}
+
+@media (max-width: 650px) {
+  .admin-cred-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ===============================
+   Success Popup Modal
+================================ */
+.restaurant-success-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+  animation: backdropFade 0.25s ease;
+}
+
+@keyframes backdropFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.restaurant-success-modal-card {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.05);
+  max-width: 520px;
+  width: 100%;
+  overflow: hidden;
+  animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalPop {
+  from { opacity: 0; transform: scale(0.92) translateY(12px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.success-modal-header {
+  background: linear-gradient(135deg, #1e293b 0%, #111827 100%);
+  color: white;
+  padding: 28px 24px 22px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.success-modal-badge {
+  width: 56px;
+  height: 56px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  font-size: 26px;
+  font-weight: bold;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.success-modal-header h2 {
+  margin: 0 0 6px;
+  font-size: 21px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.success-modal-header p {
+  margin: 0;
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.success-modal-body {
+  padding: 22px 24px 16px;
+}
+
+.modal-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.modal-info-box {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 11px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.info-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: #64748b;
+}
+
+.info-val {
+  font-size: 13px;
+  color: #0f172a;
+  word-break: break-word;
+}
+
+.info-badge {
+  font-family: ui-monospace, SFMono-Regular, monospace;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 6px;
+  width: fit-content;
+}
+
+.id-badge {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.email-badge {
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+.modal-login-notice {
+  background: #eff6ff;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 12px;
+  color: #1e40af;
+  line-height: 1.5;
+}
+
+.success-modal-footer {
+  padding: 16px 24px 22px;
+  background: #f8fafc;
+  border-top: 1px solid #e2e8f0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.modal-btn-add-more {
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.modal-btn-add-more:hover {
+  background: #f1f5f9;
+}
+
+.modal-btn-dashboard {
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.15s ease;
+}
+
+.modal-btn-dashboard:hover {
+  background: #1d4ed8;
+}
+
+@media (max-width: 550px) {
+  .modal-info-grid {
+    grid-template-columns: 1fr;
+  }
+  .success-modal-footer {
+    flex-direction: column;
+  }
+  .modal-btn-add-more,
+  .modal-btn-dashboard {
+    width: 100%;
+    text-align: center;
+  }
+}

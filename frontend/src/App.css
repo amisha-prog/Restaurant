@@ -1,0 +1,4286 @@
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  width: 100%;
+  overscroll-behavior-x: none;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f7fb;
+  color: #111827;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+
+/* =========================================================
+   SUPER ADMIN DASHBOARD
+========================================================= */
+
+.admin-dashboard {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  background: #f5f7fb;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.admin-sidebar {
+  width: 230px;
+  min-height: 100vh;
+  flex-shrink: 0;
+
+  background: #111827;
+  color: #ffffff;
+
+  padding: 28px 16px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* ---------------------------------------------------------
+   ADMIN BRAND
+--------------------------------------------------------- */
+
+.admin-logo {
+  padding: 5px 10px 25px;
+  border-bottom: 1px solid #293241;
+
+  display: flex;
+  align-items: center;
+}
+
+
+/* Logo completely hidden */
+
+.logo-icon {
+  display: none !important;
+}
+
+.admin-logo div:not(.logo-icon) {
+  display: block;
+}
+
+.admin-logo h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.admin-logo span {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.admin-nav {
+  margin-top: 28px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.nav-item {
+  width: 100%;
+
+  border: none;
+  background: transparent;
+
+  color: #cbd5e1;
+
+  padding: 13px 14px;
+
+  border-radius: 8px;
+
+  text-align: left;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  transition: 0.2s ease;
+}
+
+.nav-item:hover {
+  background: #1f2937;
+  color: #ffffff;
+}
+
+.nav-item.active {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+
+/* Remove emoji/icon if present */
+
+.nav-item span:first-child {
+  display: none;
+}
+
+
+/* =========================================================
+   SIDEBAR LOGOUT
+========================================================= */
+
+.admin-sidebar .logout-btn {
+  width: 100%;
+
+  margin-top: auto;
+
+  padding: 12px;
+
+  border: 1px solid #374151;
+  border-radius: 8px;
+
+  background: #1f2937;
+  color: #ffffff;
+
+  font-size: 14px;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.admin-sidebar .logout-btn:hover {
+  background: #374151;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+.admin-main {
+  flex: 1;
+
+  min-width: 0;
+
+  padding: 35px 40px;
+
+  background: #f5f7fb;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 0;
+}
+
+.admin-header h1 {
+  margin: 0;
+
+  font-size: 32px;
+  font-weight: 700;
+
+  color: #111827;
+}
+
+.admin-header p {
+  margin: 7px 0 0;
+
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   ADD RESTAURANT BUTTON
+========================================================= */
+
+.add-restaurant-btn {
+  border: none;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  padding: 12px 18px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.add-restaurant-btn:hover {
+  background: #1d4ed8;
+}
+
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+.stats-grid {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 18px;
+
+  margin-bottom: 25px;
+}
+
+
+/* =========================================================
+   STAT CARD
+========================================================= */
+
+.stat-card {
+  min-height: 150px;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 12px;
+
+  padding: 22px;
+
+  transition: 0.2s ease;
+}
+
+.stat-card:hover {
+  border-color: #dbeafe;
+
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+}
+
+
+/* Hide icons/emojis */
+
+.stat-icon {
+  display: none !important;
+}
+
+
+.stat-card p {
+  margin: 0 0 10px;
+
+  color: #6b7280;
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.stat-card h2 {
+  margin: 0;
+
+  font-size: 30px;
+  font-weight: 700;
+
+  color: #111827;
+}
+
+
+/* =========================================================
+   DASHBOARD CONTENT
+========================================================= */
+
+.dashboard-grid {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.8fr);
+
+  gap: 20px;
+}
+
+
+/* =========================================================
+   DASHBOARD CARD
+========================================================= */
+
+.dashboard-card {
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 12px;
+
+  padding: 24px;
+}
+
+
+/* =========================================================
+   CARD HEADER
+========================================================= */
+
+.card-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 15px;
+
+  margin-bottom: 20px;
+}
+
+.card-header h2 {
+  margin: 0;
+
+  font-size: 19px;
+  font-weight: 600;
+
+  color: #111827;
+}
+
+.card-header p {
+  margin: 6px 0 0;
+
+  color: #9ca3af;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   VIEW ALL BUTTON
+========================================================= */
+
+.view-all-btn {
+  border: 1px solid #dbeafe;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  padding: 8px 12px;
+
+  border-radius: 7px;
+
+  font-size: 13px;
+
+  cursor: pointer;
+}
+
+.view-all-btn:hover {
+  background: #dbeafe;
+}
+
+
+/* =========================================================
+   RESTAURANT LIST
+========================================================= */
+
+.restaurant-list {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* =========================================================
+   RESTAURANT ROW
+========================================================= */
+
+.restaurant-row {
+  width: 100%;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 16px 0;
+
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.restaurant-row:last-child {
+  border-bottom: none;
+}
+
+
+/* =========================================================
+   RESTAURANT AVATAR
+========================================================= */
+
+.restaurant-avatar {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  border-radius: 8px;
+
+  background: #f3f4f6;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  font-size: 0;
+}
+
+
+/* Hide restaurant emoji */
+
+.restaurant-avatar::after {
+  content: "";
+}
+
+
+/* =========================================================
+   RESTAURANT INFO
+========================================================= */
+
+.restaurant-info {
+  flex: 1;
+
+  min-width: 0;
+}
+
+.restaurant-info h3 {
+  margin: 0;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  color: #111827;
+}
+
+.restaurant-info p {
+  margin: 5px 0 0;
+
+  color: #6b7280;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status {
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.active-status {
+  background: #dcfce7;
+
+  color: #15803d;
+}
+
+
+/* =========================================================
+   QUICK ACTIONS
+========================================================= */
+
+.quick-actions {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.quick-action {
+  width: 100%;
+
+  border: 1px solid #e5e7eb;
+
+  background: #ffffff;
+
+  padding: 14px;
+
+  border-radius: 9px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.quick-action:hover {
+  background: #f8fafc;
+
+  border-color: #dbeafe;
+}
+
+
+/* Hide quick action icons */
+
+.quick-action > span {
+  display: none;
+}
+
+.quick-action div {
+  flex: 1;
+}
+
+.quick-action h3 {
+  margin: 0;
+
+  font-size: 14px;
+
+  color: #111827;
+}
+
+.quick-action p {
+  margin: 4px 0 0;
+
+  font-size: 12px;
+
+  color: #9ca3af;
+}
+
+.quick-action b {
+  color: #2563eb;
+
+  font-size: 16px;
+}
+
+
+/* =========================================================
+   ADD RESTAURANT PAGE
+========================================================= */
+
+.add-restaurant-page {
+  min-height: 100vh;
+
+  background: #f5f7fb;
+
+  padding: 35px 40px;
+}
+
+.add-restaurant-container {
+  width: 100%;
+  max-width: 1000px;
+
+  margin: auto;
+}
+
+
+/* =========================================================
+   ADD RESTAURANT HEADER
+========================================================= */
+
+.add-restaurant-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 25px;
+}
+
+.add-restaurant-header h1 {
+  margin: 0;
+
+  font-size: 30px;
+
+  color: #111827;
+}
+
+.add-restaurant-header p {
+  margin: 7px 0 0;
+
+  color: #6b7280;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.back-btn {
+  padding: 10px 16px;
+
+  border: 1px solid #d1d5db;
+
+  background: #ffffff;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-size: 14px;
+}
+
+.back-btn:hover {
+  background: #f9fafb;
+}
+
+
+/* =========================================================
+   RESTAURANT FORM
+========================================================= */
+
+.restaurant-form {
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 12px;
+
+  padding: 30px;
+
+  box-shadow: 0 4px 15px rgba(15, 23, 42, 0.04);
+}
+
+.form-section h2 {
+  margin-top: 0;
+
+  margin-bottom: 25px;
+
+  font-size: 20px;
+
+  color: #111827;
+}
+
+
+/* =========================================================
+   FORM GRID
+========================================================= */
+
+.form-grid {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  color: #374151;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+
+  padding: 12px 14px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 8px;
+
+  outline: none;
+
+  font-size: 14px;
+
+  background: #ffffff;
+
+  color: #111827;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #2563eb;
+
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+
+/* =========================================================
+   FORM BUTTONS
+========================================================= */
+
+.form-buttons {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 12px;
+
+  margin-top: 30px;
+
+  padding-top: 20px;
+
+  border-top: 1px solid #eee;
+}
+
+.cancel-btn {
+  padding: 11px 20px;
+
+  background: #ffffff;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+}
+
+.cancel-btn:hover {
+  background: #f9fafb;
+}
+
+.save-restaurant-btn {
+  padding: 11px 22px;
+
+  background: #2563eb;
+
+  color: #ffffff;
+
+  border: none;
+
+  border-radius: 8px;
+
+  cursor: pointer;
+
+  font-weight: 600;
+}
+
+.save-restaurant-btn:hover {
+  background: #1d4ed8;
+}
+
+.save-restaurant-btn:disabled {
+  opacity: 0.7;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   RESTAURANT ADMIN LOGIN
+========================================================= */
+
+.restaurant-admin-login-page {
+  min-height: 100vh;
+  width: 100%;
+
+  background: #f5f7fb;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 30px 20px;
+}
+
+.restaurant-admin-login-box {
+  width: 100%;
+  max-width: 420px;
+
+  background: #ffffff;
+
+  padding: 40px;
+
+  border-radius: 14px;
+
+  border: 1px solid #e5e7eb;
+
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+
+  text-align: center;
+}
+
+
+/* Hide login icon */
+
+.restaurant-admin-login-icon {
+  display: none !important;
+}
+
+
+.restaurant-admin-login-box h1 {
+  margin: 0;
+
+  font-size: 30px;
+
+  font-weight: 700;
+
+  color: #111827;
+}
+
+.restaurant-admin-login-subtitle {
+  margin: 8px 0 30px;
+
+  font-size: 14px;
+
+  color: #6b7280;
+}
+
+
+/* =========================================================
+   LOGIN ERROR
+========================================================= */
+
+.restaurant-admin-login-error {
+  width: 100%;
+
+  padding: 12px 14px;
+
+  margin-bottom: 20px;
+
+  border-radius: 8px;
+
+  background: #fef2f2;
+
+  border: 1px solid #fecaca;
+
+  color: #dc2626;
+
+  font-size: 13px;
+
+  text-align: left;
+}
+
+
+/* =========================================================
+   LOGIN FORM
+========================================================= */
+
+.restaurant-admin-login-form {
+  width: 100%;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 20px;
+
+  text-align: left;
+}
+
+.restaurant-login-field {
+  width: 100%;
+
+  display: flex !important;
+
+  flex-direction: column !important;
+
+  gap: 8px;
+}
+
+.restaurant-login-field label {
+  display: block !important;
+
+  width: 100%;
+
+  margin: 0 !important;
+
+  color: #374151;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.restaurant-login-field input {
+  width: 100% !important;
+
+  height: 48px;
+
+  padding: 12px 14px !important;
+
+  border: 1px solid #d1d5db !important;
+
+  border-radius: 8px !important;
+
+  outline: none !important;
+
+  background: #ffffff !important;
+
+  color: #111827 !important;
+
+  font-size: 14px !important;
+}
+
+.restaurant-login-field input:focus {
+  border-color: #2563eb !important;
+
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1) !important;
+}
+
+
+/* =========================================================
+   LOGIN BUTTON
+========================================================= */
+
+.restaurant-admin-login-button {
+  width: 100% !important;
+
+  height: 48px;
+
+  margin-top: 5px;
+
+  border: none !important;
+
+  border-radius: 8px !important;
+
+  background: #2563eb !important;
+
+  color: #ffffff !important;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.restaurant-admin-login-button:hover {
+  background: #1d4ed8 !important;
+}
+
+.restaurant-admin-login-button:disabled {
+  opacity: 0.7;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   LOGIN BACK BUTTON
+========================================================= */
+
+.restaurant-admin-back-button {
+  margin-top: 22px;
+
+  padding: 8px;
+
+  border: none !important;
+
+  background: transparent !important;
+
+  color: #6b7280 !important;
+
+  font-size: 14px;
+
+  cursor: pointer;
+}
+
+.restaurant-admin-back-button:hover {
+  color: #2563eb !important;
+}
+
+
+/* =========================================================
+   RESTAURANT DASHBOARD
+========================================================= */
+
+.restaurant-dashboard {
+  min-height: 100vh;
+
+  background: #f5f7fb;
+
+  padding: 35px 40px;
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   RESTAURANT DASHBOARD HEADER
+========================================================= */
+
+.restaurant-dashboard-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  background: #ffffff;
+
+  padding: 22px 28px;
+
+  border-radius: 12px;
+
+  margin-bottom: 22px;
+
+  border: 1px solid #e5e7eb;
+}
+
+.restaurant-dashboard-header h1 {
+  margin: 0;
+
+  font-size: 28px;
+
+  color: #111827;
+}
+
+.restaurant-dashboard-header p {
+  margin: 7px 0 0;
+
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   RESTAURANT LOGOUT
+========================================================= */
+
+.restaurant-dashboard .logout-btn {
+  background: #2563eb;
+
+  color: #ffffff;
+
+  border: none;
+
+  padding: 11px 20px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.restaurant-dashboard .logout-btn:hover {
+  background: #1d4ed8;
+}
+
+
+/* =========================================================
+   WELCOME CARD
+========================================================= */
+
+.restaurant-welcome-card {
+  background: #2563eb;
+
+  color: #ffffff;
+
+  padding: 28px;
+
+  border-radius: 12px;
+
+  margin-bottom: 22px;
+}
+
+.restaurant-welcome-card h2 {
+  margin: 0 0 8px;
+
+  font-size: 23px;
+}
+
+.restaurant-welcome-card p {
+  margin: 0;
+
+  opacity: 0.9;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   RESTAURANT INFO GRID
+========================================================= */
+
+.restaurant-info-grid {
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 18px;
+}
+
+
+/* =========================================================
+   INFO CARDS
+========================================================= */
+
+.restaurant-info-card {
+  background: #ffffff;
+
+  padding: 22px;
+
+  border-radius: 12px;
+
+  border: 1px solid #e5e7eb;
+
+  transition: 0.2s ease;
+}
+
+.restaurant-info-card:hover {
+  border-color: #dbeafe;
+
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.05);
+}
+
+.restaurant-info-card h3 {
+  margin: 0 0 10px;
+
+  font-size: 13px;
+
+  color: #6b7280;
+
+  font-weight: 600;
+}
+
+.restaurant-info-card p {
+  margin: 0;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  color: #1f2937;
+
+  word-break: break-word;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .restaurant-info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+@media (max-width: 800px) {
+
+  .admin-sidebar {
+    width: 200px;
+  }
+
+  .admin-main {
+    padding: 25px;
+  }
+
+  .restaurant-dashboard {
+    padding: 25px;
+  }
+}
+
+
+@media (max-width: 650px) {
+
+  .admin-dashboard {
+    flex-direction: column;
+  }
+
+  .admin-sidebar {
+    width: 100%;
+    min-height: auto;
+
+    padding: 15px;
+  }
+
+  .admin-logo {
+    padding-bottom: 15px;
+  }
+
+  .admin-nav {
+    margin-top: 15px;
+
+    flex-direction: row;
+
+    overflow-x: auto;
+  }
+
+  .nav-item {
+    width: auto;
+
+    white-space: nowrap;
+  }
+
+  .admin-sidebar .logout-btn {
+    margin-top: 15px;
+  }
+
+  .admin-main {
+    padding: 20px;
+  }
+
+  .admin-header {
+    flex-direction: row;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+  }
+
+  .add-restaurant-btn {
+    width: 100%;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .restaurant-info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+@media (max-width: 600px) {
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .full-width {
+    grid-column: span 1;
+  }
+
+  .add-restaurant-page {
+    padding: 20px 15px;
+  }
+
+  .restaurant-form {
+    padding: 20px;
+  }
+
+  .add-restaurant-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 15px;
+  }
+
+  .restaurant-dashboard {
+    padding: 15px;
+  }
+
+  .restaurant-dashboard-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 15px;
+  }
+
+  .restaurant-dashboard .logout-btn {
+    width: 100%;
+  }
+
+  .restaurant-admin-login-box {
+    padding: 30px 22px;
+  }
+}
+
+
+@media (max-width: 400px) {
+
+  .admin-main {
+    padding: 15px;
+  }
+
+  .admin-header h1 {
+    font-size: 27px;
+  }
+
+  .restaurant-admin-login-box {
+    padding: 25px 18px;
+  }
+
+  .restaurant-admin-login-box h1 {
+    font-size: 25px;
+  }
+}
+
+/* =========================================================
+   GLOBAL RESET
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f7fb;
+  color: #111827;
+}
+
+button,
+input,
+select,
+textarea {
+  font-family: inherit;
+}
+
+
+/* =========================================================
+   SUPER ADMIN DASHBOARD
+========================================================= */
+
+.professional-dashboard {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  background: #f5f7fb;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.professional-sidebar {
+  width: 250px;
+  min-width: 250px;
+  min-height: 100vh;
+
+  background: #111827;
+  color: white;
+
+  padding: 28px 18px;
+
+  display: flex;
+  flex-direction: column;
+
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+
+/* =========================================================
+   SIDEBAR BRAND
+========================================================= */
+
+.sidebar-brand {
+  padding: 5px 8px 25px;
+  border-bottom: 1px solid #273244;
+}
+
+.sidebar-brand-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-avatar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sidebar-brand h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.sidebar-brand p {
+  margin: 3px 0 0;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+
+/* =========================================================
+   SIDEBAR NAVIGATION
+========================================================= */
+
+.sidebar-navigation {
+  margin-top: 28px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar-navigation button {
+  font-family: inherit;
+}
+
+.sidebar-nav-active {
+  width: 100%;
+
+  border: none;
+  border-radius: 9px;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  padding: 13px 15px;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  text-align: left;
+
+  transition: 0.2s ease;
+}
+
+.sidebar-nav-active:hover {
+  background: #1d4ed8;
+}
+
+.sidebar-nav-active span {
+  font-size: 18px;
+}
+
+
+/* =========================================================
+   SIDEBAR BOTTOM
+========================================================= */
+
+.sidebar-bottom {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid #273244;
+}
+
+
+/* =========================================================
+   ADMIN PROFILE
+========================================================= */
+
+.admin-profile {
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 12px 10px;
+
+  margin-bottom: 12px;
+
+  border-radius: 8px;
+}
+
+.admin-avatar {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #374151;
+
+  color: #ffffff;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.admin-profile strong {
+  display: block;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  color: #ffffff;
+}
+
+.admin-profile span {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 11px;
+
+  color: #9ca3af;
+}
+
+
+/* =========================================================
+   LOGOUT BUTTON
+========================================================= */
+
+.logout-button {
+  width: 100%;
+
+  border: 1px solid #374151;
+
+  background: #1f2937;
+  color: #e5e7eb;
+
+  padding: 11px 14px;
+
+  border-radius: 8px;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  text-align: center;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+
+  box-sizing: border-box;
+}
+
+.logout-button:hover {
+  background: #374151;
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+.professional-main {
+  flex: 1;
+
+  min-width: 0;
+
+  padding: 38px 42px;
+
+  max-width: 1500px;
+
+  overscroll-behavior-x: contain;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.professional-header {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: flex-start;
+
+  gap: 25px;
+
+  margin-bottom: 30px;
+}
+
+.page-label {
+  display: block;
+  margin-bottom: 5px;
+  color: #64748b;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.welcome-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 2px rgba(37, 99, 235, 0.08);
+}
+
+.welcome-title {
+  margin: 0;
+  font-size: 32px;
+  line-height: 1.25;
+  color: #0f172a;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #2563eb 0%, #4f46e5 50%, #7c3aed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.wave-emoji {
+  display: inline-block;
+  transform-origin: 70% 70%;
+  animation: waveHand 2.5s infinite;
+}
+
+@keyframes waveHand {
+  0% { transform: rotate(0deg); }
+  10% { transform: rotate(14deg); }
+  20% { transform: rotate(-8deg); }
+  30% { transform: rotate(14deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(10deg); }
+  60% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+
+.welcome-subtitle {
+  margin: 6px 0 0;
+  color: #64748b;
+  font-size: 14.5px;
+  font-weight: 450;
+}
+
+.professional-header h1 {
+  margin: 0;
+  font-size: 34px;
+  line-height: 1.2;
+  color: #111827;
+  font-weight: 700;
+}
+
+.professional-header p {
+  margin: 8px 0 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   PRIMARY BUTTON
+========================================================= */
+
+.primary-button {
+  border: none;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  padding: 12px 18px;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  transition: 0.2s ease;
+}
+
+.primary-button:hover {
+  background: #1d4ed8;
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 5px 12px rgba(37, 99, 235, 0.18);
+}
+
+
+/* =========================================================
+   STATISTICS GRID
+========================================================= */
+
+.statistics-grid {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  gap: 18px;
+
+  margin-bottom: 25px;
+}
+
+
+/* =========================================================
+   STATISTICS CARD
+========================================================= */
+
+.statistics-card {
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 12px;
+
+  padding: 22px;
+
+  min-height: 155px;
+
+  display: flex;
+  align-items: flex-start;
+
+  gap: 15px;
+
+  transition: 0.2s ease;
+}
+
+.statistics-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.06);
+}
+
+
+/* =========================================================
+   STATISTICS ICON
+========================================================= */
+
+.statistics-icon {
+  width: 44px;
+  height: 44px;
+
+  flex-shrink: 0;
+
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.statistics-icon.blue {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.statistics-icon.purple {
+  background: #f5f3ff;
+  color: #7c3aed;
+}
+
+.statistics-icon.orange {
+  background: #fff7ed;
+  color: #ea580c;
+}
+
+.statistics-icon.green {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+
+/* =========================================================
+   STATISTICS TEXT
+========================================================= */
+
+.statistics-card > div:last-child {
+  min-width: 0;
+}
+
+.statistics-card span {
+  display: block;
+
+  color: #6b7280;
+
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.statistics-card h2 {
+  margin: 8px 0 5px;
+
+  color: #111827;
+
+  font-size: 28px;
+  line-height: 1;
+
+  font-weight: 700;
+}
+
+.statistics-card small {
+  display: block;
+
+  color: #9ca3af;
+
+  font-size: 11px;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   RESTAURANT MANAGEMENT
+========================================================= */
+
+.restaurant-management {
+  width: 100%;
+
+  background: #ffffff;
+
+  border: 1px solid #e5e7eb;
+
+  border-radius: 12px;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   MANAGEMENT HEADER
+========================================================= */
+
+.management-header {
+  display: flex;
+
+  justify-content: space-between;
+  align-items: flex-start;
+
+  padding: 25px 26px;
+
+  border-bottom: 1px solid #eef0f4;
+}
+
+.section-label {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #64748b;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 0.08em;
+}
+
+.management-header h2 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.management-header p {
+  margin: 6px 0 0;
+
+  color: #9ca3af;
+
+  font-size: 13px;
+}
+
+.restaurant-count {
+  color: #374151;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  background: #f8fafc;
+
+  border: 1px solid #e5e7eb;
+
+  padding: 8px 12px;
+
+  border-radius: 7px;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   TABLE CONTAINER
+========================================================= */
+
+.restaurant-table-container {
+  width: 100%;
+
+  overflow-x: auto;
+
+  overscroll-behavior-x: contain;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.restaurant-table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  min-width: 850px;
+}
+
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+.restaurant-table thead {
+  background: #f8fafc;
+}
+
+.restaurant-table th {
+  padding: 14px 18px;
+
+  color: #64748b;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  text-align: left;
+
+  white-space: nowrap;
+
+  border-bottom: 1px solid #e5e7eb;
+
+  letter-spacing: 0.04em;
+}
+
+
+/* =========================================================
+   TABLE BODY
+========================================================= */
+
+.restaurant-table td {
+  padding: 17px 18px;
+
+  border-bottom: 1px solid #f1f5f9;
+
+  color: #374151;
+
+  font-size: 13px;
+
+  vertical-align: middle;
+}
+
+.restaurant-table tbody tr {
+  transition: 0.15s ease;
+}
+
+.restaurant-table tbody tr:hover {
+  background: #fafbfc;
+}
+
+.restaurant-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* =========================================================
+   RESTAURANT NAME CELL
+========================================================= */
+
+.restaurant-name-cell {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  min-width: 200px;
+}
+
+.restaurant-avatar {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  border-radius: 9px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.restaurant-name-cell strong {
+  display: block;
+
+  color: #111827;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.restaurant-name-cell span {
+  display: block;
+
+  margin-top: 4px;
+
+  color: #9ca3af;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   LOCATION
+========================================================= */
+
+.location-text {
+  color: #4b5563;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status-active,
+.status-inactive {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 6px 9px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.status-active {
+  background: #ecfdf5;
+
+  color: #15803d;
+}
+
+.status-inactive {
+  background: #fef2f2;
+
+  color: #dc2626;
+}
+
+.status-dot {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: currentColor;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.action-buttons {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.table-actions-dropdown-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.action-dots-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+.action-dots-btn:hover,
+.action-dots-btn.active {
+  background: #f1f5f9;
+  color: #0f172a;
+  border-color: #cbd5e1;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.action-dropdown-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  min-width: 175px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.12), 0 8px 10px -6px rgba(15, 23, 42, 0.08);
+  padding: 6px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  animation: dropdownFadeIn 0.15s ease-out;
+}
+
+.action-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #334155;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.12s ease;
+  white-space: nowrap;
+}
+
+.action-dropdown-item:hover {
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.action-dropdown-item .action-item-icon {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+}
+
+.action-dropdown-item.item-view:hover {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.action-dropdown-item.item-edit:hover {
+  background: #fefce8;
+  color: #ca8a04;
+}
+
+.action-dropdown-item.item-delete {
+  color: #dc2626;
+}
+
+.action-dropdown-item.item-delete:hover {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.action-dropdown-item:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.action-dropdown-divider {
+  height: 1px;
+  background: #f1f5f9;
+  margin: 4px 0;
+}
+
+.view-button,
+.delete-button {
+  padding: 7px 10px;
+
+  border-radius: 6px;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+
+/* View */
+
+.view-button {
+  border: 1px solid #dbeafe;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+}
+
+.view-button:hover {
+  background: #dbeafe;
+}
+
+
+/* Delete */
+
+.delete-button {
+  border: 1px solid #fecaca;
+
+  background: #fff;
+
+  color: #dc2626;
+}
+
+.delete-button:hover {
+  background: #fef2f2;
+}
+
+.delete-button:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.dashboard-loading {
+  min-height: 180px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  color: #6b7280;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   EMPTY RESTAURANTS
+========================================================= */
+
+.empty-restaurants {
+  padding: 60px 20px;
+
+  text-align: center;
+}
+
+.empty-restaurants h3 {
+  margin: 0;
+
+  color: #111827;
+
+  font-size: 18px;
+}
+
+.empty-restaurants p {
+  margin: 8px 0 20px;
+
+  color: #9ca3af;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   RESPONSIVE - 1200px
+========================================================= */
+
+@media (max-width: 1200px) {
+
+  .professional-main {
+    padding: 30px;
+  }
+
+  .statistics-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - 900px
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .professional-sidebar {
+    width: 210px;
+    min-width: 210px;
+  }
+
+  .professional-main {
+    padding: 25px;
+  }
+
+  .professional-header h1 {
+    font-size: 30px;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - 700px
+========================================================= */
+
+/* SUPERADMIN MOBILE TOP NAVBAR & DRAWER SIDEBAR (MATCHING media_1791367078833.png) */
+.superadmin-mobile-bar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .professional-dashboard {
+    flex-direction: column !important;
+    min-height: 100vh !important;
+    background: #f8fafc !important;
+  }
+
+  .superadmin-mobile-bar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    background: #0f172a !important;
+    padding: 10px 16px !important;
+    height: 60px !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 100 !important;
+    border-bottom: 1px solid #1e293b !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+  }
+
+  .superadmin-mobile-profile {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+  }
+
+  .superadmin-mobile-avatar {
+    width: 38px !important;
+    height: 38px !important;
+    background: linear-gradient(135deg, #38bdf8, #2563eb) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4) !important;
+  }
+
+  .superadmin-mobile-info {
+    display: flex !important;
+    flex-direction: column !important;
+    line-height: 1.15 !important;
+  }
+
+  .superadmin-mobile-info strong {
+    color: #ffffff !important;
+    font-size: 14.5px !important;
+    font-weight: 700 !important;
+  }
+
+  .superadmin-mobile-info small {
+    color: #94a3b8 !important;
+    font-size: 10.5px !important;
+    font-weight: 500 !important;
+  }
+
+  .superadmin-hamburger-btn {
+    background: transparent !important;
+    border: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 5px !important;
+    padding: 6px !important;
+    cursor: pointer !important;
+  }
+
+  .superadmin-hamburger-btn span {
+    display: block !important;
+    width: 22px !important;
+    height: 2px !important;
+    background: #ffffff !important;
+    border-radius: 2px !important;
+  }
+
+  .professional-sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    height: 100vh !important;
+    width: 260px !important;
+    min-width: 260px !important;
+    z-index: 1000 !important;
+    transform: translateX(-100%) !important;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.3) !important;
+    background: #0f172a !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 20px 16px !important;
+  }
+
+  .professional-sidebar.mobile-open {
+    transform: translateX(0) !important;
+  }
+
+  .sidebar-navigation {
+    flex: 1 !important;
+  }
+
+  .sidebar-bottom {
+    margin-top: auto !important;
+    padding-top: 16px !important;
+    padding-bottom: 24px !important;
+    width: 100% !important;
+  }
+
+  .professional-main {
+    margin-left: 0 !important;
+    width: 100% !important;
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 16px 12px !important;
+    min-height: calc(100vh - 60px) !important;
+    min-height: calc(100dvh - 60px) !important;
+    box-sizing: border-box !important;
+  }
+
+  .restaurant-management {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    background: #ffffff !important;
+    border-radius: 16px !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04) !important;
+    overflow: hidden !important;
+    margin-bottom: 8px !important;
+  }
+
+  .restaurant-table-container {
+    flex: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .sidebar-brand {
+    padding-bottom: 18px;
+  }
+
+  .sidebar-navigation {
+    margin-top: 15px;
+  }
+
+  .sidebar-bottom {
+    margin-top: 20px;
+  }
+
+  .admin-profile {
+    display: none;
+  }
+
+  .logout-button {
+    margin-top: 10px;
+  }
+
+  .professional-main {
+    width: 100%;
+
+    padding: 20px 15px;
+  }
+
+  .professional-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+  }
+
+  .header-titles {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .professional-header h1 {
+    font-size: 18px !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .professional-header p {
+    display: none;
+  }
+
+  .primary-button {
+    width: 100%;
+  }
+
+  .statistics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .management-header {
+    flex-direction: column;
+
+    gap: 15px;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE - 480px
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .professional-main {
+    padding: 15px 10px;
+  }
+
+  .professional-header h1 {
+    font-size: 26px;
+  }
+
+  .professional-header p {
+    font-size: 13px;
+  }
+
+  .statistics-card {
+    padding: 18px;
+  }
+
+  .statistics-card h2 {
+    font-size: 25px;
+  }
+
+  .restaurant-management {
+    border-radius: 9px;
+  }
+
+  .management-header {
+    padding: 20px;
+  }
+
+}
+
+
+/* ===============================
+   EDIT BUTTON
+================================ */
+
+.edit-button {
+  padding: 8px 14px;
+  border: 1px solid #f59e0b;
+  background: #fffaf0;
+  color: #d97706;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.edit-button:hover {
+  background: #f59e0b;
+  color: white;
+}
+
+
+/* ===============================
+   EDIT RESTAURANT PAGE
+================================ */
+
+.edit-restaurant-page {
+  min-height: 100vh;
+  background: #f5f7fb;
+  padding: 40px;
+}
+
+.edit-restaurant-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 16px;
+  padding: 35px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.06);
+}
+
+.edit-page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.edit-page-header h1 {
+  margin: 6px 0;
+  font-size: 30px;
+}
+
+.edit-page-header p {
+  margin: 0;
+  color: #8a94a6;
+}
+
+.edit-page-header .back-button,
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: auto;
+  min-width: 90px;
+  height: 38px;
+  padding: 8px 18px;
+  border: 1.5px solid #dbe2ea;
+  background: white;
+  color: #374151;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: all 0.2s ease;
+}
+
+.edit-page-header .back-button:hover,
+.back-button:hover {
+  background: #f8fafc;
+  border-color: #94a3b8;
+  color: #111827;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+
+/* ===============================
+   FORM
+================================ */
+
+.edit-restaurant-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #263238;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid #dbe2ea;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  background: white;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  border-color: #2563eb;
+}
+
+.form-group input:disabled {
+  background: #f1f4f8;
+  color: #7b8794;
+  cursor: not-allowed;
+}
+
+.form-group small {
+  margin-top: 6px;
+  color: #8a94a6;
+}
+
+
+/* ===============================
+   FORM ACTIONS
+================================ */
+
+.edit-form-actions {
+  grid-column: 1 / -1;
+
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+
+  margin-top: 15px;
+  padding-top: 25px;
+
+  border-top: 1px solid #edf0f4;
+}
+
+.cancel-button {
+  padding: 12px 22px;
+  border: 1px solid #dbe2ea;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.cancel-button:hover {
+  background: #f5f7fb;
+}
+
+.save-button {
+  padding: 12px 24px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.save-button:hover {
+  background: #1d4ed8;
+}
+
+.save-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+/* ===============================
+   LOADING
+================================ */
+
+.edit-page-loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f7fb;
+  font-size: 18px;
+  color: #64748b;
+}
+
+
+/* ===============================
+   RESPONSIVE
+================================ */
+
+@media (max-width: 700px) {
+  .edit-restaurant-page {
+    padding: 20px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .edit-restaurant-container {
+    padding: 20px 16px;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .edit-page-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .edit-page-header h1,
+  .edit-page-header p,
+  .edit-page-header .section-label {
+    text-align: center;
+  }
+
+  .edit-page-header .back-button {
+    margin-top: 4px;
+  }
+
+  .edit-restaurant-form {
+    grid-template-columns: 1fr;
+  }
+
+  .edit-form-actions {
+    grid-column: auto;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .edit-form-actions .cancel-button,
+  .edit-form-actions .save-button {
+    flex: 1;
+    text-align: center;
+    justify-content: center;
+  }
+}
+
+/* ===================================================
+   RESTAURANT ADMIN DASHBOARD STYLES
+   =================================================== */
+
+.mobile-only-logo {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .mobile-only-logo {
+    display: flex !important;
+  }
+}
+
+.restaurant-dashboard {
+  min-height: 100vh;
+  display: flex;
+  background: #f5f7fb;
+  color: #172033;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.restaurant-sidebar {
+  width: 255px;
+  min-height: 100vh;
+  background: #ffffff;
+  border-right: 1px solid #e7eaf0;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+}
+
+.restaurant-sidebar-logo {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 25px;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.restaurant-logo-icon {
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
+  background: #2563eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+}
+
+.restaurant-sidebar-logo h2 {
+  margin: 0;
+  font-size: 19px;
+  color: #172033;
+}
+
+.restaurant-sidebar-logo span {
+  display: block;
+  margin-top: 3px;
+  font-size: 11px;
+  color: #8a94a6;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Navigation */
+
+.restaurant-navigation {
+  padding: 25px 15px;
+  flex: 1;
+}
+
+.navigation-title {
+  font-size: 10px;
+  font-weight: 700;
+  color: #9aa3b2;
+  letter-spacing: 1.2px;
+  margin: 0 10px 12px;
+}
+
+.navigation-title-space {
+  margin-top: 30px;
+}
+
+.restaurant-nav-item {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 13px 14px;
+  margin-bottom: 5px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  color: #667085;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-align: left;
+  transition: 0.2s ease;
+}
+
+.restaurant-nav-item:hover {
+  background: #f3f6fc;
+  color: #2563eb;
+}
+
+.restaurant-nav-item.active {
+  background: #edf4ff;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+.nav-icon {
+  width: 22px;
+  text-align: center;
+  font-size: 17px;
+}
+
+.nav-badge {
+  margin-left: auto;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 20px;
+  background: #2563eb;
+  color: white;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Sidebar Bottom */
+
+.restaurant-sidebar-bottom {
+  padding: 18px 15px;
+  border-top: 1px solid #edf0f5;
+}
+
+.restaurant-user-mini {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  margin-bottom: 12px;
+}
+
+.restaurant-user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #2563eb;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.restaurant-user-info {
+  min-width: 0;
+}
+
+.restaurant-user-info strong {
+  display: block;
+  font-size: 13px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.restaurant-user-info span {
+  display: block;
+  font-size: 11px;
+  color: #98a1b2;
+  margin-top: 3px;
+}
+
+.restaurant-sidebar-logout {
+  width: 100%;
+  border: 1px solid #e7eaf0;
+  background: white;
+  border-radius: 9px;
+  padding: 11px;
+  color: #667085;
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.restaurant-sidebar-logout:hover {
+  background: #fff5f5;
+  color: #dc2626;
+  border-color: #fecaca;
+}
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.restaurant-main {
+  margin-left: 255px;
+  width: calc(100% - 255px);
+  min-height: 100vh;
+  padding: 30px 35px;
+}
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.restaurant-top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.restaurant-page-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #2563eb;
+}
+
+.restaurant-top-header h1 {
+  margin: 5px 0 4px;
+  font-size: 29px;
+  color: #172033;
+}
+
+.restaurant-top-header p {
+  margin: 0;
+  color: #7b8495;
+  font-size: 13px;
+}
+
+.restaurant-header-right {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+}
+
+.restaurant-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.online-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 4px #dcfce7;
+}
+
+.header-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-left: 20px;
+  border-left: 1px solid #e5e7eb;
+}
+
+.header-profile-avatar {
+  width: 40px;
+  height: 40px;
+  background: #2563eb;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.header-profile strong {
+  display: block;
+  font-size: 13px;
+}
+
+.header-profile span {
+  display: block;
+  color: #8a94a6;
+  font-size: 11px;
+  margin-top: 3px;
+}
+
+/* =====================================================
+   WELCOME BANNER
+===================================================== */
+
+.restaurant-welcome-banner {
+  min-height: 175px;
+  border-radius: 16px;
+  padding: 28px 32px;
+  background: linear-gradient(110deg, #2563eb, #3b82f6);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 25px;
+  overflow: hidden;
+  position: relative;
+}
+
+.restaurant-welcome-banner::after {
+  content: "";
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  border: 35px solid rgba(255, 255, 255, 0.08);
+  right: 170px;
+  top: -130px;
+}
+
+.welcome-content {
+  position: relative;
+  z-index: 2;
+}
+
+.welcome-small {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  opacity: 0.8;
+}
+
+.welcome-content h2 {
+  font-size: 27px;
+  margin: 10px 0 7px;
+}
+
+.welcome-content p {
+  margin: 0;
+  font-size: 13px;
+  opacity: 0.88;
+}
+
+.welcome-restaurant {
+  position: relative;
+  z-index: 2;
+  min-width: 270px;
+  padding: 15px 18px;
+  border-radius: 13px;
+  background: rgba(255, 255, 255, 0.13);
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  backdrop-filter: blur(5px);
+}
+
+.welcome-restaurant-icon {
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.17);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+}
+
+.welcome-restaurant strong {
+  display: block;
+  font-size: 14px;
+}
+
+.welcome-restaurant span {
+  display: block;
+  font-size: 11px;
+  margin-top: 4px;
+  opacity: 0.8;
+}
+
+/* =====================================================
+   STATISTICS
+===================================================== */
+
+.restaurant-statistics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 25px;
+}
+
+.restaurant-stat-card {
+  background: white;
+  border: 1px solid #e7eaf0;
+  border-radius: 14px;
+  padding: 20px;
+  transition: 0.2s ease;
+}
+
+.restaurant-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(31, 41, 55, 0.07);
+}
+
+.stat-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-icon {
+  width: 43px;
+  height: 43px;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.stat-icon-blue {
+  background: #edf4ff;
+}
+
+.stat-icon-green {
+  background: #ecfdf3;
+}
+
+.stat-icon-purple {
+  background: #f4f0ff;
+}
+
+.stat-icon-orange {
+  background: #fff7ed;
+}
+
+.stat-growth {
+  font-size: 10px;
+  color: #16a34a;
+  background: #f0fdf4;
+  padding: 5px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.stat-card-content {
+  margin-top: 17px;
+}
+
+.stat-card-content span {
+  color: #778195;
+  font-size: 12px;
+}
+
+.stat-card-content h2 {
+  margin: 5px 0;
+  font-size: 25px;
+  color: #172033;
+}
+
+.stat-card-content small {
+  color: #a0a8b6;
+  font-size: 10px;
+}
+
+/* =====================================================
+   CONTENT GRID
+===================================================== */
+
+.restaurant-content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.restaurant-panel,
+.restaurant-information-panel {
+  background: white;
+  border: 1px solid #e7eaf0;
+  border-radius: 14px;
+  padding: 22px;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 18px;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.panel-label {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1.3px;
+  color: #2563eb;
+}
+
+.panel-header h2 {
+  margin: 5px 0 0;
+  font-size: 17px;
+  color: #172033;
+}
+
+.panel-action {
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.empty-panel {
+  min-height: 175px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.empty-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: #f4f6fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.empty-panel h3 {
+  font-size: 14px;
+  margin: 0 0 5px;
+}
+
+.empty-panel p {
+  font-size: 11px;
+  color: #98a1b2;
+  margin: 0;
+}
+
+/* =====================================================
+   RESTAURANT INFORMATION
+===================================================== */
+
+.restaurant-information-panel {
+  margin-bottom: 20px;
+}
+
+.info-status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 7px 10px;
+  border-radius: 20px;
+}
+
+.active-status {
+  background: #ecfdf3;
+  color: #15803d;
+}
+
+.inactive-status {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.info-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.restaurant-info-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding-top: 22px;
+}
+
+.info-item {
+  min-width: 0;
+}
+
+.info-item span {
+  display: block;
+  color: #8a94a6;
+  font-size: 10px;
+  margin-bottom: 6px;
+}
+
+.info-item strong {
+  display: block;
+  color: #263043;
+  font-size: 13px;
+  word-break: break-word;
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.restaurant-dashboard-footer {
+  display: flex;
+  justify-content: space-between;
+  padding: 18px 3px 5px;
+  color: #9aa3b2;
+  font-size: 10px;
+}
+
+/* =====================================================
+   LOADING
+===================================================== */
+
+.restaurant-dashboard-loading {
+  min-height: 100vh;
+  background: #f5f7fb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #667085;
+}
+
+.dashboard-spinner {
+  width: 35px;
+  height: 35px;
+  border: 3px solid #e5e7eb;
+  border-top-color: #2563eb;
+  border-radius: 50%;
+  animation: dashboardSpin 0.8s linear infinite;
+  margin-bottom: 12px;
+}
+
+@keyframes dashboardSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1200px) {
+  .restaurant-statistics {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .restaurant-info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .restaurant-sidebar {
+    width: 210px;
+  }
+
+  .restaurant-main {
+    margin-left: 210px;
+    width: calc(100% - 210px);
+    padding: 25px;
+  }
+
+  .restaurant-content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .welcome-restaurant {
+    min-width: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .restaurant-sidebar {
+    position: relative;
+    width: 100%;
+    min-height: auto;
+  }
+
+  .restaurant-dashboard {
+    display: block;
+  }
+
+  .restaurant-sidebar-bottom {
+    display: none;
+  }
+
+  .restaurant-navigation {
+    display: none;
+  }
+
+  .restaurant-main {
+    margin-left: 0;
+    width: 100%;
+    padding: 20px;
+  }
+
+  .restaurant-top-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .restaurant-top-header p,
+  .restaurant-status-indicator {
+    display: none !important;
+  }
+
+  .restaurant-header-right {
+    display: flex;
+  }
+
+  .header-profile-info {
+    display: none;
+  }
+
+  .restaurant-welcome-banner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .welcome-restaurant {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .restaurant-statistics {
+    grid-template-columns: 1fr;
+  }
+
+  .restaurant-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .restaurant-dashboard-footer {
+    flex-direction: column;
+    gap: 7px;
+  }
+}
+
+/* ===================================================
+   PROFILE MODAL & POPUP STYLES (SHARED)
+   =================================================== */
+
+.clickable-profile {
+  cursor: pointer;
+  border-radius: 30px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+
+.clickable-profile:hover {
+  background: #f1f5f9;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.admin-profile-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+  animation: profileFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes profileFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.admin-profile-modal {
+  width: 100%;
+  max-width: 580px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.25), 0 0 0 1px rgba(226, 232, 240, 0.8);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: profileModalSlide 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes profileModalSlide {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.admin-profile-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  border-bottom: 1px solid #f1f5f9;
+  background: #ffffff;
+}
+
+.admin-profile-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.profile-header-icon {
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+}
+
+.admin-profile-title h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.admin-profile-title p {
+  margin: 2px 0 0;
+  font-size: 0.78rem;
+  color: #64748b;
+}
+
+.admin-profile-close-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #64748b;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.admin-profile-close-btn:hover {
+  background: #fee2e2;
+  color: #ef4444;
+  border-color: #fecaca;
+  transform: rotate(90deg);
+}
+
+.admin-profile-hero {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  color: #ffffff;
+  position: relative;
+}
+
+.admin-hero-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.admin-hero-avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #3b82f6, #6366f1);
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+}
+
+.admin-hero-status-dot {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #10b981;
+  border: 2.5px solid #0f172a;
+}
+
+.admin-hero-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.admin-hero-info h4 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #f8fafc;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-hero-email {
+  margin: 4px 0 10px;
+  font-size: 0.85rem;
+  color: #94a3b8;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.admin-hero-badges {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.admin-role-badge {
+  background: rgba(99, 102, 241, 0.3);
+  color: #c7d2fe;
+  border: 1px solid rgba(165, 180, 252, 0.3);
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.admin-status-badge {
+  background: rgba(16, 185, 129, 0.2);
+  color: #6ee7b7;
+  border: 1px solid rgba(110, 231, 183, 0.3);
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.admin-profile-tabs {
+  display: flex;
+  gap: 8px;
+  padding: 10px 24px 0;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.admin-profile-tab {
+  padding: 10px 16px;
+  border: none;
+  background: transparent;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s ease;
+}
+
+.admin-profile-tab:hover {
+  color: #0f172a;
+}
+
+.admin-profile-tab.active {
+  color: #2563eb;
+  border-bottom-color: #2563eb;
+  background: #ffffff;
+  border-radius: 8px 8px 0 0;
+}
+
+.admin-profile-body {
+  padding: 20px 24px;
+  max-height: 380px;
+  overflow-y: auto;
+  background: #ffffff;
+}
+
+.admin-profile-details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.admin-detail-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #f8fafc;
+  border: 1px solid #f1f5f9;
+  border-radius: 12px;
+  transition: all 0.15s ease;
+}
+
+.admin-detail-card:hover {
+  border-color: #e2e8f0;
+  background: #f1f5f9;
+}
+
+.admin-detail-icon {
+  font-size: 18px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #e2e8f0;
+  flex-shrink: 0;
+}
+
+.admin-detail-content {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.admin-detail-content label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.admin-detail-content strong {
+  font-size: 0.88rem;
+  color: #0f172a;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.admin-mono-id {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.82rem;
+  background: #e2e8f0;
+  color: #334155;
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: inline-block;
+  font-weight: 600;
+}
+
+.admin-profile-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-top: 1px solid #f1f5f9;
+  background: #f8fafc;
+}
+
+.admin-profile-logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: #fff1f2;
+  color: #e11d48;
+  border: 1px solid #ffe4e6;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.admin-profile-logout-btn:hover {
+  background: #ffe4e6;
+  color: #be123c;
+  border-color: #fecdd3;
+}
+
+.admin-profile-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.admin-profile-edit-btn {
+  padding: 8px 16px;
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.admin-profile-edit-btn:hover {
+  background: #dbeafe;
+}
+
+.admin-profile-close-action-btn {
+  padding: 8px 18px;
+  background: #ffffff;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.admin-profile-close-action-btn:hover {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+/* =========================================================
+   TABLE PAGINATION STYLES
+========================================================= */
+
+.table-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: #ffffff;
+  border-top: 1px solid #f1f5f9;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 13.5px;
+  color: #64748b;
+}
+
+.pagination-info {
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.pagination-info strong {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.rows-per-page {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.rows-per-page select {
+  padding: 6px 12px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #1e293b;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.rows-per-page select:hover {
+  border-color: #cbd5e1;
+  background: #ffffff;
+}
+
+.rows-per-page select:focus {
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.pagination-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pagination-arrow-btn {
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #475569;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.pagination-arrow-btn:hover:not(:disabled) {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.25);
+}
+
+.pagination-arrow-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  background: #f8fafc;
+  border-color: #e2e8f0;
+  color: #94a3b8;
+  box-shadow: none;
+}
+
+.pagination-number-btn {
+  min-width: 36px;
+  height: 36px;
+  padding: 0 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #475569;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+}
+
+.pagination-number-btn:hover:not(.active) {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #0f172a;
+  transform: translateY(-1px);
+}
+
+.pagination-number-btn.active {
+  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  border-color: #2563eb;
+  color: #ffffff;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.32);
+}
+
+@media (max-width: 768px) {
+  .table-pagination {
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    padding: 16px 12px !important;
+    gap: 12px !important;
+  }
+
+  .pagination-info {
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  .pagination-controls {
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    gap: 12px !important;
+  }
+
+  .rows-per-page {
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
+  .pagination-buttons {
+    justify-content: center !important;
+    width: 100% !important;
+  }
+}
