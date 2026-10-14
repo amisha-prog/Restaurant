@@ -1,11 +1,22 @@
 const getBackendUrl = () => {
+  let envUrl = import.meta.env.VITE_API_URL;
+  if (envUrl && typeof envUrl === "string") {
+    envUrl = envUrl.trim().replace(/\/+$/, "");
+    if (envUrl.endsWith("/api")) {
+      envUrl = envUrl.slice(0, -4);
+    }
+    return envUrl;
+  }
   if (
     typeof window !== "undefined" &&
     window.location.hostname &&
     window.location.hostname !== "localhost" &&
     window.location.hostname !== "127.0.0.1"
   ) {
-    return `http://${window.location.hostname}:5001`;
+    const isLocalNetwork = /^(\d{1,3}\.){3}\d{1,3}$/.test(window.location.hostname);
+    if (isLocalNetwork) {
+      return `http://${window.location.hostname}:5001`;
+    }
   }
   return "http://localhost:5001";
 };

@@ -28,7 +28,7 @@ router.get("/network-ip", (req, res) => {
       localIp,
       frontendPort: 5173,
       backendPort: 5001,
-      networkBaseUrl: `http://${localIp}:5173`,
+      networkBaseUrl: process.env.FRONTEND_URL ? process.env.FRONTEND_URL.replace(/\/+$/, "") : `http://${localIp}:5173`,
     });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
