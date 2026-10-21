@@ -407,7 +407,15 @@ function KitchenDashboard() {
                       {/* Customer & Source */}
                       <div className="kd-card-meta">
                         <span>👤 {order.customerName || "Walk-in"}</span>
-                        <span>{order.source === "Admin" ? "🛡️ Admin Order" : order.source === "QR" ? "📱 QR Order" : "👔 Waiter"}</span>
+                        <span>
+                          {order.source === "Admin"
+                            ? "🛡️ Admin Order"
+                            : String(order.source).toLowerCase() === "manager"
+                            ? "👔 Manager Order"
+                            : String(order.source).toLowerCase() === "waiter"
+                            ? "🧑‍💼 Waiter Order"
+                            : "📱 QR Order"}
+                        </span>
                       </div>
 
                       {/* Items */}

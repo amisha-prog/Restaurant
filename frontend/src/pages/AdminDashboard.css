@@ -5689,7 +5689,7 @@ body {
 /* Orders Metrics Row */
 .orders-metrics-row {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 14px;
   margin: 18px 0 22px 0;
   width: 100%;
@@ -5917,6 +5917,12 @@ body {
   background: #e0f2fe;
   color: #0369a1;
   border: 1px solid #bae6fd;
+}
+
+.source-manager {
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #93c5fd;
 }
 
 .source-admin {
@@ -9279,7 +9285,7 @@ body {
 
 .orders-metrics-row {
   display: grid !important;
-  grid-template-columns: repeat(5, 1fr) !important;
+  grid-template-columns: repeat(6, 1fr) !important;
   gap: 16px !important;
   margin-bottom: 0 !important;
 }
@@ -10027,6 +10033,58 @@ body {
     padding: 14px 16px !important;
   }
 
+  .orders-module-page .module-page-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 12px !important;
+    padding: 16px 14px !important;
+    border-radius: 16px !important;
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .orders-module-page .module-page-header h2 {
+    font-size: 22px !important;
+    font-weight: 800 !important;
+    color: #0f172a !important;
+    margin: 0 0 4px 0 !important;
+  }
+
+  .orders-module-page .module-page-header p {
+    font-size: 12.5px !important;
+    color: #64748b !important;
+    margin: 0 !important;
+    line-height: 1.4 !important;
+  }
+
+  .orders-header-actions {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    margin-top: 2px !important;
+  }
+
+  .orders-header-actions .btn-create-order-admin {
+    flex: 1 1 auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 9px 14px !important;
+    font-size: 13px !important;
+    border-radius: 10px !important;
+  }
+
+  .orders-header-actions .btn-refresh-orders {
+    flex: 0 0 auto !important;
+    padding: 9px 14px !important;
+    font-size: 12.5px !important;
+    border-radius: 10px !important;
+  }
+
   .module-header-actions {
     width: 100% !important;
     display: flex !important;
@@ -10040,7 +10098,43 @@ body {
     justify-content: center !important;
   }
 
-  .orders-metrics-row,
+  .orders-metrics-row {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .orders-metrics-row .metric-chip {
+    grid-column: span 1 !important;
+    padding: 14px 14px !important;
+    border-radius: 14px !important;
+    box-sizing: border-box !important;
+    min-width: 0 !important;
+  }
+
+  .orders-metrics-row .metric-chip .metric-chip-title {
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .orders-metrics-row .metric-chip .metric-chip-val {
+    font-size: 24px !important;
+    font-weight: 800 !important;
+    margin: 2px 0 0 0 !important;
+  }
+
+  .orders-metrics-row .metric-chip .metric-chip-subtext {
+    font-size: 11px !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
   .reservation-stats-row,
   .clean-stats-row {
     grid-template-columns: repeat(2, 1fr) !important;
@@ -10271,8 +10365,9 @@ body {
     gap: 10px !important;
   }
 
-  .chip-wide-mobile {
-    grid-column: span 2 !important;
+  .orders-metrics-row .metric-chip {
+    grid-column: span 1 !important;
+    padding: 13px 14px !important;
   }
 
   .alok-status-summary-grid {

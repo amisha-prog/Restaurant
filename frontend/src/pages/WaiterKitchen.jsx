@@ -286,38 +286,83 @@ function WaiterKitchen() {
                 });
 
                 return (
-                  <div className="notification-panel" style={{ position: "absolute", top: "45px", right: "0", width: "340px", maxHeight: "420px", overflowY: "auto", background: "#ffffff", border: "1px solid #cbd5e1", borderRadius: "12px", boxShadow: "0 12px 28px rgba(0,0,0,0.18)", padding: "12px", zIndex: 1000, color: "#0f172a" }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-                      <b style={{ color: "#0f172a", fontSize: "14px" }}>Notifications</b>
-                      <button type="button" onClick={() => setShowNotifications(false)} style={{ border: 0, background: "none", color: "#94a3b8", cursor: "pointer", fontSize: "14px" }}>✕</button>
-                    </div>
-                    <div style={{ display: "flex", gap: "6px", marginBottom: "10px", borderBottom: "1px solid #e2e8f0", paddingBottom: "8px", overflowX: "auto" }}>
-                      <button type="button" style={{ padding: "4px 8px", borderRadius: "14px", border: "none", background: notifFilter === "all" ? "#2563eb" : "#f1f5f9", color: notifFilter === "all" ? "#fff" : "#475569", fontSize: "11px", fontWeight: "600", cursor: "pointer", whitespace: "nowrap" }} onClick={() => setNotifFilter("all")}>
-                        All ({kdsNotifications.length})
-                      </button>
-                      <button type="button" style={{ padding: "4px 8px", borderRadius: "14px", border: "none", background: notifFilter === "user" ? "#1e40af" : "#f1f5f9", color: notifFilter === "user" ? "#fff" : "#475569", fontSize: "11px", fontWeight: "600", cursor: "pointer", whitespace: "nowrap" }} onClick={() => setNotifFilter("user")}>
-                        📱 User ({userCount})
-                      </button>
-                      <button type="button" style={{ padding: "4px 8px", borderRadius: "14px", border: "none", background: notifFilter === "waiter" ? "#6b21a8" : "#f1f5f9", color: notifFilter === "waiter" ? "#fff" : "#475569", fontSize: "11px", fontWeight: "600", cursor: "pointer", whitespace: "nowrap" }} onClick={() => setNotifFilter("waiter")}>
-                        🛎️ Waiter ({waiterCount})
-                      </button>
-                    </div>
-                    {filteredNotifs.length ? filteredNotifs.slice(0, 15).map((notification) => {
-                      const badge = getBadge(notification.type);
-                      return (
-                        <article key={notification._id} style={{ padding: "8px 0", borderBottom: "1px solid #f1f5f9" }}>
-                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "8px" }}>
-                            <strong style={{ fontSize: "12px", color: "#0f172a" }}>{notification.title}</strong>
-                            <span style={{ fontSize: "10px", fontWeight: "700", padding: "2px 6px", borderRadius: "10px", background: badge.bg, color: badge.color, whitespace: "nowrap", flexShrink: 0 }}>
-                              {badge.label}
-                            </span>
+                  <>
+                    <div
+                      className="chef-notif-backdrop"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setShowNotifications(false);
+                      }}
+                    />
+                    <div className="chef-notification-panel">
+                      <div className="chef-notif-header">
+                        <div className="chef-notif-title-wrap">
+                          <b className="chef-notif-title">Notifications</b>
+                          <span className="chef-notif-count-pill">{kdsNotifications.length}</span>
+                        </div>
+                        <button
+                          type="button"
+                          className="chef-notif-close-btn"
+                          onClick={() => setShowNotifications(false)}
+                          aria-label="Close notifications"
+                        >
+                          ✕
+                        </button>
+                      </div>
+
+                      <div className="chef-notif-filters">
+                        <button
+                          type="button"
+                          className={`chef-notif-filter-tab ${notifFilter === "all" ? "active" : ""}`}
+                          onClick={() => setNotifFilter("all")}
+                        >
+                          All ({kdsNotifications.length})
+                        </button>
+                        <button
+                          type="button"
+                          className={`chef-notif-filter-tab user-tab ${notifFilter === "user" ? "active" : ""}`}
+                          onClick={() => setNotifFilter("user")}
+                        >
+                          📱 User ({userCount})
+                        </button>
+                        <button
+                          type="button"
+                          className={`chef-notif-filter-tab waiter-tab ${notifFilter === "waiter" ? "active" : ""}`}
+                          onClick={() => setNotifFilter("waiter")}
+                        >
+                          🛎️ Waiter ({waiterCount})
+                        </button>
+                      </div>
+
+                      <div className="chef-notif-list">
+                        {filteredNotifs.length ? (
+                          filteredNotifs.slice(0, 25).map((notification) => {
+                            const badge = getBadge(notification.type);
+                            return (
+                              <article key={notification._id} className="chef-notif-item">
+                                <div className="chef-notif-item-top">
+                                  <strong className="chef-notif-item-title">{notification.title}</strong>
+                                  <span
+                                    className="chef-notif-badge"
+                                    style={{ background: badge.bg, color: badge.color }}
+                                  >
+                                    {badge.label}
+                                  </span>
+                                </div>
+                                <p className="chef-notif-item-msg">{notification.message}</p>
+                                <small className="chef-notif-item-time">{ago(notification.createdAt)}</small>
+                              </article>
+                            );
+                          })
+                        ) : (
+                          <div className="chef-notif-empty">
+                            <span>🔔</span>
+                            <p>No notifications in this category.</p>
                           </div>
-                          <p style={{ margin: "4px 0", fontSize: "11px", color: "#334155", lineHeight: "1.4" }}>{notification.message}</p>
-                          <small style={{ fontSize: "10px", color: "#94a3b8" }}>{ago(notification.createdAt)}</small>
-                        </article>
-                      );
-                    }) : <p style={{ padding: "12px", textAlign: "center", color: "#64748b", fontSize: "12px" }}>No notifications in this category.</p>}
-                  </div>
+                        )}
+                      </div>
+                    </div>
+                  </>
                 );
               })()}
             </div>

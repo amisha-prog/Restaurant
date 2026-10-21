@@ -110,7 +110,7 @@ function AppRoutes() {
       {/* =========================
           CUSTOMER
       ========================= */}
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="/menu" element={<Menu />} />
       <Route path="/customer/menu" element={<CustomerMenu />} />
       <Route path="/customer/cart" element={<CustomerCart />} />

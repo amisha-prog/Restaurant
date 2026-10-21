@@ -14,6 +14,10 @@ const getApiUrl = () => {
     window.location.hostname !== "localhost" &&
     window.location.hostname !== "127.0.0.1"
   ) {
+    // Hosted on Vercel deployment
+    if (window.location.hostname.endsWith("vercel.app")) {
+      return "https://backend-five-beryl-16.vercel.app/api";
+    }
     // Only use local IP on LAN during development (e.g. 192.168.x.x)
     const isLocalNetwork = /^(\d{1,3}\.){3}\d{1,3}$/.test(window.location.hostname);
     if (isLocalNetwork) {

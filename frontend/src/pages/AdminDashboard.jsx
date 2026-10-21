@@ -431,10 +431,18 @@ const AdminDashboard = () => {
   const [ordersPage, setOrdersPage] = useState(1);
   const [ordersPerPage, setOrdersPerPage] = useState(9);
 
+  // Customers Pagination State
+  const [customersPage, setCustomersPage] = useState(1);
+  const [customersPerPage, setCustomersPerPage] = useState(6);
+
   // Reset page when filters change
   useEffect(() => {
     setOrdersPage(1);
   }, [orderStatusFilter, orderSearch, customerOrderFilter, orderDateFilter, orderCustomDate, activeMenu]);
+
+  useEffect(() => {
+    setCustomersPage(1);
+  }, [customerSearch, activeMenu]);
 
   const getOrderDateKey = useCallback((createdAt) => {
     if (!createdAt) return "";
@@ -531,6 +539,12 @@ const AdminDashboard = () => {
     return "All Time";
   }, [orderDateFilter, orderCustomDate, todayDateKey, yesterdayDateKey, formatDateKeyDisplay]);
   const [tableFilter, setTableFilter] = useState("All");
+  const [tablesPage, setTablesPage] = useState(1);
+  const [tablesPerPage, setTablesPerPage] = useState(8);
+
+  useEffect(() => {
+    setTablesPage(1);
+  }, [tableFilter, activeMenu]);
   const [tableUpdatingId, setTableUpdatingId] = useState(null);
   const [tableDeletingId, setTableDeletingId] = useState(null);
   const [editingTableId, setEditingTableId] = useState(null);
@@ -4484,7 +4498,7 @@ const AdminDashboard = () => {
                 </span>
               </div>
 
-              <div className="metric-chip chip-completed chip-wide-mobile">
+              <div className="metric-chip chip-completed">
                 <div className="metric-chip-header">
                   <span className="metric-chip-title">COMPLETED</span>
                   <div className="metric-chip-icon purple-icon">📦</div>
@@ -4727,8 +4741,8 @@ const AdminDashboard = () => {
                               <span className="order-card-table-pill">
                                 🪑 {formatTableName(order.tableNumber)}
                               </span>
-                            <span className={`order-source-pill ${order.source === "Admin" ? "source-admin" : order.source === "QR" ? "source-qr" : "source-waiter"}`}>
-                              {order.source === "Admin" ? "🛡️ Admin Order" : order.source === "QR" ? "📱 QR Order" : "👔 Waiter Order"}
+                            <span className={`order-source-pill ${order.source === "Admin" ? "source-admin" : String(order.source).toLowerCase() === "manager" ? "source-manager" : String(order.source).toLowerCase() === "waiter" ? "source-waiter" : "source-qr"}`}>
+                              {order.source === "Admin" ? "🛡️ Admin Order" : String(order.source).toLowerCase() === "manager" ? "👔 Manager Order" : String(order.source).toLowerCase() === "waiter" ? "🧑‍💼 Waiter Order" : "📱 QR Order"}
                             </span>
                           </div>
 
@@ -5053,75 +5067,161 @@ const AdminDashboard = () => {
                 );
               }
 
+              const totalCustomersPages = Math.ceil(filteredCusts.length / customersPerPage) || 1;
+              const currentCustomersPage = Math.min(Math.max(customersPage, 1), totalCustomersPages);
+              const paginatedCustomers = filteredCusts.slice(
+                (currentCustomersPage - 1) * customersPerPage,
+                currentCustomersPage * customersPerPage
+              );
+
               return (
-                <div className="customers-directory-grid">
-                  {filteredCusts.map((cust, idx) => {
-                    const initials = (cust.name || "G")
-                      .split(" ")
-                      .map((n) => n[0])
-                      .slice(0, 2)
-                      .join("")
-                      .toUpperCase();
+                <>
+                  <div className="customers-directory-grid">
+                    {paginatedCustomers.map((cust, idx) => {
+                      const initials = (cust.name || "G")
+                        .split(" ")
+                        .map((n) => n[0])
+                        .slice(0, 2)
+                        .join("")
+                        .toUpperCase();
 
-                    const lastDate = cust.lastOrderDate ? new Date(cust.lastOrderDate) : null;
-                    const dateStr = lastDate
-                      ? `${lastDate.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })} at ${lastDate.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" })}`
-                      : "—";
+                      const lastDate = cust.lastOrderDate ? new Date(cust.lastOrderDate) : null;
+                      const dateStr = lastDate
+                        ? `${lastDate.toLocaleDateString("en-IN", { day: "2-digit", month: "short", year: "numeric" })} at ${lastDate.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit" })}`
+                        : "—";
 
-                    return (
-                      <article key={cust.id || idx} className="customer-profile-card">
-                        <div className="cust-card-top">
-                          <div className="cust-big-avatar">
-                            {initials}
+                      return (
+                        <article key={cust.id || idx} className="customer-profile-card">
+                          <div className="cust-card-top">
+                            <div className="cust-big-avatar">
+                              {initials}
+                            </div>
+                            <div className="cust-main-heading">
+                              <h3>{cust.name}</h3>
+                              <a
+                                href={cust.phone !== "—" ? `tel:${cust.phone}` : undefined}
+                                className="cust-phone-link"
+                              >
+                                📞 {cust.phone}
+                              </a>
+                            </div>
+                            <span className={`order-status-badge badge-${(cust.lastStatus || "new").toLowerCase()}`}>
+                              {cust.lastStatus || "Active"}
+                            </span>
                           </div>
-                          <div className="cust-main-heading">
-                            <h3>{cust.name}</h3>
-                            <a
-                              href={cust.phone !== "—" ? `tel:${cust.phone}` : undefined}
-                              className="cust-phone-link"
+
+                          <div className="cust-details-grid">
+                            <div className="cust-detail-box">
+                              <span>Orders Placed</span>
+                              <strong>{cust.orders}</strong>
+                            </div>
+                            <div className="cust-detail-box highlight-spend">
+                              <span>Total Spend</span>
+                              <strong>₹{cust.totalSpend.toFixed(2)}</strong>
+                            </div>
+                            <div className="cust-detail-box">
+                              <span>Last Table</span>
+                              <strong>🪑 {cust.lastOrderTable}</strong>
+                            </div>
+                            <div className="cust-detail-box">
+                              <span>Last Visit</span>
+                              <strong style={{ fontSize: "11px" }}>{dateStr}</strong>
+                            </div>
+                          </div>
+
+                          <div className="cust-card-footer">
+                            <button
+                              className="btn-view-cust-orders"
+                              onClick={() => {
+                                setCustomerOrderFilter(cust.phone !== "—" ? cust.phone : cust.name);
+                                setActiveMenu("Orders");
+                              }}
                             >
-                              📞 {cust.phone}
-                            </a>
+                              🧾 View All Orders ({cust.orders})
+                            </button>
                           </div>
-                          <span className={`order-status-badge badge-${(cust.lastStatus || "new").toLowerCase()}`}>
-                            {cust.lastStatus || "Active"}
-                          </span>
-                        </div>
+                        </article>
+                      );
+                    })}
+                  </div>
 
-                        <div className="cust-details-grid">
-                          <div className="cust-detail-box">
-                            <span>Orders Placed</span>
-                            <strong>{cust.orders}</strong>
-                          </div>
-                          <div className="cust-detail-box highlight-spend">
-                            <span>Total Spend</span>
-                            <strong>₹{cust.totalSpend.toFixed(2)}</strong>
-                          </div>
-                          <div className="cust-detail-box">
-                            <span>Last Table</span>
-                            <strong>🪑 {cust.lastOrderTable}</strong>
-                          </div>
-                          <div className="cust-detail-box">
-                            <span>Last Visit</span>
-                            <strong style={{ fontSize: "11px" }}>{dateStr}</strong>
-                          </div>
-                        </div>
-
-                        <div className="cust-card-footer">
-                          <button
-                            className="btn-view-cust-orders"
-                            onClick={() => {
-                              setCustomerOrderFilter(cust.phone !== "—" ? cust.phone : cust.name);
-                              setActiveMenu("Orders");
+                  {/* Customers Pagination Bar */}
+                  {filteredCusts.length > 0 && (
+                    <div className="table-pagination-bar" style={{ marginTop: "24px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                        <span className="pagination-info">
+                          Showing {(currentCustomersPage - 1) * customersPerPage + 1}–
+                          {Math.min(currentCustomersPage * customersPerPage, filteredCusts.length)} of {filteredCusts.length} customers
+                        </span>
+                        <div className="customers-per-page-selector" style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontSize: "12px", color: "#64748b" }}>
+                          <span>Show:</span>
+                          <select
+                            value={customersPerPage}
+                            onChange={(e) => {
+                              setCustomersPerPage(Number(e.target.value));
+                              setCustomersPage(1);
+                            }}
+                            style={{
+                              padding: "4px 8px",
+                              borderRadius: "6px",
+                              border: "1px solid #cbd5e1",
+                              background: "#ffffff",
+                              fontSize: "12px",
+                              fontWeight: "600",
+                              color: "#1e293b",
+                              cursor: "pointer"
                             }}
                           >
-                            🧾 View All Orders ({cust.orders})
+                            <option value={6}>6 per page</option>
+                            <option value={9}>9 per page</option>
+                            <option value={12}>12 per page</option>
+                            <option value={24}>24 per page</option>
+                            <option value={48}>48 per page</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      {totalCustomersPages > 1 && (
+                        <div className="pagination-nav">
+                          <button
+                            type="button"
+                            className="page-number-btn"
+                            disabled={currentCustomersPage <= 1}
+                            onClick={() => setCustomersPage((p) => Math.max(p - 1, 1))}
+                            title="Previous page"
+                            aria-label="Previous page"
+                          >
+                            ‹
+                          </button>
+                          {getPaginationRange(currentCustomersPage, totalCustomersPages).map((item, idx) =>
+                            item === "..." ? (
+                              <span key={`cust-ellipsis-${idx}`} className="page-ellipsis">…</span>
+                            ) : (
+                              <button
+                                key={`cust-page-${item}`}
+                                type="button"
+                                className={`page-number-btn ${item === currentCustomersPage ? "active" : ""}`}
+                                onClick={() => setCustomersPage(item)}
+                              >
+                                {item}
+                              </button>
+                            )
+                          )}
+                          <button
+                            type="button"
+                            className="page-number-btn"
+                            disabled={currentCustomersPage >= totalCustomersPages}
+                            onClick={() => setCustomersPage((p) => Math.min(p + 1, totalCustomersPages))}
+                            title="Next page"
+                            aria-label="Next page"
+                          >
+                            ›
                           </button>
                         </div>
-                      </article>
-                    );
-                  })}
-                </div>
+                      )}
+                    </div>
+                  )}
+                </>
               );
             })()}
           </section>
@@ -5192,84 +5292,126 @@ const AdminDashboard = () => {
                 );
               }
 
+              const totalTablesPages = Math.ceil(filteredTables.length / tablesPerPage) || 1;
+              const currentTablesPage = Math.min(Math.max(tablesPage, 1), totalTablesPages);
+              const paginatedTables = filteredTables.slice(
+                (currentTablesPage - 1) * tablesPerPage,
+                currentTablesPage * tablesPerPage
+              );
+
               return (
-                <div className="admin-tables-grid">
-                  {filteredTables.map((table) => {
-                    const stLower = (table.status || "available").toLowerCase().replace(/\s+/g, "-");
-                    // Find active order for this table if occupied
-                    const activeOrder = dashboardSummary.orders.find(
-                      (o) =>
-                        String(o.tableNumber).trim().toLowerCase() === String(table.tableNumber).trim().toLowerCase() &&
-                        ["New", "Preparing", "Ready", "Served"].includes(o.status)
-                    );
+                <>
+                  <div className="admin-tables-grid">
+                    {paginatedTables.map((table) => {
+                      const stLower = (table.status || "available").toLowerCase().replace(/\s+/g, "-");
+                      // Find active order for this table if occupied
+                      const activeOrder = dashboardSummary.orders.find(
+                        (o) =>
+                          String(o.tableNumber).trim().toLowerCase() === String(table.tableNumber).trim().toLowerCase() &&
+                          ["New", "Preparing", "Ready", "Served"].includes(o.status)
+                      );
 
-                    // Find active reservation for this table
-                    const activeTableRes = reservations.find(
-                      (r) =>
-                        String(r.tableNumber || "").trim().toLowerCase() === String(table.tableNumber || "").trim().toLowerCase() &&
-                        ["Confirmed", "Seated"].includes(r.status)
-                    );
+                      // Find active reservation for this table
+                      const activeTableRes = reservations.find(
+                        (r) =>
+                          String(r.tableNumber || "").trim().toLowerCase() === String(table.tableNumber || "").trim().toLowerCase() &&
+                          ["Confirmed", "Seated"].includes(r.status)
+                      );
 
-                    return (
-                      <article key={table._id} className={`admin-table-card table-status-${stLower}`}>
-                        <div className="table-card-header">
-                          <div>
-                            <h3>{table.tableNumber}</h3>
-                            <span className="table-card-capacity">👥 {table.capacity || 4} Seats</span>
+                      return (
+                        <article key={table._id} className={`admin-table-card table-status-${stLower}`}>
+                          <div className="table-card-header">
+                            <div>
+                              <h3>{table.tableNumber}</h3>
+                              <span className="table-card-capacity">👥 {table.capacity || 4} Seats</span>
+                            </div>
+                            <div className="table-card-header-right">
+                              <span className={`table-pill-badge badge-${stLower}`}>
+                                {table.status || "Available"}
+                              </span>
+                              <button
+                                type="button"
+                                className="btn-edit-table-card"
+                                onClick={() => openEditTable(table)}
+                                title="Edit table"
+                              >
+                                ✏️
+                              </button>
+                              <button
+                                type="button"
+                                className="btn-delete-table-card"
+                                onClick={() => handleDeleteTable(table._id, table.tableNumber)}
+                                disabled={tableDeletingId === table._id}
+                                title="Delete table"
+                              >
+                                {tableDeletingId === table._id ? "⏳" : "🗑️"}
+                              </button>
+                            </div>
                           </div>
-                          <div className="table-card-header-right">
-                            <span className={`table-pill-badge badge-${stLower}`}>
-                              {table.status || "Available"}
-                            </span>
-                            <button
-                              type="button"
-                              className="btn-edit-table-card"
-                              onClick={() => openEditTable(table)}
-                              title="Edit table"
-                            >
-                              ✏️
-                            </button>
-                            <button
-                              type="button"
-                              className="btn-delete-table-card"
-                              onClick={() => handleDeleteTable(table._id, table.tableNumber)}
-                              disabled={tableDeletingId === table._id}
-                              title="Delete table"
-                            >
-                              {tableDeletingId === table._id ? "⏳" : "🗑️"}
-                            </button>
-                          </div>
-                        </div>
 
-                        {/* Table Content based on Current Status */}
-                        {table.status === "Occupied" ? (
-                          activeOrder ? (
-                            <div className="table-active-order-box">
-                              <div className="active-order-header">
-                                <span className="active-order-label">Active Order:</span>
-                                <strong>#{String(activeOrder._id).slice(-6).toUpperCase()}</strong>
+                          {/* Table Content based on Current Status */}
+                          {table.status === "Occupied" ? (
+                            activeOrder ? (
+                              <div className="table-active-order-box">
+                                <div className="active-order-header">
+                                  <span className="active-order-label">Active Order:</span>
+                                  <strong>#{String(activeOrder._id).slice(-6).toUpperCase()}</strong>
+                                </div>
+                                <p className="active-order-cust">
+                                  👤 {activeOrder.customerName || "Walk-in"} · 📞 {activeOrder.customerPhone || "—"}
+                                </p>
+                                <div className="active-order-bottom">
+                                  <span className="active-order-items">
+                                    {activeOrder.items?.length || 0} items
+                                  </span>
+                                  <strong className="active-order-price">
+                                    ₹{Number(activeOrder.total || 0).toFixed(2)}
+                                  </strong>
+                                </div>
                               </div>
-                              <p className="active-order-cust">
-                                👤 {activeOrder.customerName || "Walk-in"} · 📞 {activeOrder.customerPhone || "—"}
-                              </p>
-                              <div className="active-order-bottom">
-                                <span className="active-order-items">
-                                  {activeOrder.items?.length || 0} items
-                                </span>
-                                <strong className="active-order-price">
-                                  ₹{Number(activeOrder.total || 0).toFixed(2)}
-                                </strong>
+                            ) : (
+                              <div className="table-state-box table-state-occupied">
+                                <span className="table-state-icon">{activeTableRes ? "🍽️" : "🔴"}</span>
+                                <div className="table-state-text">
+                                  <strong>
+                                    {activeTableRes ? `Seated: ${activeTableRes.customerName} (${activeTableRes.guestsCount}p)` : "Diners Seated"}
+                                  </strong>
+                                  <p>
+                                    {activeTableRes ? `📞 ${activeTableRes.customerPhone} · Seated from Booking` : "Guests at table · Awaiting order"}
+                                  </p>
+                                </div>
+                                {activeTableRes && (
+                                  <button
+                                    type="button"
+                                    className="table-jump-res-btn"
+                                    onClick={() => {
+                                      setReservationSearch(activeTableRes.customerName);
+                                      setActiveMenu("Reservations");
+                                    }}
+                                    title="View Reservation"
+                                  >
+                                    👁️ View
+                                  </button>
+                                )}
+                              </div>
+                            )
+                          ) : table.status === "Cleaning" ? (
+                            <div className="table-state-box table-state-cleaning">
+                              <span className="table-state-icon">🧹</span>
+                              <div className="table-state-text">
+                                <strong>Cleaning in Progress</strong>
+                                <p>Sanitizing & resetting for next guest</p>
                               </div>
                             </div>
-                          ) : (
-                            <div className="table-state-box table-state-occupied">
-                              <span className="table-state-icon">{activeTableRes ? "🍽️" : "🔴"}</span>
+                          ) : table.status === "Reserved" ? (
+                            <div className="table-state-box table-state-reserved">
+                              <span className="table-state-icon">🟡</span>
                               <div className="table-state-text">
                                 <strong>
-                                  {activeTableRes ? `Seated: ${activeTableRes.customerName} (${activeTableRes.guestsCount}p)` : "Diners Seated"}
+                                  {activeTableRes ? `Reserved: ${activeTableRes.customerName} (${activeTableRes.guestsCount}p)` : "Reserved Table"}
                                 </strong>
                                 <p>
-                                  {activeTableRes ? `📞 ${activeTableRes.customerPhone} · Seated from Booking` : "Guests at table · Awaiting order"}
+                                  {activeTableRes ? `⏰ ${activeTableRes.reservationTime} · 📞 ${activeTableRes.customerPhone}` : "Booked for upcoming diners"}
                                 </p>
                               </div>
                               {activeTableRes && (
@@ -5286,77 +5428,121 @@ const AdminDashboard = () => {
                                 </button>
                               )}
                             </div>
-                          )
-                        ) : table.status === "Cleaning" ? (
-                          <div className="table-state-box table-state-cleaning">
-                            <span className="table-state-icon">🧹</span>
-                            <div className="table-state-text">
-                              <strong>Cleaning in Progress</strong>
-                              <p>Sanitizing & resetting for next guest</p>
+                          ) : table.status === "Out of Service" ? (
+                            <div className="table-state-box table-state-out-service">
+                              <span className="table-state-icon">⚪</span>
+                              <div className="table-state-text">
+                                <strong>Out of Service</strong>
+                                <p>Table temporarily disabled</p>
+                              </div>
                             </div>
-                          </div>
-                        ) : table.status === "Reserved" ? (
-                          <div className="table-state-box table-state-reserved">
-                            <span className="table-state-icon">🟡</span>
-                            <div className="table-state-text">
-                              <strong>
-                                {activeTableRes ? `Reserved: ${activeTableRes.customerName} (${activeTableRes.guestsCount}p)` : "Reserved Table"}
-                              </strong>
-                              <p>
-                                {activeTableRes ? `⏰ ${activeTableRes.reservationTime} · 📞 ${activeTableRes.customerPhone}` : "Booked for upcoming diners"}
-                              </p>
+                          ) : (
+                            <div className="table-state-box table-state-available">
+                              <span className="table-state-icon">✨</span>
+                              <div className="table-state-text">
+                                <strong>Available & Fresh</strong>
+                                <p>No active diner seated · Ready for guests</p>
+                              </div>
                             </div>
-                            {activeTableRes && (
-                              <button
-                                type="button"
-                                className="table-jump-res-btn"
-                                onClick={() => {
-                                  setReservationSearch(activeTableRes.customerName);
-                                  setActiveMenu("Reservations");
-                                }}
-                                title="View Reservation"
-                              >
-                                👁️ View
-                              </button>
-                            )}
-                          </div>
-                        ) : table.status === "Out of Service" ? (
-                          <div className="table-state-box table-state-out-service">
-                            <span className="table-state-icon">⚪</span>
-                            <div className="table-state-text">
-                              <strong>Out of Service</strong>
-                              <p>Table temporarily disabled</p>
-                            </div>
-                          </div>
-                        ) : (
-                          <div className="table-state-box table-state-available">
-                            <span className="table-state-icon">✨</span>
-                            <div className="table-state-text">
-                              <strong>Available & Fresh</strong>
-                              <p>No active diner seated · Ready for guests</p>
-                            </div>
-                          </div>
-                        )}
+                          )}
 
-                        <div className="table-card-actions">
-                          <label>Update Status:</label>
+                          <div className="table-card-actions">
+                            <label>Update Status:</label>
+                            <select
+                              className="table-status-changer"
+                              value={table.status || "Available"}
+                              onChange={(e) => handleUpdateTableStatus(table._id, e.target.value)}
+                              disabled={tableUpdatingId === table._id}
+                            >
+                              <option value="Available">🟢 Available</option>
+                              <option value="Occupied">🔴 Occupied</option>
+                              <option value="Reserved">🟡 Reserved</option>
+                              <option value="Cleaning">🔵 Cleaning</option>
+                              <option value="Out of Service">⚪ Out of Service</option>
+                            </select>
+                          </div>
+                        </article>
+                      );
+                    })}
+                  </div>
+
+                  {/* Tables Pagination Bar */}
+                  {filteredTables.length > 0 && (
+                    <div className="table-pagination-bar" style={{ marginTop: "24px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap" }}>
+                        <span className="pagination-info">
+                          Showing {(currentTablesPage - 1) * tablesPerPage + 1}–
+                          {Math.min(currentTablesPage * tablesPerPage, filteredTables.length)} of {filteredTables.length} tables
+                        </span>
+                        <div className="tables-per-page-selector" style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontSize: "12px", color: "#64748b" }}>
+                          <span>Show:</span>
                           <select
-                            className="table-status-changer"
-                            value={table.status || "Available"}
-                            onChange={(e) => handleUpdateTableStatus(table._id, e.target.value)}
-                            disabled={tableUpdatingId === table._id}
+                            value={tablesPerPage}
+                            onChange={(e) => {
+                              setTablesPerPage(Number(e.target.value));
+                              setTablesPage(1);
+                            }}
+                            style={{
+                              padding: "4px 8px",
+                              borderRadius: "6px",
+                              border: "1px solid #cbd5e1",
+                              background: "#ffffff",
+                              fontSize: "12px",
+                              fontWeight: "600",
+                              color: "#1e293b",
+                              cursor: "pointer"
+                            }}
                           >
-                            <option value="Available">🟢 Available</option>
-                            <option value="Occupied">🔴 Occupied</option>
-                            <option value="Reserved">🟡 Reserved</option>
-                            <option value="Cleaning">🔵 Cleaning</option>
-                            <option value="Out of Service">⚪ Out of Service</option>
+                            <option value={8}>8 per page</option>
+                            <option value={12}>12 per page</option>
+                            <option value={16}>16 per page</option>
+                            <option value={24}>24 per page</option>
+                            <option value={48}>48 per page</option>
                           </select>
                         </div>
-                      </article>
-                    );
-                  })}
-                </div>
+                      </div>
+
+                      {totalTablesPages > 1 && (
+                        <div className="pagination-nav">
+                          <button
+                            type="button"
+                            className="page-number-btn"
+                            disabled={currentTablesPage <= 1}
+                            onClick={() => setTablesPage((p) => Math.max(p - 1, 1))}
+                            title="Previous page"
+                            aria-label="Previous page"
+                          >
+                            ‹
+                          </button>
+                          {getPaginationRange(currentTablesPage, totalTablesPages).map((item, idx) =>
+                            item === "..." ? (
+                              <span key={`tbl-ellipsis-${idx}`} className="page-ellipsis">…</span>
+                            ) : (
+                              <button
+                                key={`tbl-page-${item}`}
+                                type="button"
+                                className={`page-number-btn ${item === currentTablesPage ? "active" : ""}`}
+                                onClick={() => setTablesPage(item)}
+                              >
+                                {item}
+                              </button>
+                            )
+                          )}
+                          <button
+                            type="button"
+                            className="page-number-btn"
+                            disabled={currentTablesPage >= totalTablesPages}
+                            onClick={() => setTablesPage((p) => Math.min(p + 1, totalTablesPages))}
+                            title="Next page"
+                            aria-label="Next page"
+                          >
+                            ›
+                          </button>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </>
               );
             })()}
           </section>

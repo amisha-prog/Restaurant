@@ -636,13 +636,15 @@ function WaiterDashboard() {
       </section>
       <section className="dashboard-content">
         <div className="table-section" id="table-management">
-          <div className="section-header" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "14px" }}>
-            <h2 style={{ fontSize: "18px", fontWeight: "700", color: "#1e293b", margin: 0, display: "flex", alignItems: "center", gap: "8px" }}>
-              🪑 Table Management
-            </h2>
-            <span style={{ background: "#f1f5f9", color: "#475569", padding: "4px 12px", borderRadius: "12px", fontSize: "12px", fontWeight: "600" }}>
-              {tables.length} tables
-            </span>
+          <div className="table-section-header">
+            <div className="table-header-left">
+              <h2 className="table-header-title">
+                🪑 Table Management
+              </h2>
+              <span className="table-header-badge">
+                {tables.length} tables
+              </span>
+            </div>
           </div>
 
           {/* Table Search, Filters & Controls Bar */}
@@ -659,37 +661,59 @@ function WaiterDashboard() {
                   setTablePage(1);
                 }}
               />
+              {tableSearch && (
+                <button
+                  type="button"
+                  className="table-search-clear-btn"
+                  onClick={() => {
+                    setTableSearch("");
+                    setTablePage(1);
+                  }}
+                  title="Clear search"
+                  aria-label="Clear search"
+                >
+                  ✕
+                </button>
+              )}
             </div>
-            <div className="table-filter-pills">
-              {["All", "Available", "Occupied", "Reserved", "Cleaning"].map((status) => {
-                const count = status === "All" ? tables.length : tables.filter((t) => t.status === status).length;
-                return (
-                  <button
-                    key={status}
-                    className={`table-filter-pill ${tableFilterStatus === status ? "active" : ""}`}
-                    onClick={() => {
-                      setTableFilterStatus(status);
-                      setTablePage(1);
-                    }}
-                  >
-                    {status} ({count})
-                  </button>
-                );
-              })}
+
+            <div className="table-controls-filters-row">
+              <div className="table-filter-pills">
+                {["All", "Available", "Occupied", "Reserved", "Cleaning"].map((status) => {
+                  const count = status === "All" ? tables.length : tables.filter((t) => t.status === status).length;
+                  return (
+                    <button
+                      key={status}
+                      type="button"
+                      className={`table-filter-pill ${tableFilterStatus === status ? "active" : ""}`}
+                      onClick={() => {
+                        setTableFilterStatus(status);
+                        setTablePage(1);
+                      }}
+                    >
+                      {status} <span className="pill-count">({count})</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="table-per-page-wrap">
+                <select
+                  className="table-per-page-select"
+                  value={tablesPerPage}
+                  onChange={(e) => {
+                    setTablesPerPage(Number(e.target.value));
+                    setTablePage(1);
+                  }}
+                  aria-label="Tables per page"
+                >
+                  <option value={8}>8 / page</option>
+                  <option value={12}>12 / page</option>
+                  <option value={16}>16 / page</option>
+                  <option value={100}>All tables</option>
+                </select>
+              </div>
             </div>
-            <select
-              className="table-per-page-select"
-              value={tablesPerPage}
-              onChange={(e) => {
-                setTablesPerPage(Number(e.target.value));
-                setTablePage(1);
-              }}
-            >
-              <option value={8}>8 per page</option>
-              <option value={12}>12 per page</option>
-              <option value={16}>16 per page</option>
-              <option value={100}>All tables</option>
-            </select>
           </div>
 
           <div className="table-grid">

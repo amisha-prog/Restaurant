@@ -7,7 +7,7 @@ const orderSchema = new mongoose.Schema(
     customerName: { type: String, default: "Customer", trim: true },
     customerPhone: { type: String, default: "", trim: true },
     guestCount: { type: Number, default: 2, min: 1 },
-    source: { type: String, enum: ["QR", "Manual", "Waiter", "Admin"], default: "QR" },
+    source: { type: String, enum: ["QR", "Manual", "Waiter", "Admin", "Manager"], default: "QR" },
     items: [{ menuItemId: String, name: String, price: Number, quantity: Number, selectedModifiers: [{ name: String, priceAdjustment: Number }] }],
     total: { type: Number, required: true, min: 0 },
     subtotal: { type: Number, min: 0 },

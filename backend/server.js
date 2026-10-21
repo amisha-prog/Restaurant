@@ -63,6 +63,18 @@ app.use(
 app.use(express.json());
 app.use("/uploads", express.static(require("path").join(__dirname, "uploads")));
 
+// Ensure MongoDB connection (especially in serverless environments like Vercel)
+app.use(async (req, res, next) => {
+  if (mongoose.connection.readyState !== 1) {
+    try {
+      await connectDB();
+    } catch (err) {
+      console.error("MongoDB connection error in middleware:", err.message);
+    }
+  }
+  next();
+});
+
 // =====================================================
 // Home Route
 // =====================================================
@@ -248,4 +260,8 @@ const startServer = async () => {
 // Start Application
 // =====================================================
 
-startServer();
+if (!process.env.VERCEL) {
+  startServer();
+}
+
+module.exports = app;

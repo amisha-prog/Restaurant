@@ -1,15 +1,7 @@
+import { Navigate } from "react-router-dom";
+
 function Home() {
-  return (
-    <div className="home-page">
-      <h1>Welcome to Our Restaurant 🍽️</h1>
-
-      <p>
-        Delicious food, customized just the way you like it.
-      </p>
-
-      <button>Explore Menu</button>
-    </div>
-  );
+  return <Navigate to="/login" replace />;
 }
 
 export default Home;

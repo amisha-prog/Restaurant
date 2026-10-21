@@ -15,7 +15,21 @@ function CustomerCart() {
   
   const itemCount = cart.reduce((count, item) => count + Number(item.quantity || 0), 0);
   const total = useMemo(() => cart.reduce((sum, item) => sum + Number(item.price || 0) * Number(item.quantity || 0), 0), [cart]);
-  const customer = (() => { try { return JSON.parse(localStorage.getItem("customerUser") || "null"); } catch { return null; } })();
+  const [customer, setCustomer] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem("customerUser") || "null");
+    } catch {
+      return null;
+    }
+  });
+
+  const logoutCustomer = () => {
+    localStorage.removeItem("customerUser");
+    localStorage.removeItem("authUser");
+    localStorage.removeItem("authToken");
+    setCustomer(null);
+  };
+
   const tableContext = (() => { try { return JSON.parse(localStorage.getItem("tableOrderContext") || "null"); } catch { return null; } })();
   const [tableNumber, setTableNumber] = useState(tableContext?.tableNumber || "Table 01");
   const [restaurantId, setRestaurantId] = useState(tableContext?.restaurantId || "");
@@ -154,16 +168,73 @@ function CustomerCart() {
   };
 
   if (orderPlaced) {
-    return <main className="customer-cart-page"><section className="cart-empty"><h2>Order placed successfully!</h2><p>Your order has been sent to {tableNumber}. The restaurant will prepare it shortly.</p><button type="button" onClick={() => navigate("/customer/menu")}>Order More Food</button></section></main>;
+    return (
+      <div className="customer-cart-container">
+        <header className="customer-header">
+          <div className="customer-logo" onClick={() => navigate("/customer/menu")} style={{ cursor: "pointer" }}>
+            <div className="logo-icon">🍴</div>
+            <div>
+              <h2>FoodVista</h2>
+              <span className="logo-tagline">Gourmet Dining & Bites</span>
+            </div>
+          </div>
+          <div className="header-actions">
+            {tableNumber && (
+              <div className="header-table-badge" style={{ cursor: "default" }}>
+                <span className="table-live-dot" />
+                <span><strong>{tableNumber.toLowerCase().startsWith("table") ? tableNumber : `Table ${tableNumber}`}</strong></span>
+              </div>
+            )}
+          </div>
+        </header>
+
+        <main className="customer-cart-page">
+          <section className="cart-empty">
+            <h2>Order placed successfully!</h2>
+            <p>Your order has been sent to {tableNumber}. The restaurant will prepare it shortly.</p>
+            <button type="button" onClick={() => navigate("/customer/menu")}>Order More Food</button>
+          </section>
+        </main>
+      </div>
+    );
   }
 
   return (
-    <main className="customer-cart-page">
-      <header className="customer-cart-header">
-        <button type="button" onClick={() => navigate("/customer/menu")}>Continue shopping</button>
-        <h1>Your Cart</h1>
-        <span>{itemCount} item{itemCount === 1 ? "" : "s"}</span>
+    <div className="customer-cart-container">
+      <header className="customer-header">
+        <div className="customer-logo" onClick={() => navigate("/customer/menu")} style={{ cursor: "pointer" }}>
+          <div className="logo-icon">🍴</div>
+          <div>
+            <h2>FoodVista</h2>
+            <span className="logo-tagline">Gourmet Dining & Bites</span>
+          </div>
+        </div>
+
+        <div className="header-actions">
+          {tableNumber && (
+            <div className="header-table-badge" style={{ cursor: "default" }}>
+              <span className="table-live-dot" />
+              <span><strong>{tableNumber.toLowerCase().startsWith("table") ? tableNumber : `Table ${tableNumber}`}</strong></span>
+            </div>
+          )}
+
+          {customer ? (
+            <div className="customer-account">
+              <span className="user-greeting">Hi, {customer.name?.replace("FoodVista ", "") || "Customer"}</span>
+              <button className="login-btn logout" onClick={logoutCustomer}>Logout</button>
+            </div>
+          ) : (
+            <button className="login-btn" onClick={() => navigate("/login")}>Login</button>
+          )}
+        </div>
       </header>
+
+      <main className="customer-cart-page">
+        <header className="customer-cart-header">
+          <button type="button" onClick={() => navigate("/customer/menu")}>← Continue shopping</button>
+          <h1>Your Cart</h1>
+          <span>{itemCount} item{itemCount === 1 ? "" : "s"}</span>
+        </header>
       {cart.length === 0 ? (
         <section className="cart-empty"><h2>Your cart is empty</h2><button type="button" onClick={() => navigate("/customer/menu")}>Browse Menu</button></section>
       ) : (
@@ -257,7 +328,8 @@ function CustomerCart() {
           </aside>
         </section>
       )}
-    </main>
+      </main>
+    </div>
   );
 }
 

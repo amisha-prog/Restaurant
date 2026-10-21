@@ -27,7 +27,7 @@ const createOrder = async (req, res) => {
     }, 0);
     const taxRate = 5;
     const taxAmount = Number((total * taxRate / 100).toFixed(2));
-    const validSources = ["Admin", "Waiter", "Manual", "QR"];
+    const validSources = ["Admin", "Waiter", "Manager", "Manual", "QR"];
     const finalSource = validSources.includes(source) ? source : "QR";
 
     // Block creating manual/admin/waiter orders on unavailable tables (Cleaning or Out of Service)
@@ -114,19 +114,25 @@ const createOrder = async (req, res) => {
         existingActiveOrder.status = "Preparing";
       }
 
+      // Record accurate actor if placed by Manager, Waiter, or Admin
+      if (finalSource && ["Manager", "Waiter", "Admin"].includes(finalSource)) {
+        existingActiveOrder.source = finalSource;
+      }
+
       existingActiveOrder.updatedAt = new Date();
       await existingActiveOrder.save();
       await syncTableStatus(restaurantId, existingActiveOrder.tableNumber);
 
       const reorderedSummary = cleanedItems.map((it) => `${it.quantity}x ${it.name}`).join(", ");
       const totalItemCount = existingActiveOrder.items.reduce((sum, item) => sum + item.quantity, 0);
+      const reorderActor = finalSource === "Manager" ? "Manager" : finalSource === "Admin" ? "Admin" : finalSource === "Waiter" ? "Waiter" : "Customer";
 
-      const notifMsg = `🍳 Reorder for ${existingActiveOrder.tableNumber}: ${reorderedSummary} added to Order #${existingActiveOrder._id.toString().slice(-6).toUpperCase()} (${totalItemCount} total items, ₹${existingActiveOrder.total}).`;
+      const notifMsg = `🍳 Reorder for ${existingActiveOrder.tableNumber}: ${reorderedSummary} added to Order #${existingActiveOrder._id.toString().slice(-6).toUpperCase()} (${totalItemCount} total items, ₹${existingActiveOrder.total}) by ${reorderActor}.`;
 
       await createRestaurantNotification({
         restaurantId,
         type: "order_updated",
-        title: `🍳 Reorder Added for ${existingActiveOrder.tableNumber}`,
+        title: `🍳 Reorder Added by ${reorderActor} for ${existingActiveOrder.tableNumber}`,
         message: notifMsg,
         tableNumber: existingActiveOrder.tableNumber,
         orderId: existingActiveOrder._id,
@@ -158,13 +164,32 @@ const createOrder = async (req, res) => {
     const restaurant = await Restaurant.findOne(restaurantQuery).select("_id");
     await syncTableStatus(restaurantId, tableNumber);
     const totalItemCount = cleanedItems.reduce((sum, item) => sum + item.quantity, 0);
-    const notifType = finalSource === "Admin" ? "admin_order" : finalSource === "QR" ? "qr_order" : "manual_order";
-    const notifTitle = finalSource === "Admin" ? "🛡️ New Admin Order" : finalSource === "QR" ? "📱 New User QR Order" : "📝 New Waiter Order";
-    const notifMsg = finalSource === "Admin"
-      ? `Admin order placed for ${tableNumber} (${totalItemCount} items, Total: ₹${order.total}).`
-      : finalSource === "QR"
-      ? `Customer at ${tableNumber} placed a new order (${totalItemCount} items, Total: ₹${order.total}).`
-      : `Waiter order placed for ${tableNumber} (${totalItemCount} items, Total: ₹${order.total}).`;
+    const notifType =
+      finalSource === "Admin"
+        ? "admin_order"
+        : finalSource === "Manager"
+        ? "manager_order"
+        : finalSource === "QR"
+        ? "qr_order"
+        : "manual_order";
+
+    const notifTitle =
+      finalSource === "Admin"
+        ? "🛡️ New Admin Order"
+        : finalSource === "Manager"
+        ? "👔 New Manager Order"
+        : finalSource === "QR"
+        ? "📱 New User QR Order"
+        : "📝 New Waiter Order";
+
+    const notifMsg =
+      finalSource === "Admin"
+        ? `Admin order placed for ${tableNumber} (${totalItemCount} items, Total: ₹${order.total}).`
+        : finalSource === "Manager"
+        ? `Manager order placed for ${tableNumber} (${totalItemCount} items, Total: ₹${order.total}).`
+        : finalSource === "QR"
+        ? `Customer at ${tableNumber} placed a new order (${totalItemCount} items, Total: ₹${order.total}).`
+        : `Waiter order placed for ${tableNumber} (${totalItemCount} items, Total: ₹${order.total}).`;
 
     await createRestaurantNotification({
       restaurantId,

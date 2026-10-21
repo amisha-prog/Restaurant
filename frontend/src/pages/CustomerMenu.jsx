@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import QRCode from "qrcode";
 import { CartContext } from "../context/CartContext";
 import { getFallbackMenuImage, getMenuImageUrl } from "../utils/menuImage";
 import "./CustomerMenu.css";
@@ -104,6 +105,9 @@ function CustomerMenu() {
   const [serviceMessage, setServiceMessage] = useState("");
   const [tableStatus, setTableStatus] = useState("Available");
   const [showOccupiedModal, setShowOccupiedModal] = useState(true);
+  const [restaurantTables, setRestaurantTables] = useState([]);
+  const [showTableModal, setShowTableModal] = useState(false);
+  const [customTableInput, setCustomTableInput] = useState("");
 
   const displayTableLabel = useMemo(() => {
     const raw = tableContext?.tableNumber || "";
@@ -117,21 +121,25 @@ function CustomerMenu() {
   // =====================================================
   useEffect(() => {
     const fetchTableStatus = async () => {
-      const restId = tableContext?.restaurantId;
+      const restId = tableContext?.restaurantId || "REST012";
       const tNum = tableContext?.tableNumber;
-      if (!restId || !tNum) return;
 
       try {
         const res = await fetch(`${API_URL}/tables?restaurantId=${encodeURIComponent(restId)}`);
         const data = await res.json();
         if (res.ok && data.success && Array.isArray(data.tables)) {
-          const cleanTNum = String(tNum).trim().toLowerCase().replace(/^table\s*/i, "");
-          const match = data.tables.find((t) => {
-            const cleanT = String(t.tableNumber || "").trim().toLowerCase().replace(/^table\s*/i, "");
-            return cleanT === cleanTNum || String(t.tableNumber).trim().toLowerCase() === String(tNum).trim().toLowerCase();
-          });
-          if (match && match.status) {
-            setTableStatus(match.status);
+          setRestaurantTables(data.tables);
+          if (tNum) {
+            const cleanTNum = String(tNum).trim().toLowerCase().replace(/^table\s*/i, "");
+            const match = data.tables.find((t) => {
+              const cleanT = String(t.tableNumber || "").trim().toLowerCase().replace(/^table\s*/i, "");
+              return cleanT === cleanTNum || String(t.tableNumber).trim().toLowerCase() === String(tNum).trim().toLowerCase();
+            });
+            if (match && match.status) {
+              setTableStatus(match.status);
+            } else {
+              setTableStatus("Available");
+            }
           }
         }
       } catch (err) {
@@ -153,14 +161,73 @@ function CustomerMenu() {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const tableNumber = params.get("table");
-    const restaurantId = params.get("restaurant");
-    if (tableNumber && restaurantId) {
-      const nextTableContext = { tableNumber, restaurantId };
+    const tableParam = params.get("table") || params.get("tableNumber") || params.get("table_number") || params.get("t");
+    const restParam = params.get("restaurant") || params.get("restaurantId") || params.get("restId");
+
+    if (tableParam) {
+      const nextTableContext = {
+        tableNumber: tableParam,
+        restaurantId: restParam || tableContext?.restaurantId || "REST012",
+      };
+      localStorage.setItem("tableOrderContext", JSON.stringify(nextTableContext));
+      setTableContext(nextTableContext);
+      setShowOccupiedModal(true);
+    } else if (restParam && (!tableContext || !tableContext.restaurantId)) {
+      const nextTableContext = {
+        tableNumber: tableContext?.tableNumber || "",
+        restaurantId: restParam,
+      };
       localStorage.setItem("tableOrderContext", JSON.stringify(nextTableContext));
       setTableContext(nextTableContext);
     }
   }, [location.search]);
+
+  const [selectedTableQr, setSelectedTableQr] = useState(null);
+
+  const handleSelectTable = (selectedNum) => {
+    const raw = String(selectedNum).trim();
+    if (!raw) return;
+    const formatted = raw.toLowerCase().startsWith("table") ? raw : `Table ${raw}`;
+    const nextTableContext = {
+      tableNumber: formatted,
+      restaurantId: tableContext?.restaurantId || "REST012",
+    };
+    localStorage.setItem("tableOrderContext", JSON.stringify(nextTableContext));
+    setTableContext(nextTableContext);
+    setShowTableModal(false);
+    setShowOccupiedModal(true);
+  };
+
+  const handleOpenTableQr = async (tableNumber) => {
+    const raw = String(tableNumber).trim();
+    if (!raw) return;
+    const formatted = raw.toLowerCase().startsWith("table") ? raw : `Table ${raw}`;
+    const origin = window.location.origin;
+    const restId = tableContext?.restaurantId || "REST012";
+    const params = new URLSearchParams({
+      restaurant: restId,
+      table: formatted,
+    });
+    const targetUrl = `${origin}/customer/menu?${params.toString()}`;
+
+    try {
+      const qrDataUrl = await QRCode.toDataURL(targetUrl, {
+        width: 320,
+        margin: 2,
+        errorCorrectionLevel: "H",
+        color: { dark: "#0f172a", light: "#ffffff" },
+      });
+      setSelectedTableQr({
+        tableNumber: formatted,
+        qrDataUrl,
+        menuUrl: targetUrl,
+      });
+      setShowTableModal(false);
+    } catch (err) {
+      console.error("QR Code Error:", err);
+      handleSelectTable(formatted);
+    }
+  };
 
   // =====================================================
   // AUTO-PLAY HERO CAROUSEL (PAUSES ON HOVER)
@@ -393,11 +460,30 @@ function CustomerMenu() {
         </div>
 
         <div className="header-actions">
-          {displayTableLabel && (
-            <div className="header-table-badge">
+          {displayTableLabel ? (
+            <button
+              type="button"
+              className="header-table-badge"
+              onClick={() => setShowTableModal(true)}
+              title="Click to switch your dining table"
+              style={{ cursor: "pointer", border: "none", background: "none" }}
+            >
               <span className="table-live-dot" />
               <span><strong>{displayTableLabel}</strong></span>
-            </div>
+              <span style={{ fontSize: "10px", marginLeft: "4px", color: "#16a34a" }}>▼</span>
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="header-table-badge"
+              onClick={() => setShowTableModal(true)}
+              title="Click to select dining table"
+              style={{ cursor: "pointer", border: "none", background: "none" }}
+            >
+              <span className="table-live-dot" />
+              <span><strong>Select Table</strong></span>
+              <span style={{ fontSize: "10px", marginLeft: "4px", color: "#16a34a" }}>▼</span>
+            </button>
           )}
 
           {customerUser ? (
@@ -422,9 +508,34 @@ function CustomerMenu() {
             <p>
               <strong>{displayTableLabel || "This table"}</strong> is currently marked as <strong>Occupied</strong> by restaurant staff.
               <br /><br />
-              If you are already seated here, enjoy your meal! If you are a new guest, please contact restaurant staff to assist you.
+              If you are already seated here, enjoy your meal! If you are a new guest, you can easily choose another table or call staff for assistance.
             </p>
             <div className="occupied-modal-actions">
+              <button
+                type="button"
+                className="btn-occupied-switch"
+                onClick={() => {
+                  setShowOccupiedModal(false);
+                  setShowTableModal(true);
+                }}
+                style={{
+                  padding: "12px 20px",
+                  background: "#0f172a",
+                  color: "#ffffff",
+                  fontSize: "14px",
+                  fontWeight: "700",
+                  border: "none",
+                  borderRadius: "12px",
+                  cursor: "pointer",
+                  boxShadow: "0 4px 12px rgba(15, 23, 42, 0.2)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  gap: "8px"
+                }}
+              >
+                🔄 Choose Another Table
+              </button>
               <button
                 type="button"
                 className="btn-occupied-call"
@@ -457,13 +568,23 @@ function CustomerMenu() {
                 <strong>{displayTableLabel || "This table"}</strong> is marked as <strong>Occupied</strong> by restaurant staff. Orders on this table are currently active.
               </p>
             </div>
-            <button
-              type="button"
-              className="call-waiter-warn-btn"
-              onClick={() => requestService("waiter")}
-            >
-              🛎️ Call Waiter
-            </button>
+            <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", alignItems: "center" }}>
+              <button
+                type="button"
+                className="call-waiter-warn-btn"
+                onClick={() => setShowTableModal(true)}
+                style={{ background: "#ffffff", color: "#991b1b", border: "1.5px solid #fca5a5" }}
+              >
+                🔄 Switch Table
+              </button>
+              <button
+                type="button"
+                className="call-waiter-warn-btn"
+                onClick={() => requestService("waiter")}
+              >
+                🛎️ Call Waiter
+              </button>
+            </div>
           </div>
         </div>
       )}
@@ -473,13 +594,36 @@ function CustomerMenu() {
       ================================================= */}
       {displayTableLabel && (
         <div className="table-order-banner">
-          <div className="table-pill">
-            <span className="table-icon">🍽️</span>
-            <span><strong>{displayTableLabel}</strong></span>
-            <span className="table-status-indicator">
-              <span className="pulse-dot" />
-              Active Dine-in
-            </span>
+          <div className="table-pill customer-table-pill">
+            <div className="table-pill-top-row">
+              <div className="table-pill-main">
+                <span className="table-icon">🍽️</span>
+                <strong className="table-number-text">{displayTableLabel}</strong>
+              </div>
+              <span className="table-status-indicator">
+                <span className="pulse-dot" />
+                Active Dine-in
+              </span>
+            </div>
+
+            <div className="table-pill-actions">
+              <button
+                type="button"
+                className="btn-change-table-pill qr-pill-btn"
+                onClick={() => handleOpenTableQr(displayTableLabel)}
+                title="Click to view QR code to scan with your phone"
+              >
+                📱 Scan QR
+              </button>
+              <button
+                type="button"
+                className="btn-change-table-pill"
+                onClick={() => setShowTableModal(true)}
+                title="Click to switch dining table"
+              >
+                Switch Table
+              </button>
+            </div>
           </div>
 
           <small className="table-note">Your order will be prepared fresh and served directly to your table.</small>
@@ -504,6 +648,187 @@ function CustomerMenu() {
           </div>
 
           {serviceMessage && <div className="table-toast-msg">{serviceMessage}</div>}
+        </div>
+      )}
+
+      {/* =================================================
+          TABLE SELECTOR / SWITCHER MODAL
+      ================================================= */}
+      {showTableModal && (
+        <div className="table-switch-modal-overlay" onClick={() => setShowTableModal(false)}>
+          <div className="table-switch-modal-card" onClick={(e) => e.stopPropagation()}>
+            <div className="table-switch-header">
+              <div className="table-switch-title">
+                <span className="modal-icon">🍽️</span>
+                <div>
+                  <h3>Select Dining Table</h3>
+                  <p>Click any table to open its QR Scanner and order directly</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                className="table-switch-close"
+                onClick={() => setShowTableModal(false)}
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Quick manual input */}
+            <form
+              className="table-manual-form"
+              onSubmit={(e) => {
+                e.preventDefault();
+                if (customTableInput.trim()) {
+                  handleOpenTableQr(customTableInput.trim());
+                  setCustomTableInput("");
+                }
+              }}
+            >
+              <input
+                type="text"
+                placeholder="Enter Table (e.g. Table 05 or 12)"
+                value={customTableInput}
+                onChange={(e) => setCustomTableInput(e.target.value)}
+                className="table-manual-input"
+              />
+              <button type="submit" className="table-manual-btn">
+                Show QR
+              </button>
+            </form>
+
+            {/* Tables Grid */}
+            <div className="table-switch-grid-wrap">
+              <span className="grid-label">Quick Pick Table to Scan & Order:</span>
+              <div className="table-switch-grid">
+                {(restaurantTables.length > 0
+                  ? restaurantTables
+                  : Array.from({ length: 20 }, (_, i) => ({
+                      _id: `t_${i + 1}`,
+                      tableNumber: `Table ${String(i + 1).padStart(2, "0")}`,
+                      status: "Available",
+                    }))
+                ).map((t) => {
+                  const tStr = String(t.tableNumber || "");
+                  const isCurrent =
+                    displayTableLabel.toLowerCase().replace(/\s+/g, "") ===
+                    tStr.toLowerCase().replace(/\s+/g, "");
+                  const isOccupied = String(t.status).toLowerCase() === "occupied";
+                  return (
+                    <button
+                      key={t._id || t.tableNumber}
+                      type="button"
+                      className={`table-grid-btn ${isCurrent ? "current" : ""} ${isOccupied ? "occupied" : "available"}`}
+                      onClick={() => handleOpenTableQr(t.tableNumber)}
+                      title={`Click to open QR scanner for ${t.tableNumber}`}
+                    >
+                      <strong>{t.tableNumber}</strong>
+                      <span className="table-grid-status">
+                        {isCurrent ? "Active" : t.status || "Available"}
+                      </span>
+                      <span className="table-grid-qr-badge">📱 Scan QR</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div className="table-switch-actions">
+              <button
+                type="button"
+                className="btn-table-cancel"
+                onClick={() => setShowTableModal(false)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* =================================================
+          TABLE QR SCANNER MODAL (Scan & Order directly)
+      ================================================= */}
+      {selectedTableQr && (
+        <div className="table-qr-modal-overlay" onClick={() => setSelectedTableQr(null)}>
+          <div className="table-qr-modal-card" onClick={(e) => e.stopPropagation()}>
+            <div className="table-qr-header">
+              <div className="table-qr-title">
+                <span className="qr-badge-icon">📱</span>
+                <div>
+                  <h3>Scan & Order at {selectedTableQr.tableNumber}</h3>
+                  <p>Point any phone camera to scan and order directly</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                className="table-switch-close"
+                onClick={() => setSelectedTableQr(null)}
+              >
+                ✕
+              </button>
+            </div>
+
+            <div className="table-qr-body">
+              <div className="table-qr-code-frame">
+                <img
+                  src={selectedTableQr.qrDataUrl}
+                  alt={`QR Code for ${selectedTableQr.tableNumber}`}
+                  className="table-qr-img"
+                />
+                <div className="table-qr-scan-badge">
+                  <span className="scan-pulse" />
+                  Point mobile camera to order
+                </div>
+              </div>
+
+              <div className="table-qr-info">
+                <div className="table-qr-pill">
+                  🍽️ <strong>{selectedTableQr.tableNumber}</strong>
+                  <span className="table-qr-status-tag">Ready to Order</span>
+                </div>
+                <p className="table-qr-hint">
+                  Customer apne phone ke camera se is QR ko scan karke directly {selectedTableQr.tableNumber} ka menu open karke order kar sakte hain.
+                </p>
+              </div>
+
+              <div className="table-qr-actions">
+                <button
+                  type="button"
+                  className="btn-qr-order-here"
+                  onClick={() => {
+                    handleSelectTable(selectedTableQr.tableNumber);
+                    setSelectedTableQr(null);
+                  }}
+                >
+                  👉 Order on this Device
+                </button>
+                <div className="table-qr-secondary-btns">
+                  <button
+                    type="button"
+                    className="btn-qr-copy"
+                    onClick={() => {
+                      navigator.clipboard.writeText(selectedTableQr.menuUrl);
+                      setServiceMessage(`Link copied for ${selectedTableQr.tableNumber}!`);
+                      setTimeout(() => setServiceMessage(""), 3000);
+                    }}
+                  >
+                    📋 Copy Order Link
+                  </button>
+                  <button
+                    type="button"
+                    className="btn-qr-back"
+                    onClick={() => {
+                      setSelectedTableQr(null);
+                      setShowTableModal(true);
+                    }}
+                  >
+                    ⬅️ Pick Another Table
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       )}
 
