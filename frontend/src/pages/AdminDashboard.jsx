@@ -255,6 +255,8 @@ const AdminDashboard = () => {
   const [adminOrderDietFilter, setAdminOrderDietFilter] = useState("All");
   const [adminOrderSuccessModal, setAdminOrderSuccessModal] = useState(null);
   const [adminOccupiedModal, setAdminOccupiedModal] = useState(null);
+  const [showAdminTablePicker, setShowAdminTablePicker] = useState(false);
+  const [tablePickerSearch, setTablePickerSearch] = useState("");
 
   const [managerForm, setManagerForm] = useState({
     restaurantId: "",
@@ -6111,40 +6113,129 @@ const AdminDashboard = () => {
               <div className="admin-order-left-pane">
                 {/* Table & Customer Row */}
                 <div className="admin-order-top-fields">
-                  <div className="admin-order-field">
+                  <div className="admin-order-field" style={{ position: "relative" }}>
                     <label>Dining Table <span className="req">*</span></label>
-                    <select
-                      value={adminOrderTable}
-                      onChange={(e) => {
-                        const chosen = e.target.value;
-                        setAdminOrderTable(chosen);
-                        const target = (dashboardSummary.tables || []).find(
-                          (t) => String(t.tableNumber).trim().toLowerCase() === String(chosen).trim().toLowerCase()
-                        );
-                        if (target && ["Cleaning", "Out of Service"].includes(target.status)) {
-                          setAdminOrderError(`⛔ Table ${chosen} is currently ${target.status}! Please select another table.`);
-                          setAdminOccupiedModal({
-                            tableNumber: chosen,
-                            status: target.status,
-                          });
-                        } else {
-                          if (adminOrderError) setAdminOrderError("");
-                        }
-                      }}
-                      className={`admin-order-select ${!adminOrderTable && adminOrderCart.length ? "highlight-needed" : ""}`}
-                      required
+                    
+                    {/* Click-outside backdrop for table dropdown */}
+                    {showAdminTablePicker && (
+                      <div
+                        className="admin-table-picker-backdrop"
+                        onClick={() => {
+                          setShowAdminTablePicker(false);
+                          setTablePickerSearch("");
+                        }}
+                      />
+                    )}
+
+                    <button
+                      type="button"
+                      className={`admin-order-select admin-custom-table-trigger ${!adminOrderTable && adminOrderCart.length ? "highlight-needed" : ""}`}
+                      onClick={() => setShowAdminTablePicker((prev) => !prev)}
                     >
-                      <option value="">-- Select Table --</option>
-                      {(dashboardSummary.tables || []).map((t) => {
-                        const isAvail = t.status === "Available";
-                        const isOcc = t.status === "Occupied";
-                        return (
-                          <option key={t._id} value={t.tableNumber}>
-                            {isAvail ? `🟢 ${t.tableNumber} (Available)` : isOcc ? `🔴 ${t.tableNumber} (Occupied)` : `⛔ ${t.tableNumber} (${t.status})`}
-                          </option>
-                        );
-                      })}
-                    </select>
+                      <span className="admin-table-trigger-text">
+                        {adminOrderTable ? (
+                          (() => {
+                            const tObj = (dashboardSummary.tables || []).find(
+                              (t) => String(t.tableNumber).trim().toLowerCase() === String(adminOrderTable).trim().toLowerCase()
+                            );
+                            const isAvail = tObj?.status === "Available";
+                            const isOcc = tObj?.status === "Occupied";
+                            return (
+                              <span className="admin-table-chosen-label">
+                                <span>{isAvail ? "🟢" : isOcc ? "🔴" : "⛔"}</span>
+                                <strong>{adminOrderTable}</strong>
+                                <small>({tObj?.status || "Selected"})</small>
+                              </span>
+                            );
+                          })()
+                        ) : (
+                          <span className="admin-table-placeholder">-- Select Table --</span>
+                        )}
+                      </span>
+                      <span className="admin-table-trigger-arrow">
+                        {showAdminTablePicker ? "▲" : "▼"}
+                      </span>
+                    </button>
+
+                    {/* Custom Dropdown: 100% contained inside field, never overflows */}
+                    {showAdminTablePicker && (
+                      <div className="admin-custom-table-dropdown">
+                        <div className="admin-table-dropdown-search-box">
+                          <span>🔍</span>
+                          <input
+                            type="text"
+                            placeholder="Type table # or status…"
+                            value={tablePickerSearch}
+                            onChange={(e) => setTablePickerSearch(e.target.value)}
+                            onClick={(e) => e.stopPropagation()}
+                            autoFocus
+                            className="admin-table-search-input"
+                          />
+                          {tablePickerSearch && (
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setTablePickerSearch("");
+                              }}
+                              className="admin-table-search-clear"
+                            >
+                              ✕
+                            </button>
+                          )}
+                        </div>
+
+                        <div className="admin-table-dropdown-list">
+                          {(dashboardSummary.tables || [])
+                            .filter((t) => {
+                              if (!tablePickerSearch) return true;
+                              const s = tablePickerSearch.toLowerCase().trim();
+                              return (
+                                String(t.tableNumber || "").toLowerCase().includes(s) ||
+                                String(t.status || "").toLowerCase().includes(s)
+                              );
+                            })
+                            .map((t) => {
+                              const isAvail = t.status === "Available";
+                              const isOcc = t.status === "Occupied";
+                              const isSelected = String(adminOrderTable).trim().toLowerCase() === String(t.tableNumber).trim().toLowerCase();
+                              return (
+                                <div
+                                  key={t._id}
+                                  className={`admin-table-dropdown-item ${isSelected ? "selected" : ""} ${isOcc ? "occupied" : isAvail ? "available" : "other"}`}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    const chosen = t.tableNumber;
+                                    setAdminOrderTable(chosen);
+                                    setShowAdminTablePicker(false);
+                                    setTablePickerSearch("");
+                                    if (["Cleaning", "Out of Service"].includes(t.status)) {
+                                      setAdminOrderError(`⛔ Table ${chosen} is currently ${t.status}! Please select another table.`);
+                                      setAdminOccupiedModal({
+                                        tableNumber: chosen,
+                                        status: t.status,
+                                      });
+                                    } else {
+                                      if (adminOrderError) setAdminOrderError("");
+                                    }
+                                  }}
+                                >
+                                  <div className="admin-table-item-name">
+                                    <span className="table-status-emoji">{isAvail ? "🟢" : isOcc ? "🔴" : "⛔"}</span>
+                                    <strong>{t.tableNumber}</strong>
+                                  </div>
+                                  <span className={`admin-table-badge ${isAvail ? "avail" : isOcc ? "occ" : "other"}`}>
+                                    {isAvail ? "Available" : isOcc ? "Occupied" : t.status}
+                                  </span>
+                                </div>
+                              );
+                            })}
+                          {(dashboardSummary.tables || []).length === 0 && (
+                            <div className="admin-table-dropdown-empty">No dining tables found.</div>
+                          )}
+                        </div>
+                      </div>
+                    )}
                   </div>
 
                   <div className="admin-order-field">
