@@ -5677,12 +5677,117 @@ body {
   color: #1e293b;
 }
 
+.admin-order-mobile-float-bar {
+  display: none;
+}
+
 @media (max-width: 900px) {
+  .admin-create-order-backdrop {
+    padding: 10px 8px !important;
+  }
+
+  .admin-create-order-modal {
+    position: relative !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 94vh !important;
+    border-radius: 18px !important;
+  }
+
   .admin-create-order-body {
     grid-template-columns: 1fr;
+    padding-bottom: 92px !important;
   }
+
   .admin-order-top-fields {
     grid-template-columns: 1fr;
+  }
+
+  .admin-order-mobile-float-bar {
+    display: flex !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: #0f172a !important;
+    border-top: 1px solid #1e293b !important;
+    padding: 10px 14px !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    box-shadow: 0 -8px 25px rgba(0, 0, 0, 0.35) !important;
+    z-index: 100 !important;
+    box-sizing: border-box !important;
+    border-bottom-left-radius: 18px !important;
+    border-bottom-right-radius: 18px !important;
+  }
+
+  .admin-float-bar-details {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    cursor: pointer !important;
+    min-width: 0 !important;
+    flex: 1 !important;
+  }
+
+  .admin-float-cart-pill {
+    background: #2563eb !important;
+    color: #ffffff !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    padding: 5px 10px !important;
+    border-radius: 999px !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    flex-shrink: 0 !important;
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.4) !important;
+  }
+
+  .admin-float-price-group {
+    display: flex !important;
+    flex-direction: column !important;
+    min-width: 0 !important;
+  }
+
+  .admin-float-grand-price {
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    color: #f8fafc !important;
+    line-height: 1.2 !important;
+  }
+
+  .admin-float-table-label {
+    font-size: 11px !important;
+    color: #94a3b8 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .btn-admin-float-order-submit {
+    background: linear-gradient(135deg, #2563eb, #1d4ed8) !important;
+    color: #ffffff !important;
+    font-size: 13.5px !important;
+    font-weight: 800 !important;
+    padding: 10px 18px !important;
+    border-radius: 12px !important;
+    border: none !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.45) !important;
+    flex-shrink: 0 !important;
+    transition: transform 0.15s ease !important;
+  }
+
+  .btn-admin-float-order-submit:active {
+    transform: scale(0.96) !important;
+  }
+
+  .btn-admin-float-order-submit:disabled {
+    opacity: 0.65 !important;
+    cursor: not-allowed !important;
   }
 }
 

@@ -1911,18 +1911,40 @@ function ManagerDashboard() {
 
                 {/* Floating Bottom Cart Bar on Mobile when items exist */}
                 {cartTotalQty > 0 && (
-                  <div
-                    className="mobile-floating-cart-bar"
-                    onClick={() => setMobileOrderTab("cart")}
-                  >
-                    <div className="floating-cart-info">
+                  <div className="mobile-floating-cart-bar">
+                    <div
+                      className="floating-cart-info"
+                      onClick={() => setMobileOrderTab("cart")}
+                      title="Tap to review cart details"
+                    >
                       <span className="floating-cart-count">{cartTotalQty}</span>
                       <div className="floating-cart-totals">
                         <strong>{money(cartGrandTotal)}</strong>
-                        <small>{cartTotalQty} item{cartTotalQty > 1 ? "s" : ""} in cart</small>
+                        <small>
+                          {orderTable ? `Table: ${orderTable}` : "⚠️ Select table"} · Cart ↗
+                        </small>
                       </div>
                     </div>
-                    <span className="floating-cart-cta">View Cart & Order ➔</span>
+                    <button
+                      type="button"
+                      className="floating-cart-cta-btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (!orderTable) {
+                          setOrderError("Please select a Dining Table above before placing the order!");
+                          const sel = document.querySelector(".order-select");
+                          if (sel) {
+                            sel.scrollIntoView({ behavior: "smooth", block: "center" });
+                            sel.focus();
+                          }
+                          return;
+                        }
+                        handleSubmitOrder(e);
+                      }}
+                      disabled={orderSubmitting}
+                    >
+                      {orderSubmitting ? "Placing..." : activeTableOrder ? "🚀 Re-Order" : "🚀 Place Order"}
+                    </button>
                   </div>
                 )}
               </div>

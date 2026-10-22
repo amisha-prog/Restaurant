@@ -6631,6 +6631,63 @@ const AdminDashboard = () => {
               </div>
             </div>
 
+            {/* FLOATING MOBILE CART / PLACE ORDER BAR */}
+            {adminOrderCart.length > 0 && (
+              <div className="admin-order-mobile-float-bar">
+                <div
+                  className="admin-float-bar-details"
+                  onClick={() => {
+                    const rightPane = document.querySelector('.admin-order-right-pane');
+                    if (rightPane) rightPane.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  title="Tap to review cart items"
+                >
+                  <div className="admin-float-cart-pill">
+                    <span>🛒</span>
+                    <strong>{adminOrderCart.reduce((sum, i) => sum + i.quantity, 0)}</strong>
+                  </div>
+                  <div className="admin-float-price-group">
+                    <span className="admin-float-grand-price">
+                      ₹{(() => {
+                        const sub = adminOrderCart.reduce((s, i) => s + i.price * i.quantity, 0);
+                        const gst = Math.round(sub * 0.05);
+                        return activeAdminTableOrder ? (existingRunningTotal + sub + gst) : (sub + gst);
+                      })()}
+                    </span>
+                    <span className="admin-float-table-label">
+                      {adminOrderTable ? `Table: ${formatTableName(adminOrderTable)}` : "⚠️ Tap to pick table"} · Review ↗
+                    </span>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  className="btn-admin-float-order-submit"
+                  onClick={(e) => {
+                    if (!adminOrderTable) {
+                      setAdminOrderError("Please select a Dining Table above before placing the order!");
+                      const sel = document.querySelector('.admin-order-select');
+                      if (sel) {
+                        sel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        sel.focus();
+                      }
+                      return;
+                    }
+                    handleAdminSubmitOrder(e);
+                  }}
+                  disabled={adminOrderSubmitting}
+                >
+                  {adminOrderSubmitting ? (
+                    "Placing..."
+                  ) : activeAdminTableOrder ? (
+                    "🚀 Send Re-Order"
+                  ) : (
+                    "🚀 Place Order"
+                  )}
+                </button>
+              </div>
+            )}
+
             {/* SUCCESS POPUP WITH ORDER OPTIONS */}
             {adminOrderSuccessModal && (
               <div
