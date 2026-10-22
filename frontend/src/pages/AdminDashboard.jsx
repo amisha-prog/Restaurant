@@ -6140,7 +6140,7 @@ const AdminDashboard = () => {
                         const isOcc = t.status === "Occupied";
                         return (
                           <option key={t._id} value={t.tableNumber}>
-                            {isAvail ? `🟢 ${t.tableNumber} (Available)` : isOcc ? `🔴 ${t.tableNumber} (Occupied - Re-order)` : `⛔ ${t.tableNumber} (${t.status})`}
+                            {isAvail ? `🟢 ${t.tableNumber} (Available)` : isOcc ? `🔴 ${t.tableNumber} (Occupied)` : `⛔ ${t.tableNumber} (${t.status})`}
                           </option>
                         );
                       })}

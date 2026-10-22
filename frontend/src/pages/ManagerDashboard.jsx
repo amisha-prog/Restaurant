@@ -1582,7 +1582,7 @@ function ManagerDashboard() {
                         {isAvail
                           ? `🟢 ${t.tableNumber} (Available)`
                           : isOcc
-                          ? `🔴 ${t.tableNumber} (Occupied - Re-order)`
+                          ? `🔴 ${t.tableNumber} (Occupied)`
                           : `⛔ ${t.tableNumber} (${t.status})`}
                       </option>
                     );

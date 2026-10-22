@@ -401,7 +401,7 @@ function WaiterCreateOrder() {
                       {isAvail 
                         ? `🟢 ${tName} (Available)` 
                         : isOccupied 
-                          ? `🔴 ${tName} (Occupied - Re-order)` 
+                          ? `🔴 ${tName} (Occupied)` 
                           : `⛔ ${tName} (${table.status || "Unavailable"})`}
                     </option>
                   );

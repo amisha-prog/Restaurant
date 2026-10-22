@@ -4514,6 +4514,9 @@ body {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  min-width: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .admin-order-field label {
@@ -4530,6 +4533,9 @@ body {
 
 .admin-order-select,
 .admin-order-input {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   height: 40px;
   padding: 0 12px;
   border: 1.5px solid #cbd5e1;
@@ -4539,6 +4545,8 @@ body {
   background: #ffffff;
   outline: none;
   transition: all 0.2s ease;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .admin-order-select:focus,
@@ -5700,7 +5708,24 @@ body {
   }
 
   .admin-order-top-fields {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  .admin-order-field {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .admin-order-select,
+  .admin-order-input {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    font-size: 13px !important;
   }
 
   .admin-order-mobile-float-bar {
