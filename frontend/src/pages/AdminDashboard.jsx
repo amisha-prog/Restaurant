@@ -6177,7 +6177,7 @@ const AdminDashboard = () => {
                       <span>🔍</span>
                       <input
                         type="text"
-                        placeholder="Search menu items, drinks, pizza, rice…"
+                        placeholder="Search menu, drinks…"
                         value={adminOrderSearch}
                         onChange={(e) => setAdminOrderSearch(e.target.value)}
                       />

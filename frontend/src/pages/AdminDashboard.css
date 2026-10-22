@@ -4564,19 +4564,24 @@ body {
 .admin-order-search-and-view {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .admin-order-search-box {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   background: #ffffff;
   border: 1.5px solid #cbd5e1;
   border-radius: 10px;
-  padding: 0 14px;
-  height: 42px;
-  flex: 1;
+  padding: 0 12px;
+  height: 40px;
+  flex: 1 1 0%;
+  min-width: 0;
+  box-sizing: border-box;
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -4586,10 +4591,12 @@ body {
 }
 
 .admin-order-search-box input {
-  flex: 1;
+  flex: 1 1 0%;
+  min-width: 0;
+  width: 100%;
   border: none;
   outline: none;
-  font-size: 13.5px;
+  font-size: 13px;
   color: #0f172a;
   background: transparent;
 }
@@ -4600,27 +4607,35 @@ body {
   color: #94a3b8;
   font-size: 14px;
   cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
 }
 
 .admin-order-view-toggle {
   display: flex;
-  background: #e2e8f0;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
   padding: 3px;
   border-radius: 9px;
   gap: 2px;
   flex-shrink: 0;
+  box-sizing: border-box;
 }
 
 .admin-view-toggle-btn {
   border: none;
   background: transparent;
-  padding: 6px 12px;
+  padding: 6px 10px;
   border-radius: 7px;
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 700;
   color: #64748b;
   cursor: pointer;
+  white-space: nowrap;
   transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
 }
 
 .admin-view-toggle-btn:hover {
@@ -5740,6 +5755,48 @@ body {
     max-width: 100% !important;
     box-sizing: border-box !important;
     font-size: 13px !important;
+  }
+
+  .admin-order-menu-controls {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .admin-order-search-and-view {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+
+  .admin-order-search-box {
+    height: 36px !important;
+    padding: 0 8px !important;
+    flex: 1 1 0% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    gap: 6px !important;
+  }
+
+  .admin-order-search-box input {
+    font-size: 12px !important;
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .admin-order-view-toggle {
+    flex-shrink: 0 !important;
+    box-sizing: border-box !important;
+    padding: 2px !important;
+  }
+
+  .admin-view-toggle-btn {
+    padding: 5px 7px !important;
+    font-size: 11px !important;
+    gap: 2px !important;
   }
 
   .admin-order-filter-row {
