@@ -4408,14 +4408,16 @@ const AdminDashboard = () => {
                     <button onClick={() => setCustomerOrderFilter(null)}>✕ Show All Orders</button>
                   </div>
                 )}
-                <button
-                  type="button"
-                  className="btn-create-order-admin"
-                  onClick={handleOpenAdminCreateOrder}
-                  title="Create new dining order"
-                >
-                  ➕ Create New Order
-                </button>
+                {activeMenu !== "Kitchen" && (
+                  <button
+                    type="button"
+                    className="btn-create-order-admin"
+                    onClick={handleOpenAdminCreateOrder}
+                    title="Create new dining order"
+                  >
+                    ➕ Create New Order
+                  </button>
+                )}
                 <button
                   className="btn-refresh-orders"
                   onClick={fetchDashboardSummary}
