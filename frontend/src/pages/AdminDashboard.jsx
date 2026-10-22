@@ -6206,18 +6206,7 @@ const AdminDashboard = () => {
                   </div>
 
                   <div className="admin-order-filter-row">
-                    <div className="admin-order-categories-tabs">
-                      {["All", ...new Set(menuEntries.map((m) => m.category).filter(Boolean))].map((cat) => (
-                        <button
-                          key={cat}
-                          type="button"
-                          className={`admin-order-cat-chip ${adminOrderCategory === cat ? "active" : ""}`}
-                          onClick={() => setAdminOrderCategory(cat)}
-                        >
-                          {cat}
-                        </button>
-                      ))}
-                    </div>
+                    {/* Diet Filter Group: All / Veg / Non-Veg */}
                     <div className="admin-diet-filter-group">
                       <button
                         type="button"
@@ -6240,6 +6229,20 @@ const AdminDashboard = () => {
                       >
                         🔴 Non-Veg
                       </button>
+                    </div>
+
+                    {/* Category Tabs: Scrollable */}
+                    <div className="admin-order-categories-tabs">
+                      {["All", ...new Set(menuEntries.map((m) => m.category).filter(Boolean))].map((cat) => (
+                        <button
+                          key={cat}
+                          type="button"
+                          className={`admin-order-cat-chip ${adminOrderCategory === cat ? "active" : ""}`}
+                          onClick={() => setAdminOrderCategory(cat)}
+                        >
+                          {cat}
+                        </button>
+                      ))}
                     </div>
                   </div>
                 </div>
