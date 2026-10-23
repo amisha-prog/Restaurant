@@ -6682,12 +6682,27 @@ body {
   flex-direction: column;
   gap: 16px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  transition: all 0.2s ease;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  position: relative;
+  user-select: none;
 }
 
 .customer-profile-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.1);
+  border-color: #3b82f6;
+}
+
+.customer-profile-card:hover .btn-view-cust-orders {
+  background: #1e293b;
+  color: #ffffff;
+  border-color: #1e293b;
+}
+
+.customer-profile-card:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
 }
 
 .cust-card-top {

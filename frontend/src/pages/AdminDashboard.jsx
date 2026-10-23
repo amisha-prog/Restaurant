@@ -5095,7 +5095,15 @@ const AdminDashboard = () => {
                         : "—";
 
                       return (
-                        <article key={cust.id || idx} className="customer-profile-card">
+                        <article
+                          key={cust.id || idx}
+                          className="customer-profile-card clickable"
+                          onClick={() => {
+                            setCustomerOrderFilter(cust.phone !== "—" ? cust.phone : cust.name);
+                            setActiveMenu("Orders");
+                          }}
+                          title={`Click to view all orders for ${cust.name || "this customer"}`}
+                        >
                           <div className="cust-card-top">
                             <div className="cust-big-avatar">
                               {initials}
@@ -5105,6 +5113,7 @@ const AdminDashboard = () => {
                               <a
                                 href={cust.phone !== "—" ? `tel:${cust.phone}` : undefined}
                                 className="cust-phone-link"
+                                onClick={(e) => e.stopPropagation()}
                               >
                                 📞 {cust.phone}
                               </a>
@@ -5136,7 +5145,8 @@ const AdminDashboard = () => {
                           <div className="cust-card-footer">
                             <button
                               className="btn-view-cust-orders"
-                              onClick={() => {
+                              onClick={(e) => {
+                                e.stopPropagation();
                                 setCustomerOrderFilter(cust.phone !== "—" ? cust.phone : cust.name);
                                 setActiveMenu("Orders");
                               }}
