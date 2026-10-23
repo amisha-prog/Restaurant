@@ -183,7 +183,12 @@ function KitchenDashboard() {
         </div>
 
         {/* Chef Info */}
-        <div className="kd-chef-card">
+        <div
+          className="kd-chef-card clickable"
+          onClick={() => setActiveTab("dashboard")}
+          style={{ cursor: "pointer" }}
+          title="Go to Kitchen Dashboard"
+        >
           <div className="kd-chef-avatar">
             {chefData?.name?.charAt(0)?.toUpperCase() || "C"}
           </div>
@@ -195,7 +200,12 @@ function KitchenDashboard() {
         </div>
 
         {/* Restaurant */}
-        <div className="kd-restaurant-tag">
+        <div
+          className="kd-restaurant-tag clickable"
+          onClick={() => setActiveTab("dashboard")}
+          style={{ cursor: "pointer" }}
+          title="Go to Kitchen Dashboard"
+        >
           <span>🏪</span>
           <span>{restaurantData?.restaurantName || "Restaurant"}</span>
         </div>
@@ -281,12 +291,14 @@ function KitchenDashboard() {
                 { label: "Preparing",    count: stats.preparingOrdersCount, icon: "🔥", color: "orange", tab: "preparing" },
                 { label: "Ready",        count: stats.readyOrdersCount,     icon: "✅", color: "green",  tab: "ready"     },
                 { label: "Completed Today", count: stats.completedTodayCount, icon: "📦", color: "blue",  tab: "completed" },
-                { label: "Total Active", count: stats.totalActiveOrders,    icon: "⚡", color: "purple", tab: null        },
+                { label: "Total Active", count: stats.totalActiveOrders,    icon: "⚡", color: "purple", tab: "new"        },
               ].map((card) => (
                 <div
                   key={card.label}
                   className={`kd-stat-card kd-stat-${card.color} ${card.tab ? "clickable" : ""}`}
                   onClick={() => card.tab && setActiveTab(card.tab)}
+                  style={{ cursor: "pointer" }}
+                  title={`View ${card.label}`}
                 >
                   <div className="kd-stat-icon">{card.icon}</div>
                   <div className="kd-stat-body">
@@ -321,8 +333,15 @@ function KitchenDashboard() {
                     .map((order) => {
                       const diffMin = Math.floor((Date.now() - new Date(order.createdAt).getTime()) / 60000);
                       const isUrgent = diffMin >= 12 && ["New", "Preparing"].includes(order.status);
+                      const targetTab = order.status === "Ready" ? "ready" : order.status === "Preparing" ? "preparing" : "new";
                       return (
-                        <div key={order._id} className={`kd-order-row status-${order.status?.toLowerCase()} ${isUrgent ? "urgent" : ""}`}>
+                        <div
+                          key={order._id}
+                          className={`kd-order-row status-${order.status?.toLowerCase()} ${isUrgent ? "urgent" : ""}`}
+                          onClick={() => setActiveTab(targetTab)}
+                          style={{ cursor: "pointer" }}
+                          title={`Click to view ${order.status} order`}
+                        >
                           <div className="kd-order-row-left">
                             <span className="kd-order-table">
                               {order.tableNumber ? `Table ${order.tableNumber}` : "Takeaway"}

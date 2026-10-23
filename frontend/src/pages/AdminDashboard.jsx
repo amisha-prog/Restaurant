@@ -2574,7 +2574,12 @@ const AdminDashboard = () => {
 
       <aside className={`admin-sidebar${mobileNavOpen ? " mobile-open" : ""}`}>
 
-        <div className="admin-brand">
+        <div
+          className="admin-brand clickable"
+          onClick={() => setActiveMenu("Dashboard")}
+          style={{ cursor: "pointer" }}
+          title="Go to Dashboard"
+        >
           <div className="brand-logo">
             🍽️
           </div>
@@ -3127,7 +3132,12 @@ const AdminDashboard = () => {
 
               {/* ROW 2 */}
               {/* COL 1: TOTAL REVENUE */}
-              <div className="alok-kpi-card">
+              <div
+                className="alok-kpi-card clickable"
+                onClick={() => setActiveMenu("Orders")}
+                style={{ cursor: "pointer" }}
+                title="View All Orders & Revenue"
+              >
                 <div className="alok-kpi-icon-badge yellow-badge">
                   💰
                 </div>
@@ -3142,7 +3152,7 @@ const AdminDashboard = () => {
                       📅 Today: <strong>₹{Math.round(todayRevenue).toLocaleString("en-IN")}</strong>
                     </span>
                   </div>
-                  <span className="alok-kpi-subtext">Gross Sales</span>
+                  <span className="alok-kpi-subtext">Gross Sales →</span>
                 </div>
               </div>
 
@@ -3241,35 +3251,60 @@ const AdminDashboard = () => {
                 const out = tableCounts["Out of Service"] || 0;
                 return (
                   <div className="alok-status-summary-grid">
-                    <div className="alok-status-box box-available">
+                    <div
+                      className="alok-status-box box-available clickable"
+                      onClick={() => setActiveMenu("Table Management")}
+                      style={{ cursor: "pointer" }}
+                      title="Manage Available Tables"
+                    >
                       <div className="alok-status-icon green-icon">🪑</div>
                       <span className="alok-status-box-title">Available</span>
                       <h1 className="alok-status-box-val">{avail}</h1>
                       <span className="alok-status-pct">{Math.round((avail / tot) * 100)}%</span>
                     </div>
 
-                    <div className="alok-status-box box-occupied">
+                    <div
+                      className="alok-status-box box-occupied clickable"
+                      onClick={() => setActiveMenu("Table Management")}
+                      style={{ cursor: "pointer" }}
+                      title="Manage Occupied Tables"
+                    >
                       <div className="alok-status-icon red-icon">🪑</div>
                       <span className="alok-status-box-title">Occupied</span>
                       <h1 className="alok-status-box-val">{occ}</h1>
                       <span className="alok-status-pct">{Math.round((occ / tot) * 100)}%</span>
                     </div>
 
-                    <div className="alok-status-box box-reserved">
+                    <div
+                      className="alok-status-box box-reserved clickable"
+                      onClick={() => setActiveMenu("Table Management")}
+                      style={{ cursor: "pointer" }}
+                      title="Manage Reserved Tables"
+                    >
                       <div className="alok-status-icon yellow-icon">🪑</div>
                       <span className="alok-status-box-title">Reserved</span>
                       <h1 className="alok-status-box-val">{res}</h1>
                       <span className="alok-status-pct">{Math.round((res / tot) * 100)}%</span>
                     </div>
 
-                    <div className="alok-status-box box-cleaning">
+                    <div
+                      className="alok-status-box box-cleaning clickable"
+                      onClick={() => setActiveMenu("Table Management")}
+                      style={{ cursor: "pointer" }}
+                      title="Manage Cleaning Tables"
+                    >
                       <div className="alok-status-icon blue-icon">🧹</div>
                       <span className="alok-status-box-title">Cleaning</span>
                       <h1 className="alok-status-box-val">{clean}</h1>
                       <span className="alok-status-pct">{Math.round((clean / tot) * 100)}%</span>
                     </div>
 
-                    <div className="alok-status-box box-out-of-service">
+                    <div
+                      className="alok-status-box box-out-of-service clickable"
+                      onClick={() => setActiveMenu("Table Management")}
+                      style={{ cursor: "pointer" }}
+                      title="Manage Out of Service Tables"
+                    >
                       <div className="alok-status-icon gray-icon">🛠️</div>
                       <span className="alok-status-box-title">Out of Service</span>
                       <h1 className="alok-status-box-val">{out}</h1>
