@@ -4693,9 +4693,20 @@ const AdminDashboard = () => {
               const filtered = dateFilteredOrders.filter((order) => {
                 if (currentSt !== "All" && order.status !== currentSt) return false;
                 if (customerOrderFilter) {
-                  const matchesPhone = order.customerPhone && order.customerPhone.includes(customerOrderFilter);
-                  const matchesName = order.customerName && order.customerName.toLowerCase().includes(customerOrderFilter.toLowerCase());
-                  if (!matchesPhone && !matchesName) return false;
+                  const qCust = String(customerOrderFilter).trim().toLowerCase();
+                  const rawCust = String(customerOrderFilter).trim();
+                  const phoneVal = String(order.customerPhone || "").trim();
+                  const nameVal = String(order.customerName || "").trim().toLowerCase();
+
+                  const matchesPhone = phoneVal && phoneVal.includes(rawCust);
+                  const matchesName = nameVal && nameVal.includes(qCust);
+                  const isWalkInMatch = (qCust.includes("walk-in") || qCust.includes("walk in")) &&
+                    (!nameVal || nameVal.includes("walk-in") || nameVal.includes("walk in") || nameVal.includes("walk-in guest") || nameVal.includes("walk-in customer"));
+                  const isGuestMatch = qCust.includes("guest") && nameVal.includes("guest");
+
+                  if (!matchesPhone && !matchesName && !isWalkInMatch && !isGuestMatch) {
+                    return false;
+                  }
                 }
                 if (orderSearch.trim()) {
                   const q = orderSearch.trim().toLowerCase();
@@ -5031,7 +5042,15 @@ const AdminDashboard = () => {
 
             {/* Customer Metrics */}
             <div className="customer-stats-grid">
-              <div className="cust-stat-card">
+              <div
+                className="cust-stat-card clickable"
+                onClick={() => {
+                  setCustomerSearch("");
+                  setCustomersPage(1);
+                }}
+                style={{ cursor: "pointer" }}
+                title="View All Customers in Directory"
+              >
                 <div className="cust-stat-icon">👥</div>
                 <div>
                   <p>Total Customers</p>
@@ -5040,25 +5059,61 @@ const AdminDashboard = () => {
                 </div>
               </div>
 
-              <div className="cust-stat-card">
+              <div
+                className="cust-stat-card clickable"
+                onClick={() => {
+                  setCustomerOrderFilter(null);
+                  setOrderDateFilter("all");
+                  setOrderCustomDate("");
+                  setOrderStatusFilter("All");
+                  setOrderSearch("");
+                  setActiveMenu("Orders");
+                }}
+                style={{ cursor: "pointer" }}
+                title="Click to view all orders"
+              >
                 <div className="cust-stat-icon">🧾</div>
                 <div>
                   <p>Total Orders</p>
                   <h3>{dashboardSummary.stats.totalOrders}</h3>
-                  <span>Lifetime orders placed</span>
+                  <span>Lifetime orders placed →</span>
                 </div>
               </div>
 
-              <div className="cust-stat-card">
+              <div
+                className="cust-stat-card clickable"
+                onClick={() => {
+                  setCustomerOrderFilter(null);
+                  setOrderDateFilter("all");
+                  setOrderCustomDate("");
+                  setOrderStatusFilter("All");
+                  setOrderSearch("");
+                  setActiveMenu("Orders");
+                }}
+                style={{ cursor: "pointer" }}
+                title="Click to view all orders & revenue"
+              >
                 <div className="cust-stat-icon">💰</div>
                 <div>
                   <p>Total Customer Spend</p>
                   <h3>₹{Number(dashboardSummary.stats.totalRevenue || 0).toLocaleString("en-IN", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</h3>
-                  <span>Gross customer revenue</span>
+                  <span>Gross customer revenue →</span>
                 </div>
               </div>
 
-              <div className="cust-stat-card">
+              <div
+                className="cust-stat-card clickable"
+                onClick={() => {
+                  setCustomerOrderFilter(null);
+                  setOrderDateFilter("all");
+                  setOrderCustomDate("");
+                  setOrderStatusFilter("All");
+                  setOrderSearch("");
+                  setActiveMenu("Orders");
+                }}
+                style={{ cursor: "pointer" }}
+                title="Click to view guest average in Orders"
+              >
                 <div className="cust-stat-icon">⭐</div>
                 <div>
                   <p>Avg Spend per Customer</p>
@@ -5067,7 +5122,7 @@ const AdminDashboard = () => {
                       ? (dashboardSummary.stats.totalRevenue / dashboardSummary.customers.length).toFixed(2)
                       : "0.00"}
                   </h3>
-                  <span>Per guest average</span>
+                  <span>Per guest average →</span>
                 </div>
               </div>
             </div>
@@ -5087,6 +5142,17 @@ const AdminDashboard = () => {
 
             {/* Customer Cards Grid */}
             {(() => {
+              const handleViewCustomerOrders = (cust) => {
+                setOrderDateFilter("all");
+                setOrderCustomDate("");
+                setOrderStatusFilter("All");
+                setOrderSearch("");
+                const filterKey = cust.phone && cust.phone !== "—" ? cust.phone : cust.name;
+                setCustomerOrderFilter(filterKey);
+                setActiveMenu("Orders");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              };
+
               const filteredCusts = dashboardSummary.customers.filter((c) => {
                 if (!customerSearch.trim()) return true;
                 const q = customerSearch.trim().toLowerCase();
@@ -5133,10 +5199,7 @@ const AdminDashboard = () => {
                         <article
                           key={cust.id || idx}
                           className="customer-profile-card clickable"
-                          onClick={() => {
-                            setCustomerOrderFilter(cust.phone !== "—" ? cust.phone : cust.name);
-                            setActiveMenu("Orders");
-                          }}
+                          onClick={() => handleViewCustomerOrders(cust)}
                           title={`Click to view all orders for ${cust.name || "this customer"}`}
                         >
                           <div className="cust-card-top">
@@ -5182,8 +5245,7 @@ const AdminDashboard = () => {
                               className="btn-view-cust-orders"
                               onClick={(e) => {
                                 e.stopPropagation();
-                                setCustomerOrderFilter(cust.phone !== "—" ? cust.phone : cust.name);
-                                setActiveMenu("Orders");
+                                handleViewCustomerOrders(cust);
                               }}
                             >
                               🧾 View All Orders ({cust.orders})
