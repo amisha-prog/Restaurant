@@ -4472,6 +4472,9 @@ const AdminDashboard = () => {
                 onClick={() => {
                   setOrderDateFilter("all");
                   setOrderCustomDate("");
+                  setOrderStatusFilter("All");
+                  setCustomerOrderFilter(null);
+                  setOrderSearch("");
                 }}
                 title="Click to view all orders"
               >
@@ -4504,7 +4507,12 @@ const AdminDashboard = () => {
                 </span>
               </div>
 
-              <div className="metric-chip chip-new">
+              <div
+                className={`metric-chip chip-new ${orderStatusFilter === "New" ? "chip-active-filter" : ""}`}
+                style={{ cursor: "pointer" }}
+                onClick={() => setOrderStatusFilter(orderStatusFilter === "New" ? "All" : "New")}
+                title="Filter New orders"
+              >
                 <div className="metric-chip-header">
                   <span className="metric-chip-title">NEW ORDERS</span>
                   <div className="metric-chip-icon red-icon">🔔</div>
@@ -4515,7 +4523,12 @@ const AdminDashboard = () => {
                 </span>
               </div>
 
-              <div className="metric-chip chip-prep">
+              <div
+                className={`metric-chip chip-prep ${orderStatusFilter === "Preparing" ? "chip-active-filter" : ""}`}
+                style={{ cursor: "pointer" }}
+                onClick={() => setOrderStatusFilter(orderStatusFilter === "Preparing" ? "All" : "Preparing")}
+                title="Filter In Kitchen / Preparing orders"
+              >
                 <div className="metric-chip-header">
                   <span className="metric-chip-title">IN KITCHEN</span>
                   <div className="metric-chip-icon orange-icon">🍳</div>
@@ -4526,7 +4539,12 @@ const AdminDashboard = () => {
                 </span>
               </div>
 
-              <div className="metric-chip chip-ready">
+              <div
+                className={`metric-chip chip-ready ${orderStatusFilter === "Ready" ? "chip-active-filter" : ""}`}
+                style={{ cursor: "pointer" }}
+                onClick={() => setOrderStatusFilter(orderStatusFilter === "Ready" ? "All" : "Ready")}
+                title="Filter Ready orders"
+              >
                 <div className="metric-chip-header">
                   <span className="metric-chip-title">READY TO SERVE</span>
                   <div className="metric-chip-icon green-icon">✅</div>
@@ -4537,7 +4555,12 @@ const AdminDashboard = () => {
                 </span>
               </div>
 
-              <div className="metric-chip chip-completed">
+              <div
+                className={`metric-chip chip-completed ${orderStatusFilter === "Completed" ? "chip-active-filter" : ""}`}
+                style={{ cursor: "pointer" }}
+                onClick={() => setOrderStatusFilter(orderStatusFilter === "Completed" ? "All" : "Completed")}
+                title="Filter Completed orders"
+              >
                 <div className="metric-chip-header">
                   <span className="metric-chip-title">COMPLETED</span>
                   <div className="metric-chip-icon purple-icon">📦</div>
@@ -4572,9 +4595,10 @@ const AdminDashboard = () => {
                       type="button"
                       className={`orders-day-pill ${orderDateFilter === "today" ? "active" : ""}`}
                       onClick={() => {
-                        setOrderDateFilter("today");
+                        setOrderDateFilter(orderDateFilter === "today" ? "all" : "today");
                         setOrderCustomDate("");
                       }}
+                      title={orderDateFilter === "today" ? "Click to toggle back to All Orders" : "Filter Today's orders"}
                     >
                       📅 Today ({formatDateKeyDisplay(todayDateKey).slice(0, 6)}) ({todayOrdersList.length})
                     </button>
@@ -4582,7 +4606,7 @@ const AdminDashboard = () => {
                       type="button"
                       className={`orders-day-pill ${orderDateFilter === "yesterday" ? "active" : ""}`}
                       onClick={() => {
-                        setOrderDateFilter("yesterday");
+                        setOrderDateFilter(orderDateFilter === "yesterday" ? "all" : "yesterday");
                         setOrderCustomDate("");
                       }}
                     >
@@ -4615,19 +4639,20 @@ const AdminDashboard = () => {
                 </div>
 
                 {orderDateFilter !== "all" && (
-                  <div className="orders-active-date-banner">
-                    <span className="active-date-text">
+                  <div className="orders-active-date-banner" style={{ background: "#eff6ff", borderColor: "#bfdbfe" }}>
+                    <span className="active-date-text" style={{ color: "#1e40af" }}>
                       Showing: <strong>{activeDateLabel}</strong> ({dateFilteredOrders.length} orders · ₹{Math.round(activeDateRevenue).toLocaleString("en-IN")})
                     </span>
                     <button
                       type="button"
                       className="orders-clear-date-btn"
+                      style={{ background: "#2563eb", color: "#ffffff", fontWeight: 700 }}
                       onClick={() => {
                         setOrderDateFilter("all");
                         setOrderCustomDate("");
                       }}
                     >
-                      ✕ Clear Date Filter
+                      🌐 Show All ({dashboardSummary.orders.length}) Orders
                     </button>
                   </div>
                 )}
@@ -4726,37 +4751,80 @@ const AdminDashboard = () => {
 
               if (filtered.length === 0) {
                 return (
-                  <div className="empty-module-state">
-                    <div className="empty-icon">🧾</div>
-                    <h3>No orders found</h3>
-                    <p>
-                      {orderSearch || customerOrderFilter || currentSt !== "All" || orderDateFilter !== "all"
+                  <div
+                    className="empty-module-state"
+                    style={{
+                      background: "#f8fafc",
+                      border: "2px dashed #cbd5e1",
+                      borderRadius: "16px",
+                      padding: "36px 20px",
+                      textAlign: "center",
+                      maxWidth: "580px",
+                      margin: "24px auto",
+                    }}
+                  >
+                    <div className="empty-icon" style={{ fontSize: "40px", marginBottom: "10px" }}>
+                      {orderDateFilter === "today" ? "📅" : "🧾"}
+                    </div>
+                    <h3 style={{ fontSize: "18px", fontWeight: 700, color: "#1e293b", margin: "0 0 8px" }}>
+                      {orderDateFilter === "today"
+                        ? `Aaj (${formatDateKeyDisplay(todayDateKey)}) Ka Koi Naya Order Nahi Hai (0 Orders)`
+                        : "No orders found"}
+                    </h3>
+                    <p style={{ color: "#64748b", fontSize: "14px", lineHeight: "1.5", margin: "0 0 18px" }}>
+                      {orderDateFilter === "today"
+                        ? `Database me aaj abhi tak koi order place nahi hua hai. Pichle sabhi ${dashboardSummary.orders.length} orders dekhne ke liye niche button dabayein:`
+                        : orderSearch || customerOrderFilter || currentSt !== "All" || orderDateFilter !== "all"
                         ? `No orders matching your criteria${orderDateFilter !== "all" ? ` for ${activeDateLabel}` : ""}. Try clearing filters.`
                         : "No orders have been received yet. Once guests place orders, they will appear here."}
                     </p>
-                    {orderDateFilter !== "all" && (
-                      <button
-                        type="button"
-                        className="empty-clear-filter-btn"
-                        style={{
-                          marginTop: "14px",
-                          padding: "8px 16px",
-                          borderRadius: "8px",
-                          border: "1.5px solid #cbd5e1",
-                          background: "#ffffff",
-                          cursor: "pointer",
-                          fontWeight: 600,
-                          color: "#1e293b",
-                          fontSize: "13px"
-                        }}
-                        onClick={() => {
-                          setOrderDateFilter("all");
-                          setOrderCustomDate("");
-                        }}
-                      >
-                        🔄 View All Orders (Clear Date Filter)
-                      </button>
-                    )}
+
+                    <div style={{ display: "flex", gap: "10px", justifyContent: "center", flexWrap: "wrap" }}>
+                      {(dashboardSummary.orders.length > 0 || orderDateFilter !== "all" || currentSt !== "All" || customerOrderFilter || orderSearch) && (
+                        <button
+                          type="button"
+                          className="empty-clear-filter-btn"
+                          style={{
+                            padding: "10px 20px",
+                            borderRadius: "10px",
+                            border: "none",
+                            background: "#2563eb",
+                            color: "#ffffff",
+                            cursor: "pointer",
+                            fontWeight: 700,
+                            fontSize: "14px",
+                            boxShadow: "0 4px 12px rgba(37,99,235,0.25)",
+                          }}
+                          onClick={() => {
+                            setOrderDateFilter("all");
+                            setOrderCustomDate("");
+                            setOrderStatusFilter("All");
+                            setCustomerOrderFilter(null);
+                            setOrderSearch("");
+                          }}
+                        >
+                          🌐 Show All ({dashboardSummary.orders.length}) Orders
+                        </button>
+                      )}
+                      {activeMenu !== "Kitchen" && (
+                        <button
+                          type="button"
+                          style={{
+                            padding: "10px 18px",
+                            borderRadius: "10px",
+                            border: "none",
+                            background: "#10b981",
+                            color: "#ffffff",
+                            cursor: "pointer",
+                            fontWeight: 700,
+                            fontSize: "14px",
+                          }}
+                          onClick={handleOpenAdminCreateOrder}
+                        >
+                          ➕ Create New Order
+                        </button>
+                      )}
+                    </div>
                   </div>
                 );
               }
