@@ -428,6 +428,45 @@ const AdminDashboard = () => {
   // Day & Date Filter State for Orders
   const [orderDateFilter, setOrderDateFilter] = useState("all"); // "all" | "today" | "yesterday" | "custom"
   const [orderCustomDate, setOrderCustomDate] = useState("");
+  // Single Active Metric Card: Only the card user clicks gets blue highlight!
+  const [activeMetricCard, setActiveMetricCard] = useState("total"); // "total" | "today" | "new" | "preparing" | "ready" | "completed"
+
+  const handleSelectMetricCard = (cardKey) => {
+    if (activeMetricCard === cardKey && cardKey !== "total") {
+      // Toggle off back to all orders
+      setActiveMetricCard("total");
+      setOrderDateFilter("all");
+      setOrderCustomDate("");
+      setOrderStatusFilter("All");
+      setCustomerOrderFilter(null);
+      return;
+    }
+
+    setActiveMetricCard(cardKey);
+    setOrderCustomDate("");
+    setCustomerOrderFilter(null);
+
+    if (cardKey === "total") {
+      setOrderDateFilter("all");
+      setOrderStatusFilter("All");
+      setOrderSearch("");
+    } else if (cardKey === "today") {
+      setOrderDateFilter("today");
+      setOrderStatusFilter("All");
+    } else if (cardKey === "new") {
+      setOrderDateFilter("all");
+      setOrderStatusFilter("New");
+    } else if (cardKey === "preparing") {
+      setOrderDateFilter("all");
+      setOrderStatusFilter("Preparing");
+    } else if (cardKey === "ready") {
+      setOrderDateFilter("all");
+      setOrderStatusFilter("Ready");
+    } else if (cardKey === "completed") {
+      setOrderDateFilter("all");
+      setOrderStatusFilter("Completed");
+    }
+  };
 
   // Orders Pagination State
   const [ordersPage, setOrdersPage] = useState(1);
@@ -4467,34 +4506,25 @@ const AdminDashboard = () => {
             {/* Quick Metrics Bar */}
             <div className="orders-metrics-row">
               <div
-                className={`metric-chip chip-total ${orderDateFilter === "all" ? "chip-active-filter" : ""}`}
+                className={`metric-chip chip-total ${activeMetricCard === "total" ? "chip-active-filter" : ""}`}
                 style={{ cursor: "pointer" }}
-                onClick={() => {
-                  setOrderDateFilter("all");
-                  setOrderCustomDate("");
-                  setOrderStatusFilter("All");
-                  setCustomerOrderFilter(null);
-                  setOrderSearch("");
-                }}
+                onClick={() => handleSelectMetricCard("total")}
                 title="Click to view all orders"
               >
                 <div className="metric-chip-header">
                   <span className="metric-chip-title">TOTAL ORDERS</span>
                   <div className="metric-chip-icon blue-icon">📋</div>
                 </div>
-                <h2 className="metric-chip-val">{dashboardSummary.stats.totalOrders ?? 0}</h2>
+                <h2 className="metric-chip-val">{dashboardSummary.stats.totalOrders ?? (dashboardSummary.orders || []).length}</h2>
                 <span className="metric-chip-subtext" style={{ fontSize: "11px", color: "#64748b" }}>
                   All-time total
                 </span>
               </div>
 
               <div
-                className={`metric-chip chip-today ${orderDateFilter === "today" ? "chip-active-filter" : ""}`}
+                className={`metric-chip chip-today ${activeMetricCard === "today" ? "chip-active-filter" : ""}`}
                 style={{ cursor: "pointer" }}
-                onClick={() => {
-                  setOrderDateFilter(orderDateFilter === "today" ? "all" : "today");
-                  setOrderCustomDate("");
-                }}
+                onClick={() => handleSelectMetricCard("today")}
                 title="Click to filter Today's orders"
               >
                 <div className="metric-chip-header">
@@ -4502,70 +4532,70 @@ const AdminDashboard = () => {
                   <div className="metric-chip-icon green-icon">📅</div>
                 </div>
                 <h2 className="metric-chip-val">{todayOrdersList.length}</h2>
-                <span className="metric-chip-subtext" style={{ fontSize: "11px", color: "#059669", fontWeight: 700 }}>
-                  ₹{Math.round(todayRevenue).toLocaleString("en-IN")} {orderDateFilter === "today" ? "• Active ✓" : ""}
+                <span className="metric-chip-subtext" style={{ fontSize: "11px", color: todayOrdersList.length > 0 ? "#059669" : "#64748b", fontWeight: 700 }}>
+                  ₹{Math.round(todayRevenue).toLocaleString("en-IN")} {activeMetricCard === "today" ? "• Active ✓" : ""}
                 </span>
               </div>
 
               <div
-                className={`metric-chip chip-new ${orderStatusFilter === "New" ? "chip-active-filter" : ""}`}
+                className={`metric-chip chip-new ${activeMetricCard === "new" ? "chip-active-filter" : ""}`}
                 style={{ cursor: "pointer" }}
-                onClick={() => setOrderStatusFilter(orderStatusFilter === "New" ? "All" : "New")}
+                onClick={() => handleSelectMetricCard("new")}
                 title="Filter New orders"
               >
                 <div className="metric-chip-header">
                   <span className="metric-chip-title">NEW ORDERS</span>
                   <div className="metric-chip-icon red-icon">🔔</div>
                 </div>
-                <h2 className="metric-chip-val">{dateFilteredOrders.filter(o => o.status === "New").length}</h2>
+                <h2 className="metric-chip-val">{(dashboardSummary.orders || []).filter(o => o.status === "New").length}</h2>
                 <span className="metric-chip-subtext" style={{ fontSize: "11px", color: "#ef4444" }}>
-                  {orderDateFilter !== "all" ? "For selected day" : "Awaiting kitchen"}
+                  Awaiting kitchen
                 </span>
               </div>
 
               <div
-                className={`metric-chip chip-prep ${orderStatusFilter === "Preparing" ? "chip-active-filter" : ""}`}
+                className={`metric-chip chip-prep ${activeMetricCard === "preparing" ? "chip-active-filter" : ""}`}
                 style={{ cursor: "pointer" }}
-                onClick={() => setOrderStatusFilter(orderStatusFilter === "Preparing" ? "All" : "Preparing")}
+                onClick={() => handleSelectMetricCard("preparing")}
                 title="Filter In Kitchen / Preparing orders"
               >
                 <div className="metric-chip-header">
                   <span className="metric-chip-title">IN KITCHEN</span>
                   <div className="metric-chip-icon orange-icon">🍳</div>
                 </div>
-                <h2 className="metric-chip-val">{dateFilteredOrders.filter(o => o.status === "Preparing").length}</h2>
+                <h2 className="metric-chip-val">{(dashboardSummary.orders || []).filter(o => o.status === "Preparing").length}</h2>
                 <span className="metric-chip-subtext" style={{ fontSize: "11px", color: "#f97316" }}>
                   Cooking now
                 </span>
               </div>
 
               <div
-                className={`metric-chip chip-ready ${orderStatusFilter === "Ready" ? "chip-active-filter" : ""}`}
+                className={`metric-chip chip-ready ${activeMetricCard === "ready" ? "chip-active-filter" : ""}`}
                 style={{ cursor: "pointer" }}
-                onClick={() => setOrderStatusFilter(orderStatusFilter === "Ready" ? "All" : "Ready")}
+                onClick={() => handleSelectMetricCard("ready")}
                 title="Filter Ready orders"
               >
                 <div className="metric-chip-header">
                   <span className="metric-chip-title">READY TO SERVE</span>
                   <div className="metric-chip-icon green-icon">✅</div>
                 </div>
-                <h2 className="metric-chip-val">{dateFilteredOrders.filter(o => o.status === "Ready").length}</h2>
+                <h2 className="metric-chip-val">{(dashboardSummary.orders || []).filter(o => o.status === "Ready").length}</h2>
                 <span className="metric-chip-subtext" style={{ fontSize: "11px", color: "#10b981" }}>
                   Ready at counter
                 </span>
               </div>
 
               <div
-                className={`metric-chip chip-completed ${orderStatusFilter === "Completed" ? "chip-active-filter" : ""}`}
+                className={`metric-chip chip-completed ${activeMetricCard === "completed" ? "chip-active-filter" : ""}`}
                 style={{ cursor: "pointer" }}
-                onClick={() => setOrderStatusFilter(orderStatusFilter === "Completed" ? "All" : "Completed")}
+                onClick={() => handleSelectMetricCard("completed")}
                 title="Filter Completed orders"
               >
                 <div className="metric-chip-header">
                   <span className="metric-chip-title">COMPLETED</span>
                   <div className="metric-chip-icon purple-icon">📦</div>
                 </div>
-                <h2 className="metric-chip-val">{dateFilteredOrders.filter(o => ["Completed", "Served"].includes(o.status)).length}</h2>
+                <h2 className="metric-chip-val">{(dashboardSummary.orders || []).filter(o => ["Completed", "Served"].includes(o.status)).length}</h2>
                 <span className="metric-chip-subtext" style={{ fontSize: "11px", color: "#8b5cf6" }}>
                   Served & closed
                 </span>
@@ -4584,20 +4614,14 @@ const AdminDashboard = () => {
                     <button
                       type="button"
                       className={`orders-day-pill ${orderDateFilter === "all" ? "active" : ""}`}
-                      onClick={() => {
-                        setOrderDateFilter("all");
-                        setOrderCustomDate("");
-                      }}
+                      onClick={() => handleSelectMetricCard("total")}
                     >
                       🌐 All Time ({dashboardSummary.orders.length})
                     </button>
                     <button
                       type="button"
                       className={`orders-day-pill ${orderDateFilter === "today" ? "active" : ""}`}
-                      onClick={() => {
-                        setOrderDateFilter(orderDateFilter === "today" ? "all" : "today");
-                        setOrderCustomDate("");
-                      }}
+                      onClick={() => handleSelectMetricCard("today")}
                       title={orderDateFilter === "today" ? "Click to toggle back to All Orders" : "Filter Today's orders"}
                     >
                       📅 Today ({formatDateKeyDisplay(todayDateKey).slice(0, 6)}) ({todayOrdersList.length})
@@ -4606,7 +4630,9 @@ const AdminDashboard = () => {
                       type="button"
                       className={`orders-day-pill ${orderDateFilter === "yesterday" ? "active" : ""}`}
                       onClick={() => {
+                        setActiveMetricCard("");
                         setOrderDateFilter(orderDateFilter === "yesterday" ? "all" : "yesterday");
+                        setOrderStatusFilter("All");
                         setOrderCustomDate("");
                       }}
                     >
@@ -4620,11 +4646,12 @@ const AdminDashboard = () => {
                         value={orderCustomDate}
                         onChange={(e) => {
                           if (e.target.value) {
+                            setActiveMetricCard("");
                             setOrderCustomDate(e.target.value);
                             setOrderDateFilter("custom");
+                            setOrderStatusFilter("All");
                           } else {
-                            setOrderCustomDate("");
-                            setOrderDateFilter("all");
+                            handleSelectMetricCard("total");
                           }
                         }}
                         title="Pick specific date"
@@ -4647,10 +4674,7 @@ const AdminDashboard = () => {
                       type="button"
                       className="orders-clear-date-btn"
                       style={{ background: "#2563eb", color: "#ffffff", fontWeight: 700 }}
-                      onClick={() => {
-                        setOrderDateFilter("all");
-                        setOrderCustomDate("");
-                      }}
+                      onClick={() => handleSelectMetricCard("total")}
                     >
                       🌐 Show All ({dashboardSummary.orders.length}) Orders
                     </button>
@@ -4670,8 +4694,8 @@ const AdminDashboard = () => {
                       ? "Completed"
                       : orderStatusFilter;
                     const count = st === "All"
-                      ? dateFilteredOrders.length
-                      : dateFilteredOrders.filter((o) => o.status === st).length;
+                      ? (dashboardSummary.orders || []).length
+                      : (dashboardSummary.orders || []).filter((o) => o.status === st).length;
 
                     return (
                       <button
@@ -4679,6 +4703,15 @@ const AdminDashboard = () => {
                         className={`orders-tab-btn ${currentSt === st ? "is-active" : ""}`}
                         onClick={() => {
                           setOrderStatusFilter(st);
+                          setOrderDateFilter("all");
+                          setOrderCustomDate("");
+                          if (st === "All") setActiveMetricCard("total");
+                          else if (st === "New") setActiveMetricCard("new");
+                          else if (st === "Preparing") setActiveMetricCard("preparing");
+                          else if (st === "Ready") setActiveMetricCard("ready");
+                          else if (st === "Completed") setActiveMetricCard("completed");
+                          else setActiveMetricCard("");
+
                           if (["New Orders", "Preparing", "Completed"].includes(activeMenu)) {
                             setActiveMenu("Orders");
                           }
@@ -4795,13 +4828,7 @@ const AdminDashboard = () => {
                             fontSize: "14px",
                             boxShadow: "0 4px 12px rgba(37,99,235,0.25)",
                           }}
-                          onClick={() => {
-                            setOrderDateFilter("all");
-                            setOrderCustomDate("");
-                            setOrderStatusFilter("All");
-                            setCustomerOrderFilter(null);
-                            setOrderSearch("");
-                          }}
+                          onClick={() => handleSelectMetricCard("total")}
                         >
                           🌐 Show All ({dashboardSummary.orders.length}) Orders
                         </button>
